@@ -1,11 +1,11 @@
 environmentVariables:
   - variable: NEXT_PUBLIC_SUPABASE_URL
-    secret: NEXT_PUBLIC_SUPABASE_URL
+    value: "https://bqszadfunqgtfpaorwvx.supabase.co"
   - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
-    secret: NEXT_PUBLIC_SUPABASE_ANON_KEY
+    value: "sb_publishable_xQINQGX7-gqwgXHqOF0RWw_ZebOhOoI"
   - variable: NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-    secret: NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+    value: "dgpulbaqq"
   - variable: NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
-    secret: NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+    value: "ifusp_uploads"
   - variable: ADMIN_PASSWORD
     secret: ADMIN_PASSWORD
