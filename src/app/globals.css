@@ -1,25 +1,37 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #135bec;
-  --color-primary-dark: #0e45b5;
-  --color-secondary: #f0b400;
+  --color-primary: #0099CC;
+  /* brand-blue */
+  --color-secondary: #FF4D4D;
+  /* brand-red */
+  --color-accent: #FFCC00;
+  /* brand-yellow */
 
-  --color-background-light: #f6f6f8;
-  --color-background-subtle: #f8f9fa;
-  --color-background-dark: #101622;
+  --color-brand-blue: #0099CC;
+  --color-brand-red: #FF4D4D;
+  --color-brand-yellow: #FFCC00;
+  --color-brand-darkBlue: #007aa3;
+  --color-brand-lightBlue: #e5f5fa;
 
-  --color-text-main: #111318;
-  --color-text-muted: #616f89;
+  --color-background-light: #F8FAFC;
+  --color-background-subtle: #F1F5F9;
+  --color-background-dark: #0B1120;
 
-  --font-display: var(--font-inter), sans-serif;
+  --color-card-light: #FFFFFF;
+  --color-card-dark: #162033;
+
+  --color-text-main: #111827;
+  --color-text-muted: #6B7280;
+
+  --font-display: "Space Grotesk", sans-serif;
   --font-body: var(--font-inter), sans-serif;
   --font-sans: var(--font-inter), sans-serif;
 
-  --radius-DEFAULT: 0.25rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
+  --radius-DEFAULT: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
   --radius-full: 9999px;
 }
 
@@ -43,6 +55,20 @@
 
   ::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
+  }
+}
+
+@layer components {
+  .card-accent-blue {
+    border-top: 4px solid var(--color-brand-blue);
+  }
+
+  .card-accent-red {
+    border-top: 4px solid var(--color-brand-red);
+  }
+
+  .card-accent-yellow {
+    border-top: 4px solid var(--color-brand-yellow);
   }
 }
 

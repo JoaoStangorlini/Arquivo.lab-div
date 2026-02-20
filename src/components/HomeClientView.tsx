@@ -10,6 +10,7 @@ interface HomeClientViewProps {
 export const HomeClientView = ({ initialItems }: HomeClientViewProps) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('Todos');
+    const [sortOrder, setSortOrder] = useState<'recentes' | 'antigas'>('recentes');
     const [selectedItem, setSelectedItem] = useState<MediaCardProps | null>(null);
     const [modalImageIdx, setModalImageIdx] = useState(0);
     const [visibleCount, setVisibleCount] = useState(9);
@@ -17,7 +18,7 @@ export const HomeClientView = ({ initialItems }: HomeClientViewProps) => {
     const categories = ['Todos', 'Laboratórios', 'Pesquisadores', 'Eventos', 'Convivência', 'Outros'];
 
     // Filter Logic
-    const filteredItems = initialItems.filter(item => {
+    let filteredItems = initialItems.filter(item => {
         const matchesCategory = selectedCategory === 'Todos' || item.category === selectedCategory;
         const searchLower = searchQuery.toLowerCase();
         const matchesSearch =
@@ -27,6 +28,11 @@ export const HomeClientView = ({ initialItems }: HomeClientViewProps) => {
 
         return matchesCategory && matchesSearch;
     });
+
+    // Sort Logic (default is recent first from server)
+    if (sortOrder === 'antigas') {
+        filteredItems = [...filteredItems].reverse();
+    }
 
     const displayedItems = filteredItems.slice(0, visibleCount);
 
@@ -66,46 +72,36 @@ export const HomeClientView = ({ initialItems }: HomeClientViewProps) => {
 
     return (
         <>
-            <section className="relative overflow-hidden bg-background-subtle dark:bg-gray-900 pt-12 pb-20 lg:pt-20 lg:pb-28">
-                <div className="absolute inset-0 z-0">
-                    <div className="absolute inset-0 bg-gradient-to-r from-background-light/95 via-background-light/70 to-transparent dark:from-background-dark/95 dark:via-background-dark/70 z-10"></div>
-                    <img
-                        alt="Laboratório de física moderna"
-                        className="h-full w-full object-cover opacity-40 dark:opacity-20"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsdbfz1Z20wp2oNE9w8jHp_0ZiIehzGE_7RuSgSeUV84GxjWlAy5YbkwTPsp-eRJEBfYOAcyoghJa2qHjxJOcW2gS-rAJNZakoVMDJBgFMMsv-vZxEvn9pgR3XwkWUsD4S5jANNKe914awgUZSoiiREnnwNOia8XVDGcT9LrSP06tHlGVrKAJoNga9WhO3Vl4iKr3a08SGUvOwj1bIX2SQjvpUkXJHernrp3zDTSdl_Ml7j_iQb18tSZdRDx7xN48ioVjXGawvQw-d"
-                    />
-                </div>
+            <header className="relative pt-20 pb-32 overflow-hidden flex-shrink-0">
+                <div className="absolute inset-0 bg-background-light dark:bg-background-dark -z-20"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:30px_30px] opacity-10 dark:opacity-30 -z-10"></div>
 
-                <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-2xl">
-                        <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-inset ring-primary/20 mb-6">
-                            <span className="material-symbols-outlined text-[16px]">school</span>
+                {/* IDV Blobs */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-blue/10 dark:bg-brand-blue/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-red/10 dark:bg-brand-red/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
+                <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-brand-yellow/10 dark:bg-brand-yellow/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="max-w-3xl">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 border border-brand-blue/20 dark:border-brand-blue/30 text-brand-blue dark:text-brand-blue text-xs font-semibold uppercase tracking-wide mb-6">
+                            <span className="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
                             Excelência em Pesquisa
                         </div>
-                        <h2 className="text-4xl font-extrabold tracking-tight text-text-main sm:text-5xl lg:text-6xl mb-6 dark:text-white">
-                            A Ciência <br className="hidden sm:block" />
-                            <span className="text-primary relative inline-block">
-                                Acontece Aqui
-                                <svg className="absolute -bottom-2 left-0 w-full h-3 text-secondary opacity-50" preserveAspectRatio="none" viewBox="0 0 100 10">
-                                    <path d="M0 5 Q 50 10 100 5" fill="none" stroke="currentColor" strokeWidth="3"></path>
-                                </svg>
-                            </span>
+                        <h2 className="font-display font-bold text-5xl md:text-7xl tracking-tight mb-6 text-gray-900 dark:text-white leading-[1.1]">
+                            A Ciência <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-yellow to-brand-red">Acontece Aqui</span>
                         </h2>
-                        <p className="mt-4 text-lg text-text-muted dark:text-gray-300 leading-relaxed max-w-xl">
-                            O arquivo de fotos, vídeos, textos e todo tipo de material para divulgação científica. Para você ficar sempre antenado do que está acontecendo no IF-USP!
+                        <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl leading-relaxed">
+                            O arquivo oficial de divulgação científica do IF-USP. Explore fotos, vídeos, textos e materiais didáticos para ficar sempre antenado nas descobertas que transformam o mundo.
                         </p>
 
-                        <div className="mt-8 max-w-lg">
-                            <label className="sr-only" htmlFor="search">Buscar pesquisa</label>
-                            <div className="relative flex items-center shadow-lg rounded-xl bg-white dark:bg-gray-800">
-                                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                                    <span className="material-symbols-outlined text-gray-400">search</span>
-                                </div>
+                        <div className="relative max-w-2xl group">
+                            <div className="absolute -inset-1 bg-gradient-to-r from-brand-blue via-brand-yellow to-brand-red rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                            <div className="relative flex items-center bg-white dark:bg-card-dark rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+                                <span className="material-symbols-outlined text-brand-blue pl-4 text-2xl">search</span>
                                 <input
-                                    className="block w-full rounded-xl border-0 py-4 pl-12 pr-4 text-text-main ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700 dark:placeholder:text-gray-500 transition-all shadow-sm"
-                                    id="search"
-                                    name="search"
-                                    placeholder="Buscar por autor, título, descrição"
+                                    className="w-full py-4 px-4 bg-transparent border-none focus:ring-0 text-gray-900 dark:text-gray-100 placeholder-gray-400 text-lg"
+                                    placeholder="Buscar por autor, título, descrição..."
                                     type="text"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -114,23 +110,50 @@ export const HomeClientView = ({ initialItems }: HomeClientViewProps) => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </header>
 
-            <section className="border-b border-gray-100 bg-white/95 backdrop-blur-md dark:bg-background-dark/95 dark:border-gray-800 sticky top-16 z-40 transition-colors">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
-                    <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide no-scrollbar mask-gradient">
-                        {categories.map(cat => (
-                            <button
-                                key={cat}
-                                onClick={() => setSelectedCategory(cat)}
-                                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors shadow-sm ${selectedCategory === cat
-                                    ? 'bg-text-main text-white dark:bg-white dark:text-black hover:bg-gray-800'
-                                    : 'bg-gray-100 text-text-muted hover:bg-gray-200 hover:text-text-main dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white'
-                                    }`}
+            <section className="py-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark/50 sticky top-24 z-40 backdrop-blur-sm">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex items-center justify-between overflow-x-auto no-scrollbar gap-4">
+                        <div className="flex gap-2">
+                            {categories.map(cat => {
+                                const isActive = selectedCategory === cat;
+                                let activeClass = '';
+
+                                if (isActive) {
+                                    if (cat === 'Laboratórios') activeClass = 'bg-brand-blue hover:bg-brand-darkBlue border-transparent text-white font-medium shadow-md';
+                                    else if (cat === 'Pesquisadores') activeClass = 'bg-brand-red hover:bg-red-600 border-transparent text-white font-medium shadow-md';
+                                    else if (cat === 'Eventos') activeClass = 'bg-brand-yellow hover:bg-yellow-500 border-transparent text-black font-medium shadow-md';
+                                    else activeClass = 'bg-brand-blue hover:bg-brand-darkBlue border-transparent text-white font-medium shadow-md'; // Todos/Outros/Convivência default base
+                                } else {
+                                    if (cat === 'Laboratórios') activeClass = 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-blue/10 dark:hover:bg-brand-blue/20 hover:text-brand-blue border-gray-200 dark:border-gray-700 hover:border-brand-blue';
+                                    else if (cat === 'Pesquisadores') activeClass = 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-red/10 dark:hover:bg-brand-red/20 hover:text-brand-red border-gray-200 dark:border-gray-700 hover:border-brand-red';
+                                    else if (cat === 'Eventos') activeClass = 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-yellow/10 dark:hover:bg-brand-yellow/20 hover:text-brand-yellow-700 dark:hover:text-brand-yellow border-gray-200 dark:border-gray-700 hover:border-brand-yellow';
+                                    else activeClass = 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-blue/5 dark:hover:bg-brand-blue/10 hover:text-brand-blue border-gray-200 dark:border-gray-700 hover:border-brand-blue';
+                                }
+
+                                return (
+                                    <button
+                                        key={cat}
+                                        onClick={() => setSelectedCategory(cat)}
+                                        className={`px-4 py-2 rounded-full text-sm transition-colors whitespace-nowrap border ${activeClass}`}
+                                    >
+                                        {cat}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                        <div className="hidden sm:flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                            <span className="font-medium text-brand-blue">Ordenar por:</span>
+                            <select
+                                value={sortOrder}
+                                onChange={(e) => setSortOrder(e.target.value as 'recentes' | 'antigas')}
+                                className="bg-transparent border-none focus:ring-0 cursor-pointer font-semibold text-gray-700 dark:text-gray-200 hover:text-brand-blue transition-colors outline-none"
                             >
-                                {cat}
-                            </button>
-                        ))}
+                                <option value="recentes">Mais recentes</option>
+                                <option value="antigas">Mais antigas</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -162,10 +185,13 @@ export const HomeClientView = ({ initialItems }: HomeClientViewProps) => {
                         <div className="mt-12 flex justify-center">
                             <button
                                 onClick={handleLoadMore}
-                                className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-gray-300 bg-white px-8 py-4 text-sm font-bold text-text-main shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 transition-colors"
+                                className="group relative overflow-hidden inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-gray-900 dark:bg-white px-8 py-4 text-sm font-bold text-white dark:text-gray-900 shadow-xl hover:-translate-y-1 hover:shadow-2xl active:translate-y-0 transition-all min-w-[200px]"
                             >
-                                Carregar mais pesquisas
-                                <span className="material-symbols-outlined text-xl">expand_more</span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-brand-blue via-brand-yellow to-brand-red opacity-0 group-hover:opacity-20 dark:group-hover:opacity-100 transition-opacity"></div>
+                                <span className="relative flex items-center gap-2">
+                                    Carregar mais
+                                    <span className="material-symbols-outlined text-xl group-hover:translate-y-1 transition-transform">expand_more</span>
+                                </span>
                             </button>
                         </div>
                     )}

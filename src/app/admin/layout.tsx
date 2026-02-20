@@ -22,35 +22,40 @@ export default function AdminLayout({
     ];
 
     return (
-        <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased min-h-screen flex overflow-hidden">
-            <aside className="w-64 bg-white dark:bg-[#18212f] border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 h-screen overflow-y-auto sticky top-0 transition-colors">
-                <div className="flex flex-col gap-4 p-4">
-                    <div className="flex items-center gap-3 pb-4 border-b border-slate-100 dark:border-slate-800 transition-colors">
+        <div className="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-sans antialiased min-h-screen flex overflow-hidden">
+            <aside className="w-72 bg-gray-900 border-r border-gray-800 flex flex-col justify-between shrink-0 h-screen overflow-hidden sticky top-0 relative transition-colors shadow-2xl z-40">
+                {/* Interactive Background Elements for Sidebar */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-40 h-40 bg-brand-red/10 rounded-full blur-2xl translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
+
+                <div className="flex flex-col gap-4 p-6 relative z-10">
+                    <div className="flex items-center gap-3 pb-6 border-b border-gray-800 transition-colors">
                         <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                                <span className="material-symbols-outlined text-2xl">science</span>
+                            <div className="relative w-10 h-10 flex-shrink-0">
+                                <div className="absolute w-6 h-7 bg-brand-blue rounded-[1px] top-0 left-0 z-0"></div>
+                                <div className="absolute w-6 h-7 bg-brand-red rounded-[1px] bottom-0 right-0 z-0 translate-y-1"></div>
+                                <div className="absolute w-6 h-6 bg-brand-yellow rounded-full top-2 left-2 z-20 shadow-sm border border-transparent"></div>
                             </div>
                             <div className="flex flex-col overflow-hidden">
-                                <h1 className="text-slate-900 dark:text-white text-base font-bold leading-tight truncate">Arquivo Lab-Div</h1>
-                                <p className="text-slate-500 dark:text-slate-400 text-xs font-normal">Painel Admin</p>
+                                <h1 className="text-white text-lg font-bold leading-tight truncate">Admin<span className="text-brand-yellow">Panel</span></h1>
+                                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mt-0.5">Lab-Div USP</p>
                             </div>
                         </Link>
                     </div>
 
-                    <nav className="flex flex-col gap-1">
+                    <nav className="flex flex-col gap-2 overflow-y-auto max-h-[calc(100vh-200px)] no-scrollbar">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
                             return (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors group ${isActive
-                                        ? 'bg-primary/10 text-primary dark:text-blue-400'
-                                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                                    className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all group ${isActive
+                                        ? 'bg-brand-blue border border-brand-blue/50 text-white shadow-lg shadow-brand-blue/20'
+                                        : 'text-gray-400 hover:bg-gray-800 hover:text-white border border-transparent'
                                         }`}
                                 >
-                                    <span className={`material-symbols-outlined text-[24px] ${isActive ? 'fill-1' : 'group-hover:text-primary dark:group-hover:text-blue-400'
-                                        }`}>
+                                    <span className={`material-symbols-outlined text-[20px] transition-colors ${isActive ? 'text-white' : 'text-gray-500 group-hover:text-gray-300'}`}>
                                         {link.icon}
                                     </span>
                                     <span className="text-sm font-medium">{link.name}</span>
@@ -60,18 +65,18 @@ export default function AdminLayout({
                     </nav>
                 </div>
 
-                <div className="p-4 border-t border-slate-200 dark:border-slate-800 transition-colors">
+                <div className="p-6 border-t border-gray-800 transition-colors relative z-10">
                     <button
                         onClick={() => logout()}
-                        className="flex items-center gap-3 px-3 py-2 w-full text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                        className="flex items-center gap-3 px-4 py-3 w-full text-sm font-medium text-gray-400 rounded-xl hover:bg-gray-800 hover:text-brand-red transition-colors border border-transparent group focus:outline-none"
                     >
-                        <span className="material-symbols-outlined text-[24px]">logout</span>
-                        <span className="text-sm font-medium">Sair</span>
+                        <span className="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-brand-red transition-colors">logout</span>
+                        <span>Sair do Painel</span>
                     </button>
                 </div>
             </aside>
 
-            <main className="flex-1 overflow-y-auto h-screen relative">
+            <main className="flex-1 overflow-y-auto h-screen relative bg-background-light dark:bg-background-dark">
                 {children}
             </main>
         </div>

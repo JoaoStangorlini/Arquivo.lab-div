@@ -126,181 +126,204 @@ export default function SubmitPage() {
     };
 
     return (
-        <div className="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display text-slate-900 dark:text-slate-100">
-            <header className="sticky top-0 z-50 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-6 py-4 lg:px-10">
-                <div className="flex items-center gap-4 cursor-pointer" onClick={() => router.push('/')}>
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary dark:bg-primary/20 transition-colors">
-                        <span className="material-symbols-outlined text-2xl">science</span>
+        <div className="relative min-h-screen bg-background-light dark:bg-background-dark font-sans text-gray-900 dark:text-gray-100 overflow-hidden">
+            {/* Background Elements */}
+            <div className="fixed inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:30px_30px] opacity-40 -z-20"></div>
+
+            <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-brand-blue/10 dark:bg-brand-blue/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-pulse -z-10"></div>
+            <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-brand-yellow/10 dark:bg-brand-yellow/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 -z-10"></div>
+
+            {/* Simple Header */}
+            <header className="fixed top-0 w-full z-50 backdrop-blur-md bg-white/80 dark:bg-background-dark/80 border-b border-gray-200 dark:border-gray-800">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                    <button onClick={() => router.push('/')} className="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-yellow transition-colors font-medium">
+                        <span className="material-symbols-outlined text-xl">arrow_back</span>
+                        Voltar para o Arquivo
+                    </button>
+                    <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-brand-blue"></div>
+                        <div className="w-2 h-2 rounded-full bg-brand-red"></div>
+                        <div className="w-2 h-2 rounded-full bg-brand-yellow"></div>
                     </div>
-                    <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Arquivo Lab-Div</h2>
-                </div>
-                <div className="hidden md:flex flex-1 justify-end items-center gap-8">
-                    <nav className="flex items-center gap-6">
-                        <button onClick={() => router.push('/')} className="text-sm font-medium text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors">Voltar</button>
-                    </nav>
                 </div>
             </header>
 
-            <main className="flex-grow flex justify-center py-12 px-4 md:px-6">
-                <div className="w-full max-w-3xl flex flex-col gap-8">
-                    <div className="text-center space-y-3">
-                        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                            Envie sua Contribuição Científica
+            <main className="relative pt-28 pb-20 px-4 sm:px-6 lg:px-8 z-10 flex justify-center">
+                <div className="w-full max-w-3xl flex flex-col gap-10">
+
+                    {/* Page Header */}
+                    <div className="text-center space-y-4">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-red/10 dark:bg-brand-red/20 border border-brand-red/20 text-brand-red text-xs font-bold uppercase tracking-wide">
+                            <span className="material-symbols-outlined text-[14px]">science</span>
+                            Participe do Arquivo
+                        </div>
+                        <h1 className="font-display font-bold text-4xl md:text-5xl text-gray-900 dark:text-white tracking-tight">
+                            Envie sua <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-brand-yellow">Contribuição</span>
                         </h1>
-                        <p className="text-base md:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
-                            Preencha o formulário abaixo para submeter seu trabalho para divulgação nos canais oficiais do Instituto de Física da USP.
+                        <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto md:text-lg">
+                            Preencha o formulário abaixo para submeter fotos ou vídeos do seu trabalho para divulgação nos canais oficiais do Instituto de Física.
                         </p>
                     </div>
 
-                    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-6 md:p-10 transition-colors">
+                    {/* Form Card */}
+                    <div className="bg-white/80 dark:bg-card-dark/80 backdrop-blur-xl rounded-2xl md:rounded-3xl border border-gray-100 dark:border-gray-800 shadow-xl p-6 md:p-10 relative">
                         {errorMsg && (
-                            <div className="mb-6 p-4 rounded-lg bg-red-50 text-red-600 text-sm border border-red-200 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400 font-medium">
+                            <div className="mb-6 p-4 rounded-lg bg-red-50 text-red-600 text-sm border border-red-200 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400 font-medium flex items-center gap-3">
+                                <span className="material-symbols-outlined">error</span>
                                 {errorMsg}
                             </div>
                         )}
 
-                        <div className="space-y-6">
-                            <div className="space-y-2">
-                                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="title">
-                                    <span className="text-red-500 mr-1">*</span>Título do Trabalho
+                        <div className="space-y-8">
+
+                            {/* Input Group */}
+                            <div className="space-y-2 group">
+                                <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300" htmlFor="title">
+                                    <span className="material-symbols-outlined text-brand-blue text-[18px]">title</span>
+                                    Título do Trabalho <span className="text-brand-red">*</span>
                                 </label>
-                                <div className="relative">
+                                <input
+                                    id="title"
+                                    type="text"
+                                    value={title}
+                                    onChange={e => setTitle(e.target.value)}
+                                    className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition-all"
+                                    placeholder="Ex: Novo acelerador de partículas"
+                                />
+                            </div>
+
+                            <div className="space-y-2 group">
+                                <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300" htmlFor="authors">
+                                    <span className="material-symbols-outlined text-brand-red text-[18px]">group</span>
+                                    Autores <span className="text-brand-red">*</span>
+                                </label>
+                                <input
+                                    id="authors"
+                                    type="text"
+                                    value={authors}
+                                    onChange={e => setAuthors(e.target.value)}
+                                    className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-brand-red focus:border-brand-red transition-all"
+                                    placeholder="Silva, J.; Ferreira, M."
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2 group">
+                                    <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300" htmlFor="email">
+                                        <span className="material-symbols-outlined text-gray-500 text-[18px]">alternate_email</span>
+                                        E-mail para Contato
+                                    </label>
                                     <input
-                                        id="title"
-                                        type="text"
-                                        value={title}
-                                        onChange={e => setTitle(e.target.value)}
-                                        className="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-primary sm:text-base py-3 px-4 transition-all shadow-sm"
-                                        placeholder="Ex: Avanços na Computação Quântica"
+                                        id="email"
+                                        type="email"
+                                        value={email}
+                                        onChange={e => setEmail(e.target.value)}
+                                        className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition-all text-sm"
+                                        placeholder="pesquisador@if.usp.br"
+                                    />
+                                </div>
+                                <div className="space-y-2 group">
+                                    <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300" htmlFor="whatsapp">
+                                        <span className="material-symbols-outlined text-gray-500 text-[18px]">phone_iphone</span>
+                                        WhatsApp
+                                    </label>
+                                    <input
+                                        id="whatsapp"
+                                        type="tel"
+                                        value={whatsapp}
+                                        onChange={e => setWhatsapp(e.target.value)}
+                                        className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-gray-400 focus:border-gray-400 transition-all text-sm"
+                                        placeholder="(11) 90000-0000"
                                     />
                                 </div>
                             </div>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 pl-1 border-l-2 border-brand-yellow">Preencha pelo menos um dos contatos (E-mail ou WhatsApp).</p>
 
-                            <div className="space-y-2">
-                                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="authors">
-                                    <span className="text-red-500 mr-1">*</span>Nome dos Autores
+                            <div className="space-y-2 group">
+                                <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300" htmlFor="category">
+                                    <span className="material-symbols-outlined text-brand-yellow text-[18px]">category</span>
+                                    Categoria <span className="text-brand-red">*</span>
                                 </label>
-                                <textarea
-                                    id="authors"
-                                    rows={2}
-                                    value={authors}
-                                    onChange={e => setAuthors(e.target.value)}
-                                    className="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-primary sm:text-base py-3 px-4 transition-all shadow-sm resize-none"
-                                    placeholder="Liste os autores separados por vírgula (Ex: Silva, J.; Santos, A.)"
-                                ></textarea>
-                            </div>
-
-                            <div className="space-y-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 p-4 border border-slate-200 dark:border-slate-700">
-                                <div className="flex flex-col gap-1 mb-2">
-                                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                                        <span className="text-red-500 mr-1">*</span>Contato do Submissor
-                                    </h3>
-                                    <p className="text-xs text-slate-500 dark:text-slate-400">Preencha pelo menos um (E-mail ou WhatsApp).</p>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div className="space-y-2">
-                                        <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300" htmlFor="email">
-                                            E-mail
-                                        </label>
-                                        <input
-                                            id="email"
-                                            type="email"
-                                            value={email}
-                                            onChange={e => setEmail(e.target.value)}
-                                            className="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-primary sm:text-sm py-2 px-3 transition-all"
-                                            placeholder="seu@email.usp.br"
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300" htmlFor="whatsapp">
-                                            WhatsApp
-                                        </label>
-                                        <input
-                                            id="whatsapp"
-                                            type="tel"
-                                            value={whatsapp}
-                                            onChange={e => setWhatsapp(e.target.value)}
-                                            className="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-primary sm:text-sm py-2 px-3 transition-all"
-                                            placeholder="(11) 90000-0000"
-                                        />
+                                <div className="relative">
+                                    <select
+                                        id="category"
+                                        value={category}
+                                        onChange={e => setCategory(e.target.value)}
+                                        className="appearance-none w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-brand-yellow focus:border-brand-yellow transition-all cursor-pointer font-medium"
+                                    >
+                                        <option value="Laboratórios">Laboratórios</option>
+                                        <option value="Pesquisadores">Pesquisadores</option>
+                                        <option value="Eventos">Eventos</option>
+                                        <option value="Convivência">Convivência</option>
+                                        <option value="Outros">Outros</option>
+                                    </select>
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-gray-500">
+                                        <span className="material-symbols-outlined">expand_more</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="category">
-                                    <span className="text-red-500 mr-1">*</span>Categoria
-                                </label>
-                                <select
-                                    id="category"
-                                    value={category}
-                                    onChange={e => setCategory(e.target.value)}
-                                    className="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-white focus:border-primary focus:ring-primary sm:text-base py-3 px-4 transition-all shadow-sm"
-                                >
-                                    <option value="Laboratórios">Laboratórios</option>
-                                    <option value="Pesquisadores">Pesquisadores</option>
-                                    <option value="Eventos">Eventos</option>
-                                    <option value="Convivência">Convivência</option>
-                                    <option value="Outros">Outros</option>
-                                </select>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300" htmlFor="description">
-                                    Descrição / Contexto
+                            <div className="space-y-2 group">
+                                <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300" htmlFor="description">
+                                    <span className="material-symbols-outlined text-gray-500 text-[18px]">description</span>
+                                    Descrição ou Contexto
                                 </label>
                                 <textarea
                                     id="description"
-                                    rows={5}
+                                    rows={4}
                                     value={description}
                                     onChange={e => setDescription(e.target.value)}
-                                    className="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-primary sm:text-base py-3 px-4 transition-all shadow-sm resize-none"
-                                    placeholder="Insira um resumo ou abstract do trabalho, explicando a relevância científica..."
+                                    className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition-all resize-none"
+                                    placeholder="Detalhe o contexto da foto ou do vídeo..."
                                 ></textarea>
                             </div>
                         </div>
 
-                        <hr className="my-8 border-slate-100 dark:border-slate-700" />
+                        <hr className="my-10 border-gray-100 dark:border-gray-800" />
 
                         <div className="space-y-6">
-                            <div className="flex flex-col gap-1">
-                                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                                    <span className="text-red-500 mr-1">*</span>Mídia Visual
+                            <div className="flex flex-col gap-1 mb-4">
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                    <span className="material-symbols-outlined text-brand-blue">perm_media</span>
+                                    Mídia Visual <span className="text-brand-red">*</span>
                                 </h3>
-                                <p className="text-sm text-slate-500 dark:text-slate-400">Adicione uma imagem representativa ou um link para um vídeo explicativo.</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Adicione as imagens ou o link do vídeo explicativo do trabalho.</p>
                             </div>
 
-                            <div className="flex p-1 space-x-1 bg-slate-100 dark:bg-slate-900/50 rounded-xl" role="tablist">
+                            <div className="flex p-1.5 bg-gray-100/50 dark:bg-gray-800/50 rounded-2xl w-full max-w-sm mb-6 border border-gray-200/50 dark:border-gray-700/50" role="tablist">
                                 <button
                                     onClick={() => setMediaType('image')}
                                     aria-selected={mediaType === 'image'}
-                                    className={`w-full py-2.5 text-sm font-medium leading-5 rounded-lg ring-offset-2 focus:outline-none focus:ring-2 transition-all ${mediaType === 'image' ? 'text-primary bg-white dark:bg-slate-700 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                                    className={`w-full py-3 text-sm font-bold rounded-xl transition-all ${mediaType === 'image' ? 'bg-white dark:bg-gray-700 text-brand-blue shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}`}
                                 >
                                     <div className="flex items-center justify-center gap-2">
                                         <span className="material-symbols-outlined text-[20px]">image</span>
-                                        Upload de Imagem
+                                        Fotos
                                     </div>
                                 </button>
                                 <button
                                     onClick={() => setMediaType('video')}
                                     aria-selected={mediaType === 'video'}
-                                    className={`w-full py-2.5 text-sm font-medium leading-5 rounded-lg ring-offset-2 focus:outline-none focus:ring-2 transition-all ${mediaType === 'video' ? 'text-primary bg-white dark:bg-slate-700 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                                    className={`w-full py-3 text-sm font-bold rounded-xl transition-all ${mediaType === 'video' ? 'bg-white dark:bg-gray-700 text-brand-red shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}`}
                                 >
                                     <div className="flex items-center justify-center gap-2">
                                         <span className="material-symbols-outlined text-[20px]">movie</span>
-                                        Link de Vídeo (YouTube)
+                                        Vídeo
                                     </div>
                                 </button>
                             </div>
 
                             <div className="mt-4">
                                 {mediaType === 'image' ? (
-                                    <div className="flex justify-center rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 px-6 py-10 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
-                                        <div className="text-center">
-                                            <span className="material-symbols-outlined text-5xl text-slate-400 group-hover:text-primary transition-colors mx-auto mb-4">cloud_upload</span>
-                                            <div className="mt-2 flex text-sm leading-6 text-slate-600 dark:text-slate-400 justify-center">
-                                                <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-transparent font-semibold text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 hover:text-blue-600">
-                                                    <span>{selectedFiles.length > 0 ? `${selectedFiles.length} arquivo${selectedFiles.length > 1 ? 's' : ''} selecionado${selectedFiles.length > 1 ? 's' : ''}` : 'Clique para enviar'}</span>
+                                    <div className="flex justify-center rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 px-6 py-12 bg-gray-50/50 dark:bg-gray-900/50 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer group relative overflow-hidden">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/5 to-brand-yellow/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                        <div className="text-center relative z-10">
+                                            <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-full shadow-sm flex items-center justify-center mx-auto mb-4 border border-gray-100 dark:border-gray-700 group-hover:scale-110 transition-transform group-hover:border-brand-blue/20">
+                                                <span className="material-symbols-outlined text-3xl text-gray-400 group-hover:text-brand-blue transition-colors">cloud_upload</span>
+                                            </div>
+                                            <div className="mt-2 flex text-sm leading-6 text-gray-600 dark:text-gray-400 justify-center">
+                                                <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-bold text-brand-blue hover:text-brand-darkBlue focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-blue focus-within:ring-offset-2 transition-colors">
+                                                    <span>{selectedFiles.length > 0 ? `${selectedFiles.length} arquivo${selectedFiles.length > 1 ? 's' : ''} selecionado${selectedFiles.length > 1 ? 's' : ''}` : 'Clique para enviar imagens'}</span>
                                                     <input
                                                         id="file-upload"
                                                         name="file-upload"
@@ -311,23 +334,24 @@ export default function SubmitPage() {
                                                         onChange={handleFileChange}
                                                     />
                                                 </label>
-                                                {selectedFiles.length === 0 && <p className="pl-1">ou arraste e solte</p>}
+                                                {selectedFiles.length === 0 && <p className="pl-1 hidden sm:block">ou arraste para cá</p>}
                                             </div>
-                                            <p className="text-xs leading-5 text-slate-500 mt-2">PNG, JPG, GIF até 10MB</p>
-                                            <p className="text-xs font-semibold text-orange-600 dark:text-orange-400 mt-1">Limite máximo de 10 fotos por submissão.</p>
+                                            <p className="text-xs text-gray-500 mt-2">PNG, JPG ou GIF até 10MB</p>
+                                            <p className="text-xs font-semibold text-brand-red mt-2">Limite máximo de 10 fotos por submissão.</p>
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="space-y-2">
-                                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300" htmlFor="youtube-link">
-                                            URL do YouTube
+                                    <div className="space-y-2 group">
+                                        <label className="flex items-center gap-2 text-sm font-bold text-gray-700 dark:text-gray-300" htmlFor="youtube-link">
+                                            <span className="material-symbols-outlined text-brand-red text-[18px]">smart_display</span>
+                                            Link do YouTube
                                         </label>
                                         <input
                                             id="youtube-link"
                                             type="url"
                                             value={videoUrl}
                                             onChange={e => setVideoUrl(e.target.value)}
-                                            className="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-primary sm:text-base py-3 px-4 transition-all shadow-sm"
+                                            className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-brand-red focus:border-brand-red transition-all"
                                             placeholder="https://www.youtube.com/watch?v=..."
                                         />
                                     </div>
@@ -335,15 +359,27 @@ export default function SubmitPage() {
                             </div>
                         </div>
 
-                        <div className="mt-10 pt-4 flex items-center justify-end border-t border-slate-100 dark:border-slate-700">
+                        <div className="mt-12 pt-8 flex items-center justify-end border-t border-gray-100 dark:border-gray-800">
                             <button
                                 type="button"
                                 onClick={handleSubmit}
                                 disabled={isLoading}
-                                className="group relative flex w-full md:w-auto justify-center items-center gap-2 rounded-xl bg-primary px-8 py-3.5 text-base font-bold text-white shadow-lg shadow-blue-500/30 hover:bg-blue-700 hover:shadow-blue-600/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+                                className="group relative w-full sm:w-auto overflow-hidden rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-8 py-4 font-bold shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center min-w-[200px]"
                             >
-                                {isLoading ? 'Enviando...' : 'Submeter para Análise'}
-                                {!isLoading && <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">send</span>}
+                                <div className="absolute inset-0 bg-gradient-to-r from-brand-blue via-brand-yellow to-brand-red opacity-0 group-hover:opacity-20 dark:group-hover:opacity-100 transition-opacity"></div>
+                                <span className="relative flex items-center gap-2">
+                                    {isLoading ? (
+                                        <>
+                                            <span className="material-symbols-outlined animate-spin">progress_activity</span>
+                                            Enviando...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Submeter para Análise
+                                            <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                        </>
+                                    )}
+                                </span>
                             </button>
                         </div>
                     </div>

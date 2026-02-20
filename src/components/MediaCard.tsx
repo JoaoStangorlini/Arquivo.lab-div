@@ -105,8 +105,14 @@ export const MediaCard = ({
     // Prevent rendering entirely broken images if URLs array is somehow empty
     const displayUrl = urls.length > 0 ? urls[currentImageIndex] : '';
 
+    let accentClass = 'border-t-4 border-t-gray-100 dark:border-t-gray-700';
+    if (category === 'Laboratórios') accentClass = 'card-accent-blue';
+    else if (category === 'Pesquisadores') accentClass = 'card-accent-red';
+    else if (category === 'Eventos') accentClass = 'card-accent-yellow';
+    else if (category) accentClass = 'card-accent-blue'; // Default for others
+
     return (
-        <div className={`masonry-item group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-gray-800 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl cursor-pointer border ${sizeModifierStyles}`}>
+        <div className={`masonry-item group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-card-dark shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl cursor-pointer border-x border-b border-gray-100 dark:border-gray-700 ${accentClass} ${sizeModifierStyles}`}>
 
             {/* Visual Header / Media */}
             <div className={`relative w-full overflow-hidden shrink-0 ${mediaType === 'video' ? 'aspect-video' : (hasMultipleImages ? 'aspect-square' : 'aspect-[4/3]')}`}>
@@ -220,13 +226,23 @@ export const MediaCard = ({
 
             {/* Content Area */}
             <div className={`flex flex-col flex-1 p-5 ${hasMultipleImages ? 'bg-gradient-to-b from-white to-slate-50 dark:from-gray-800 dark:to-gray-800' : ''}`}>
-                {isFeatured && (
-                    <div className="flex items-center gap-2 mb-3">
-                        <span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-900/20 px-2 py-1 text-xs font-bold uppercase tracking-wider text-yellow-800 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/20">
+                <div className="flex flex-wrap items-center justify-between mb-3 gap-2">
+                    {category && (
+                        <div className={`px-3 py-1 text-xs font-bold rounded-full uppercase tracking-wide shadow-sm 
+                            ${category === 'Laboratórios' ? 'bg-brand-blue/90 text-white shadow-brand-blue/50' :
+                                category === 'Pesquisadores' ? 'bg-brand-red/90 text-white shadow-brand-red/50' :
+                                    category === 'Eventos' ? 'bg-brand-yellow/90 text-black shadow-brand-yellow/50' :
+                                        'bg-brand-blue/90 text-white shadow-brand-blue/50'}`}
+                        >
+                            {category}
+                        </div>
+                    )}
+                    {isFeatured && (
+                        <span className="px-3 py-1 bg-gradient-to-r from-brand-red to-brand-yellow text-white text-xs font-bold rounded-full uppercase tracking-wide shadow-sm">
                             Destaque
                         </span>
-                    </div>
-                )}
+                    )}
+                </div>
 
                 <h3 className={`font-extrabold text-text-main dark:text-white leading-tight mb-2 group-hover:text-primary transition-colors ${hasMultipleImages ? 'text-xl' : 'text-lg'}`}>
                     {title}
