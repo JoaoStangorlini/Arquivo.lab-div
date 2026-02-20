@@ -77,9 +77,9 @@ export const HomeClientView = ({ initialItems }: HomeClientViewProps) => {
                 <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:30px_30px] opacity-10 dark:opacity-30 -z-10"></div>
 
                 {/* IDV Blobs */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-blue/10 dark:bg-brand-blue/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-pulse"></div>
-                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-red/10 dark:bg-brand-red/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
-                <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-brand-yellow/10 dark:bg-brand-yellow/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-blue/20 dark:bg-brand-blue/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-red/20 dark:bg-brand-red/30 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
+                <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-brand-yellow/20 dark:bg-brand-yellow/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="max-w-3xl">
