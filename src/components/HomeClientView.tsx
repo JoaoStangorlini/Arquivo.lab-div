@@ -156,14 +156,16 @@ export const HomeClientView = ({ initialItems }: HomeClientViewProps) => {
                                 let activeClass = '';
 
                                 if (isActive) {
-                                    if (cat === 'Laboratórios') activeClass = 'bg-brand-blue hover:bg-brand-darkBlue border-transparent text-white font-medium shadow-md';
+                                    if (cat === 'Laboratórios') activeClass = 'bg-brand-yellow hover:bg-yellow-500 border-transparent text-black font-medium shadow-md';
                                     else if (cat === 'Pesquisadores') activeClass = 'bg-brand-red hover:bg-red-600 border-transparent text-white font-medium shadow-md';
                                     else if (cat === 'Eventos') activeClass = 'bg-brand-yellow hover:bg-yellow-500 border-transparent text-black font-medium shadow-md';
-                                    else activeClass = 'bg-brand-blue hover:bg-brand-darkBlue border-transparent text-white font-medium shadow-md'; // Todos/Outros/Convivência default base
+                                    else if (cat === 'Convivência') activeClass = 'bg-brand-red hover:bg-red-600 border-transparent text-white font-medium shadow-md';
+                                    else activeClass = 'bg-brand-blue hover:bg-brand-darkBlue border-transparent text-white font-medium shadow-md'; // Todos/Outros default base
                                 } else {
-                                    if (cat === 'Laboratórios') activeClass = 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-blue/10 dark:hover:bg-brand-blue/20 hover:text-brand-blue border-gray-200 dark:border-gray-700 hover:border-brand-blue';
+                                    if (cat === 'Laboratórios') activeClass = 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-yellow/10 dark:hover:bg-brand-yellow/20 hover:text-brand-yellow-700 dark:hover:text-brand-yellow border-gray-200 dark:border-gray-700 hover:border-brand-yellow';
                                     else if (cat === 'Pesquisadores') activeClass = 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-red/10 dark:hover:bg-brand-red/20 hover:text-brand-red border-gray-200 dark:border-gray-700 hover:border-brand-red';
                                     else if (cat === 'Eventos') activeClass = 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-yellow/10 dark:hover:bg-brand-yellow/20 hover:text-brand-yellow-700 dark:hover:text-brand-yellow border-gray-200 dark:border-gray-700 hover:border-brand-yellow';
+                                    else if (cat === 'Convivência') activeClass = 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-red/10 dark:hover:bg-brand-red/20 hover:text-brand-red border-gray-200 dark:border-gray-700 hover:border-brand-red';
                                     else activeClass = 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-blue/5 dark:hover:bg-brand-blue/10 hover:text-brand-blue border-gray-200 dark:border-gray-700 hover:border-brand-blue';
                                 }
 
