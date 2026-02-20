@@ -1,4 +1,4 @@
-env:
+environmentVariables:
   - variable: NEXT_PUBLIC_SUPABASE_URL
     secret: NEXT_PUBLIC_SUPABASE_URL
   - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
