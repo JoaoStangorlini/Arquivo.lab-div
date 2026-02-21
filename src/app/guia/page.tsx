@@ -3,7 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 
 export default function GuiaPage() {
     return (
-        <div className="min-h-screen bg-background-light dark:bg-background-dark font-sans text-gray-900 dark:text-gray-100 flex flex-col pt-24">
+        <div className="min-h-screen bg-background-light dark:bg-background-dark font-sans text-gray-900 dark:text-gray-100 flex flex-col">
             <Header />
 
             <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full prose prose-lg dark:prose-invert prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-a:text-brand-blue prose-img:rounded-xl">

@@ -107,7 +107,7 @@ export default function CriadoresPage() {
     };
 
     return (
-        <div className="min-h-screen bg-background-light dark:bg-background-dark font-sans text-gray-900 dark:text-gray-100 flex flex-col pt-24 overflow-hidden">
+        <div className="min-h-screen bg-background-light dark:bg-background-dark font-sans text-gray-900 dark:text-gray-100 flex flex-col overflow-hidden">
             <Header />
 
             <main className="flex-1 py-12 w-full">
