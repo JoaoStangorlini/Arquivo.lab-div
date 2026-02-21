@@ -12,4 +12,139 @@ Sua tarefa agora é executar uma SUPER REVISÃO de todo o código modificado e a
 
 Execute essa super revisão agora e me explique brevemente quais melhorias de performance ou redução de linhas você conseguiu aplicar.
 apos atualiza o repositorio 
-test plan sprint 5
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Atue como um Engenheiro de Software Full-Stack Sênior. O nosso projeto 'Arquivo Lab-Div' (Next.js, Tailwind, Supabase) vai receber a atualização do MÓDULO 1, focado na Experiência de Envio (UX) e Prevenção de Perdas.
+
+REGRA DE OURO: NÃO escreva código de imediato. Analise o escopo abaixo e apresente um Plano de Ação dividido em Fases (ex: Estado, UI, Validação). Só codificaremos após a minha aprovação da fase.
+
+Escopo do Módulo 1 (O Formulário Perfeito):
+1. Stepper Descritivo: Indicador de texto claro (ex: "Passo 1 de 3: Categoria").
+2. Auto-save (Rascunho): Salvar o progresso dos campos de texto no LocalStorage.
+3. Trava de Saída Acidental: Alerta 'beforeunload' se houver alterações não salvas.
+4. Limite Explícito: Tag "Máx: 10MB" visível dentro dos cards de upload.
+5. Dropzone: Área funcional de arrastar e soltar (Drag and Drop) para arquivos.
+6. Pré-visualização de Upload: Miniatura da foto ou ícone do arquivo com botão "X" para remover.
+7. Preview de Markdown: Toggle em tempo real para visualizar a formatação do texto antes de enviar.
+8. Contadores de Caracteres: Texto dinâmico (ex: 0/60) que fica vermelho ao atingir o limite.
+9. Tooltips de Ajuda: Ícones (?) explicativos ao lado de labels complexas (ex: Link Externo).
+10. Acessibilidade UI: Maior contraste visual nos checkboxes de Termos de Uso.
+11. Sistema de Co-Autoria: Campo de busca dinâmico no formulário para marcar outros usuários logados como coautores da submissão.
+
+Por favor, apresente o seu Plano de Ação Mestre para este módulo.
+ 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Atue como um Engenheiro de Software Full-Stack Sênior e Arquiteto de Banco de Dados. O nosso projeto 'Arquivo Lab-Div' (Next.js, Tailwind, Supabase) vai receber a atualização do MÓDULO 2, focado na Organização e Descoberta de Conteúdo.
+
+REGRA DE OURO: NÃO escreva código de imediato. Analise o escopo abaixo e apresente um Plano de Ação dividido em Fases (priorizando queries do Supabase antes da UI). Só codificaremos após a minha aprovação da fase.
+
+Escopo do Módulo 2 (Organização e Descoberta):
+1. Sistema de Tags Dinâmicas: Tags (ex: #Optica) no envio que viram filtros clicáveis na busca.
+2. Tempo de Leitura: Badge calculada automaticamente (ex: "4 min de leitura") em textos.
+3. Suporte Nativo a LaTeX: Renderização matemática (KaTeX/MathJax) dentro do React Markdown.
+4. Trilhas de Aprendizagem (Playlists): Agrupamento lógico de materiais (ex: "Sobrevivendo a Física 1").
+5. Seção "Em Alta no IFUSP": Vitrine na home com os materiais mais acessados/baixados da semana.
+6. Pré-visualização Rápida (Hover Preview): Tooltip que mostra o início do texto/documento ao passar o mouse sobre o card.
+7. Autocompletar Inteligente: Barra de busca que sugere títulos e autores enquanto o usuário digita.
+
+Por favor, apresente o seu Plano de Ação Mestre para este módulo.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Atue como um Engenheiro de Software Full-Stack Sênior especializado em UI/UX. O nosso projeto 'Arquivo Lab-Div' (Next.js, Tailwind, Supabase) vai receber a atualização do MÓDULO 3, focado em Leitura Imersiva e Colaboração.
+
+REGRA DE OURO: NÃO escreva código de imediato. Analise o escopo abaixo e apresente um Plano de Ação dividido em Fases. Só codificaremos após a minha aprovação da fase.
+
+Escopo do Módulo 3 (Leitura Imersiva e Colaboração):
+1. Modo de Foco: Botão que esconde barras laterais, escurece o fundo e centraliza o texto.
+2. Comentários Enriquecidos: Suporte a envio de imagens e fórmulas LaTeX nas dúvidas.
+3. Sugerir Correção (Peer Review): Modal para usuários enviarem correções privadas ao autor.
+4. Exportar para PDF: Conversão de posts em Markdown para PDF limpo para estudo offline.
+5. Destaque e Anotação Privada: Usuário grifa trechos do texto e cria notas visíveis só para ele.
+6. Comentários Em Linha (Inline Comments): Balões de discussão atrelados a parágrafos específicos.
+7. Fluxo de Edição pelo Autor: Edição de post que cria um "Rascunho" para aprovação prévia do Admin.
+8. Modo Apresentação: Converter posts em slides tela cheia.
+9. Reprodutor de Áudio (TTS): Leitura do texto em voz alta ignorando blocos LaTeX.
+10. Sincronização de Leitura: Indicador "🔥 X alunos estão lendo este material agora".
+
+Por favor, apresente o seu Plano de Ação Mestre para este módulo.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Atue como um Engenheiro de Software Full-Stack Sênior e Game Designer. O nosso projeto 'Arquivo Lab-Div' (Next.js, Tailwind, Supabase) vai receber a atualização do MÓDULO 4, focado em Gamificação e Painel do Usuário.
+
+REGRA DE OURO: NÃO escreva código de imediato. Analise o escopo abaixo e apresente um Plano de Ação dividido em Fases (Tabelas/RPCs no Supabase primeiro, depois UI). Só codificaremos após a minha aprovação da fase.
+
+Escopo do Módulo 4 (A Alma da Comunidade):
+1. Leaderboard: Ranking público dos Top Criadores do mês.
+2. Conquistas Ocultas: Selos automáticos dados por gatilhos específicos.
+3. Sistema de Favoritos: Salvar posts em uma aba privada.
+4. Estatísticas Privadas: Dashboard com Views e Downloads únicos do autor.
+5. Sistema de Níveis e XP (RPG): Ganho de XP por ações e subida de nível acadêmico.
+6. Botão de "Agradecimento" (Kudos): Upvote que notifica o autor e soma reputação.
+7. Histórico de Leitura: Aba para continuar de onde parou.
+8. Feed "Para Você": Sugestões baseadas nas tags mais acessadas.
+9. Quadro de Recompensas (Bounties): Qualquer usuário pode oferecer XP em troca de um material específico.
+10. Batalha de Departamentos: XP individual soma para um ranking de áreas (ex: Óptica).
+11. Molduras de Avatar: Bordas desbloqueáveis por XP/Selos.
+12. Endossos de Habilidades: Usuários endossam habilidades no perfil de colegas.
+13. Celebração de Marcos: Confetes ao atingir metas de views/downloads.
+14. Selo de Tutor: Destaque para quem responde bem aos comentários.
+
+Por favor, apresente o seu Plano de Ação Mestre para este módulo.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Atue como um Engenheiro de Software Full-Stack Sênior e Especialista em Segurança. O nosso projeto 'Arquivo Lab-Div' (Next.js, Tailwind, Supabase) vai receber a atualização do MÓDULO 5, focado em Ferramentas Administrativas.
+
+REGRA DE OURO: NÃO escreva código de imediato. Analise o escopo abaixo e apresente um Plano de Ação dividido em Fases. Só codificaremos após a minha aprovação da fase.
+
+Escopo do Módulo 5 (Superpoderes do Admin):
+1. Ações em Massa (Bulk Actions): Aprovar/rejeitar múltiplas submissões de uma só vez.
+2. E-mail de Boas-Vindas: Integração Resend no primeiro login.
+3. Widget de Reportar Bug: Botão flutuante para usuários enviarem alertas de erro.
+4. Templates de Respostas Rápidas: Respostas pré-prontas ao rejeitar submissões.
+5. Log de Auditoria: Registro oculto de todas as ações dos admins (quem aprovou/deletou o quê).
+6. Modo "Personificação" (Impersonation): Admin pode acessar a visão do painel de um aluno específico para debugar.
+7. Sistema de Avisos Globais: Faixa de aviso no topo do site para anúncios (ex: "Manutenção").
+8. Níveis de Permissão (RBAC): Separar "Moderador" de "Super Admin".
+9. Sistema de Suspensão: Ferramenta para banir temporariamente spammers.
+10. Exportador de Relatórios: Gerar CSV com métricas da plataforma.
+11. Detector de Links Quebrados: Alerta no painel admin se links de Drive/Nuvem ficarem offlines.
+
+Por favor, apresente o seu Plano de Ação Mestre para este módulo.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Atue como um Engenheiro de Software Full-Stack Sênior. O nosso projeto 'Arquivo Lab-Div' (Next.js, Tailwind, Supabase) vai receber a atualização do MÓDULO 6, criando um sistema de conexão entre alunos e laboratórios.
+
+REGRA DE OURO: NÃO escreva código de imediato. Analise o escopo abaixo e apresente um Plano de Ação dividido em Fases (Tabelas de Vagas/Candidaturas primeiro, depois Fluxo de UI). Só codificaremos após a minha aprovação da fase.
+
+Escopo do Módulo 6 (Match Acadêmico):
+1. Painel de Vagas Classificadas: Professores postam vagas com tags (#IC, #PUB) e área.
+2. Micro-Vagas de "Shadowing": Vagas curtas para acompanhar a rotina do laboratório.
+3. Status "Buscando Laboratório": Toggle no perfil do aluno visível para recrutadores.
+4. Candidatura Integrada com Validação: Botão que exige Lattes, Semestre e status de Cálculo/Experimental para enviar o perfil.
+5. Portfólio Dinâmico do Aluno: Perfil otimizado para o professor ler as submissões do aluno.
+6. Kanban de Seleção: Painel Trello para o professor gerenciar candidatos.
+7. Mensageria Interna Restrita: Chat que só libera quando o aluno vai para "Em Entrevista".
+8. Endosso de Pós-IC: Selo de recomendação interna pós-projeto.
+9. Vitrine de Projetos Relacionados: Vincular materiais do Hub à página da vaga.
+10. Contador de Impacto Institucional: Banner público exibindo o total de conexões realizadas.
+
+Por favor, apresente o seu Plano de Ação Mestre para este módulo.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
