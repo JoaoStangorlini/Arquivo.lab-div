@@ -90,8 +90,33 @@ export default function CriadoresPage() {
             imagePlaceholder: 'M',
             color: 'brand-blue',
             platform: 'tiktok'
+        },
+        {
+            name: 'Ciência Todo Dia',
+            role: 'Canal de Divulgação',
+            bio: 'Explorando os mistérios do universo, física e astronomia de forma acessível para todos.',
+            imagePlaceholder: 'C',
+            color: 'brand-yellow',
+            platform: 'youtube'
+        },
+        {
+            name: 'Física e Afins',
+            role: 'Doutora em Física',
+            bio: 'Desmistificando a física quântica e combatendo pseudociências com base no método científico.',
+            imagePlaceholder: 'F',
+            color: 'brand-red',
+            platform: 'youtube'
+        },
+        {
+            name: 'Manual do Mundo',
+            role: 'Criador de Conteúdo',
+            bio: 'Experiências práticas, física e curiosidades científicas explicadas de forma muito didática.',
+            imagePlaceholder: 'M',
+            color: 'brand-blue',
+            platform: 'youtube'
         }
     ];
+
 
     const getPlatformIcon = (platform: string) => {
         if (platform === 'youtube') return (
