@@ -3,6 +3,7 @@
 import React from 'react';
 import { parseMediaUrl, formatYoutubeUrl, getDownloadUrl, getPdfViewerUrl } from './MediaCard';
 import dynamic from 'next/dynamic';
+import ReactMarkdown from 'react-markdown';
 
 const CustomPdfViewer = dynamic(
     () => import('./CustomPdfViewer').then((mod) => mod.CustomPdfViewer),
@@ -149,7 +150,7 @@ export function AdminSubmissionLightbox({
                                     {item.authors}
                                 </p>
                                 <div className="whitespace-pre-wrap text-gray-800 dark:text-gray-200 leading-relaxed">
-                                    {item.description}
+                                    <ReactMarkdown>{item.description || ''}</ReactMarkdown>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
@@ -25,6 +25,48 @@ export default function SubmitPage() {
     const [acceptedCC, setAcceptedCC] = useState(false);
 
     const MAX_PDF_SIZE = 10 * 1024 * 1024; // 10MB
+    const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
+    const insertFormatting = (prefix: string, suffix: string = '') => {
+        const textarea = descriptionRef.current;
+        if (!textarea) return;
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selectedText = description.substring(start, end);
+        const before = description.substring(0, start);
+        const after = description.substring(end);
+
+        const newText = `${before}${prefix}${selectedText || 'texto'}${suffix}${after}`;
+        setDescription(newText);
+
+        // Re-focus and select the inserted text
+        setTimeout(() => {
+            textarea.focus();
+            const newCursorPos = start + prefix.length;
+            const newSelEnd = newCursorPos + (selectedText || 'texto').length;
+            textarea.setSelectionRange(newCursorPos, newSelEnd);
+        }, 0);
+    };
+
+    const insertLinePrefix = (prefix: string) => {
+        const textarea = descriptionRef.current;
+        if (!textarea) return;
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selectedText = description.substring(start, end);
+        const before = description.substring(0, start);
+        const after = description.substring(end);
+
+        // Add prefix to beginning of each selected line
+        const lines = selectedText ? selectedText.split('\n') : [''];
+        const prefixedLines = lines.map(line => `${prefix}${line}`).join('\n');
+        const newText = `${before}${prefixedLines}${after}`;
+        setDescription(newText);
+
+        setTimeout(() => {
+            textarea.focus();
+        }, 0);
+    };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -305,18 +347,52 @@ export default function SubmitPage() {
                                     <span className="material-symbols-outlined text-gray-500 text-[18px]">{mediaType === 'text' ? 'article' : 'description'}</span>
                                     {mediaType === 'text' ? (<>Corpo do Texto <span className="text-brand-red">*</span></>) : 'Descrição ou Contexto'}
                                 </label>
+
+                                {/* Markdown Formatting Toolbar */}
+                                {mediaType === 'text' && (
+                                    <div className="flex flex-wrap items-center gap-1 p-2 bg-gray-100 dark:bg-gray-800 rounded-t-xl border border-b-0 border-gray-200 dark:border-gray-700">
+                                        <button type="button" onClick={() => insertFormatting('**', '**')} title="Negrito" className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+                                            <span className="material-symbols-outlined text-[18px]">format_bold</span>
+                                        </button>
+                                        <button type="button" onClick={() => insertFormatting('*', '*')} title="Itálico" className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+                                            <span className="material-symbols-outlined text-[18px]">format_italic</span>
+                                        </button>
+                                        <div className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-1"></div>
+                                        <button type="button" onClick={() => insertLinePrefix('# ')} title="Título" className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors text-xs font-bold">
+                                            H1
+                                        </button>
+                                        <button type="button" onClick={() => insertLinePrefix('## ')} title="Subtítulo" className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors text-xs font-bold">
+                                            H2
+                                        </button>
+                                        <button type="button" onClick={() => insertLinePrefix('### ')} title="Seção" className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors text-xs font-bold">
+                                            H3
+                                        </button>
+                                        <div className="w-px h-5 bg-gray-300 dark:bg-gray-600 mx-1"></div>
+                                        <button type="button" onClick={() => insertLinePrefix('- ')} title="Lista" className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+                                            <span className="material-symbols-outlined text-[18px]">format_list_bulleted</span>
+                                        </button>
+                                        <button type="button" onClick={() => insertLinePrefix('1. ')} title="Lista Numerada" className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+                                            <span className="material-symbols-outlined text-[18px]">format_list_numbered</span>
+                                        </button>
+                                        <button type="button" onClick={() => insertFormatting('> ', '')} title="Citação" className="p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+                                            <span className="material-symbols-outlined text-[18px]">format_quote</span>
+                                        </button>
+                                    </div>
+                                )}
+
                                 <textarea
                                     id="description"
+                                    ref={descriptionRef}
                                     rows={mediaType === 'text' ? 12 : 4}
                                     value={description}
                                     onChange={e => setDescription(e.target.value)}
-                                    className="w-full bg-gray-50 dark:bg-form-dark border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition-all resize-none"
-                                    placeholder={mediaType === 'text' ? 'Escreva aqui o corpo completo do seu texto ou artigo...' : 'Detalhe o contexto da submissão...'}
+                                    className={`w-full bg-gray-50 dark:bg-form-dark border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white px-4 py-3.5 focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition-all resize-none ${mediaType === 'text' ? 'rounded-b-xl font-mono text-sm' : 'rounded-xl'}`}
+                                    placeholder={mediaType === 'text' ? 'Escreva aqui usando **negrito**, *itálico*, # Títulos, - listas...' : 'Detalhe o contexto da submissão...'}
                                     required={mediaType === 'text'}
                                 ></textarea>
                                 {mediaType === 'text' && (
                                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 pl-1 border-l-2 border-brand-blue">
-                                        Mínimo de 50 caracteres. Este texto será exibido diretamente no site como um artigo.
+                                        Mínimo de 50 caracteres. Suporta formatação: **negrito**, *itálico*, # títulos, - listas e &gt; citações.
                                     </p>
                                 )}
                             </div>
@@ -388,7 +464,7 @@ export default function SubmitPage() {
                                 <button
                                     onClick={() => { setMediaType('text'); setSelectedFiles([]); }}
                                     aria-selected={mediaType === 'text'}
-                                    className={`flex-1 min-w-[120px] py-3 text-sm font-bold rounded-xl transition-all ${mediaType === 'text' ? 'bg-white dark:bg-gray-700 text-green-600 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}`}
+                                    className={`flex-1 min-w-[120px] py-3 text-sm font-bold rounded-xl transition-all ${mediaType === 'text' ? 'bg-white dark:bg-gray-700 text-brand-blue shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}`}
                                 >
                                     <div className="flex items-center justify-center gap-2">
                                         <span className="material-symbols-outlined text-[20px]">article</span>
@@ -399,10 +475,10 @@ export default function SubmitPage() {
 
                             <div className="mt-4">
                                 {mediaType === 'text' ? (
-                                    <div className="flex justify-center rounded-2xl border-2 border-dashed border-green-300 dark:border-green-700 px-6 py-8 bg-green-50/50 dark:bg-green-900/10">
+                                    <div className="flex justify-center rounded-2xl border-2 border-dashed border-blue-300 dark:border-blue-700 px-6 py-8 bg-blue-50/50 dark:bg-blue-900/10">
                                         <div className="text-center">
-                                            <span className="material-symbols-outlined text-4xl text-green-500 mb-2">edit_note</span>
-                                            <p className="text-sm text-green-700 dark:text-green-400 font-medium">Modo Texto ativo</p>
+                                            <span className="material-symbols-outlined text-4xl text-brand-blue mb-2">edit_note</span>
+                                            <p className="text-sm text-blue-700 dark:text-blue-400 font-medium">Modo Texto ativo</p>
                                             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Escreva o conteúdo no campo &quot;Corpo do Texto&quot; acima. Nenhum arquivo é necessário.</p>
                                         </div>
                                     </div>

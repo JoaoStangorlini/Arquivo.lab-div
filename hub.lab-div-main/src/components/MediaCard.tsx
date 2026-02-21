@@ -184,9 +184,9 @@ export const MediaCard = ({
                         className="h-full w-full object-cover opacity-80"
                     />
                 ) : mediaType === 'text' ? (
-                    <div className="h-full w-full bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/20 flex flex-col items-center justify-center p-6 text-center">
-                        <span className="material-symbols-outlined text-5xl text-green-500/60 mb-3">article</span>
-                        <p className="text-xs text-green-800/60 dark:text-green-300/60 line-clamp-4 leading-relaxed max-w-full">
+                    <div className="h-full w-full bg-gradient-to-br from-blue-50 to-sky-100 dark:from-blue-900/30 dark:to-sky-900/20 flex flex-col items-center justify-center p-6 text-center">
+                        <span className="material-symbols-outlined text-5xl text-brand-blue/60 mb-3">article</span>
+                        <p className="text-xs text-blue-800/60 dark:text-blue-300/60 line-clamp-4 leading-relaxed max-w-full">
                             {description || 'Texto completo'}
                         </p>
                     </div>

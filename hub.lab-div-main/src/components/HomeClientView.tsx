@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MediaCard, MediaCardProps, parseMediaUrl, formatYoutubeUrl, getDownloadUrl, getPdfViewerUrl } from './MediaCard';
 import { fetchSubmissions } from '@/app/actions/submissions';
 import dynamic from 'next/dynamic';
+import ReactMarkdown from 'react-markdown';
 
 const CustomPdfViewer = dynamic(
     () => import('./CustomPdfViewer').then((mod) => mod.CustomPdfViewer),
@@ -430,7 +431,7 @@ export const HomeClientView = ({ initialItems, initialHasMore }: HomeClientViewP
                                             {selectedItem.authors}
                                         </p>
                                         <div className="whitespace-pre-wrap text-gray-800 dark:text-gray-200 leading-relaxed">
-                                            {selectedItem.description}
+                                            <ReactMarkdown>{selectedItem.description || ''}</ReactMarkdown>
                                         </div>
                                     </div>
                                 </div>
