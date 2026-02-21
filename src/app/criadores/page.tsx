@@ -5,31 +5,31 @@ import Image from "next/image";
 export default function CriadoresPage() {
     const creators = [
         {
-            name: 'Cmdr. Orion Branco',
-            role: 'Piloto de Teste Estelar',
-            bio: 'Sou o primeiro a testar as dobras espaciais da frota. Sobrevivi a 14 buracos de minhoca e conto tudo aqui.',
-            imagePlaceholder: 'O',
+            name: 'Ana Silva',
+            role: 'Pesquisadora do Lab Div',
+            bio: 'Investigadora principal focada em metodologias de ensino de ciências para o ensino médio.',
+            imagePlaceholder: 'A',
             color: 'brand-blue'
         },
         {
-            name: 'Dione Alpha',
-            role: 'Tradutora de Sinais',
-            bio: 'Analiso ruídos de rádio do espaço profundo para encontrar receitas de bolo alienígenas.',
-            imagePlaceholder: 'D',
+            name: 'Carlos Mendes',
+            role: 'Bolsista do Arquivo',
+            bio: 'Catalogando e digitalizando os documentos históricos do Instituto de Física da USP.',
+            imagePlaceholder: 'C',
             color: 'brand-yellow'
         },
         {
-            name: 'Lexa Centauri',
-            role: 'Engenheira de Antimatéria',
-            bio: 'Consertando reatores com fita adesiva estelar desde 2084.',
+            name: 'Luiza Costa',
+            role: 'Desenvolvedora do Hub',
+            bio: 'Criando ferramentas digitais para facilitar a comunicação científica e o acesso à informação.',
             imagePlaceholder: 'L',
             color: 'brand-red'
         },
         {
-            name: 'Chronos',
-            role: 'Mecânico de Tempo',
-            bio: 'Você perdeu suas chaves ontém amanhã? Eu ajudo você a encontrá-las na linha temporal correta.',
-            imagePlaceholder: 'C',
+            name: 'Rafael Oliveira',
+            role: 'Coordenador de Divulgação',
+            bio: 'Organizador de eventos e palestras para aproximar a ciência desenvolvida na USP do público em geral.',
+            imagePlaceholder: 'R',
             color: 'brand-blue'
         }
     ];
