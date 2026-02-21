@@ -10,6 +10,7 @@ export function Header() {
 
     const navLinks = [
         { name: 'Arquivo', href: '/' },
+        { name: 'Sobre', href: '/sobre' },
         { name: 'Iniciativas', href: '/iniciativas' },
         { name: 'Oportunidades', href: '/oportunidades' },
         { name: 'Criadores', href: '/criadores' },
