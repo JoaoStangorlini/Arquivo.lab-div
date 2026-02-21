@@ -70,7 +70,7 @@ export default function AdminDashboardOverview() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Pendentes Card */}
                     <div className="relative group bg-white dark:bg-card-dark rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-brand-yellow/30 transition-all overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-yellow/5 dark:opacity-0 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-yellow/10 transition-colors"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-yellow/5 dark:hidden rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-yellow/10 transition-colors"></div>
                         <div className="relative z-10 flex flex-col gap-4">
                             <div className="flex items-center justify-between">
                                 <span className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Aguardando Avaliação</span>
@@ -89,7 +89,7 @@ export default function AdminDashboardOverview() {
 
                     {/* Aprovados Card */}
                     <div className="relative group bg-white dark:bg-card-dark rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-brand-blue/30 transition-all overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 dark:opacity-0 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-blue/10 transition-colors"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 dark:hidden rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-blue/10 transition-colors"></div>
                         <div className="relative z-10 flex flex-col gap-4">
                             <div className="flex items-center justify-between">
                                 <span className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Públicos</span>
@@ -108,7 +108,7 @@ export default function AdminDashboardOverview() {
 
                     {/* Rejeitados Card */}
                     <div className="relative group bg-white dark:bg-card-dark rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-brand-red/30 transition-all overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-red/5 dark:opacity-0 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-red/10 transition-colors"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-red/5 dark:hidden rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-red/10 transition-colors"></div>
                         <div className="relative z-10 flex flex-col gap-4">
                             <div className="flex items-center justify-between">
                                 <span className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Arquivados</span>

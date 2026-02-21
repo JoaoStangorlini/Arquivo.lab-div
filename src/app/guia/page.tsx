@@ -19,7 +19,7 @@ export default function GuiaPage() {
                 <div className="space-y-12">
                     {/* Seção de Fotografia */}
                     <section className="bg-white dark:bg-card-dark rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 dark:opacity-0 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none transition-transform group-hover:scale-150"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/5 dark:hidden rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none transition-transform group-hover:scale-150"></div>
 
                         <div className="flex items-center gap-4 mb-6 relative z-10">
                             <span className="material-symbols-outlined text-4xl text-brand-blue">photo_camera</span>
@@ -50,7 +50,7 @@ export default function GuiaPage() {
 
                     {/* Seção de Vídeo */}
                     <section className="bg-white dark:bg-card-dark rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-red/5 dark:opacity-0 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none transition-transform group-hover:scale-150"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-red/5 dark:hidden rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none transition-transform group-hover:scale-150"></div>
 
                         <div className="flex items-center gap-4 mb-6 relative z-10">
                             <span className="material-symbols-outlined text-4xl text-brand-red">videocam</span>
@@ -81,7 +81,7 @@ export default function GuiaPage() {
 
                     {/* Seção de Upload */}
                     <section className="bg-white dark:bg-card-dark rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-yellow/5 dark:opacity-0 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none transition-transform group-hover:scale-150"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-yellow/5 dark:hidden rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none transition-transform group-hover:scale-150"></div>
 
                         <div className="flex items-center gap-4 mb-6 relative z-10">
                             <span className="material-symbols-outlined text-4xl text-brand-yellow">cloud_upload</span>

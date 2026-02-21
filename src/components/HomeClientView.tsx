@@ -94,15 +94,15 @@ export const HomeClientView = ({ initialItems }: HomeClientViewProps) => {
 
                 {/* IDV Blobs */}
                 <div
-                    className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-blue/20 dark:opacity-0 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 animate-pulse transition-transform duration-700 ease-out z-0"
+                    className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-blue/20 dark:hidden rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 animate-pulse transition-transform duration-700 ease-out z-0"
                     style={{ transform: `translate(calc(-10% + ${mousePos.x * -120}px), calc(-20% + ${mousePos.y * -120}px))` }}
                 ></div>
                 <div
-                    className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-brand-red/20 dark:opacity-0 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4 transition-transform duration-700 ease-out delay-75"
+                    className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-brand-red/20 dark:hidden rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4 transition-transform duration-700 ease-out delay-75"
                     style={{ transform: `translate(calc(-25% + ${mousePos.x * 100}px), calc(33.333% + ${mousePos.y * 100}px))` }}
                 ></div>
                 <div
-                    className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-brand-yellow/20 dark:opacity-0 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 transition-transform duration-700 ease-out delay-150"
+                    className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-brand-yellow/20 dark:hidden rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 transition-transform duration-700 ease-out delay-150"
                     style={{ transform: `translate(calc(-50% + ${mousePos.x * -160}px), calc(-50% + ${mousePos.y * -160}px))` }}
                 ></div>
 
@@ -121,7 +121,7 @@ export const HomeClientView = ({ initialItems }: HomeClientViewProps) => {
                         </p>
 
                         <div className="relative max-w-2xl group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-brand-blue via-brand-yellow to-brand-red rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                            <div className="absolute -inset-1 bg-gradient-to-r from-brand-blue via-brand-yellow to-brand-red rounded-2xl blur opacity-20 dark:hidden group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
                             <div className="relative flex items-center bg-white dark:bg-form-dark rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
                                 <span className="material-symbols-outlined text-brand-blue pl-4 text-2xl">search</span>
                                 <input

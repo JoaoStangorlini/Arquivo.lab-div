@@ -132,8 +132,8 @@ export default function SubmitPage() {
             {/* Background Elements */}
             <div className="fixed inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:30px_30px] opacity-40 -z-20"></div>
 
-            <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-brand-blue/10 dark:opacity-0 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-pulse -z-10"></div>
-            <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-brand-yellow/10 dark:opacity-0 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 -z-10"></div>
+            <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-brand-blue/10 dark:hidden rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-pulse -z-10"></div>
+            <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-brand-yellow/10 dark:hidden rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 -z-10"></div>
 
             {/* Simple Header */}
             <header className="fixed top-0 w-full z-50 backdrop-blur-md bg-white/80 dark:bg-background-dark/80 border-b border-gray-200 dark:border-gray-800">

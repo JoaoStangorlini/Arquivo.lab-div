@@ -42,8 +42,8 @@ export default function AdminLayout({
 
             <aside className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:flex w-full md:w-72 bg-neutral-900 border-r border-gray-800 flex-col justify-between shrink-0 h-[calc(100vh-73px)] md:h-screen overflow-hidden md:sticky top-0 absolute inset-x-0 bottom-0 z-50 md:z-40 transition-colors shadow-2xl`}>
                 {/* Interactive Background Elements for Sidebar */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/10 dark:opacity-0 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-40 h-40 bg-brand-red/10 dark:opacity-0 rounded-full blur-2xl translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/10 dark:hidden rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-40 h-40 bg-brand-red/10 dark:hidden rounded-full blur-2xl translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
 
                 <div className="flex flex-col gap-4 p-6 relative z-10">
                     <div className="flex items-center gap-3 pb-6 border-b border-gray-800 transition-colors">
