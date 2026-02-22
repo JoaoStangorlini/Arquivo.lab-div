@@ -161,15 +161,15 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
 
                 {/* IDV Blobs */}
                 <div
-                    className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-blue/30 dark:bg-brand-blue/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 animate-blob-bounce transition-transform duration-700 ease-out z-0"
+                    className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-blue/50 dark:bg-blue-500/40 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 animate-blob-bounce transition-transform duration-700 ease-out z-0"
                     style={{ transform: `translate(calc(-10% + var(--mouse-x, 0) * -120px), calc(-20% + var(--mouse-y, 0) * -120px))` }}
                 ></div>
                 <div
-                    className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-brand-red/30 dark:bg-brand-red/20 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4 animate-blob-bounce transition-transform duration-700 ease-out delay-75"
+                    className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-brand-red/50 dark:bg-red-500/40 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4 animate-blob-bounce transition-transform duration-700 ease-out delay-75"
                     style={{ transform: `translate(calc(-25% + var(--mouse-x, 0) * 100px), calc(33.333% + var(--mouse-y, 0) * 100px))` }}
                 ></div>
                 <div
-                    className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-brand-yellow/30 dark:bg-brand-yellow/20 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 animate-blob-bounce transition-transform duration-700 ease-out delay-150"
+                    className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-brand-yellow/50 dark:bg-yellow-400/40 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 animate-blob-bounce transition-transform duration-700 ease-out delay-150"
                     style={{ transform: `translate(calc(-50% + var(--mouse-x, 0) * -160px), calc(-50% + var(--mouse-y, 0) * -160px))` }}
                 ></div>
 

@@ -25,21 +25,40 @@ export async function POST(request: NextRequest) {
 
         const fingerprint = generateFingerprint(request);
 
-        // Call the atomic RPC function
-        const { data: result, error } = await supabase.rpc('toggle_like', {
-            p_submission_id: submission_id,
-            p_fingerprint: fingerprint
-        });
+        // Check if already liked by this fingerprint
+        const { data: existing } = await supabase
+            .from('curtidas')
+            .select('id')
+            .eq('submission_id', submission_id)
+            .eq('fingerprint', fingerprint)
+            .maybeSingle();
 
-        if (error) {
-            console.error('Supabase RPC Error:', error);
-            throw error;
+        let liked: boolean;
+
+        if (existing) {
+            // Unlike: remove the row
+            await supabase
+                .from('curtidas')
+                .delete()
+                .eq('id', existing.id);
+            liked = false;
+        } else {
+            // Like: insert new row
+            await supabase
+                .from('curtidas')
+                .insert({ submission_id, fingerprint });
+            liked = true;
         }
 
-        // result.liked (boolean) and result.count (integer) returned from RPC
+        // Get updated count
+        const { count } = await supabase
+            .from('curtidas')
+            .select('*', { count: 'exact', head: true })
+            .eq('submission_id', submission_id);
+
         return NextResponse.json({
-            liked: result.liked,
-            likeCount: result.count
+            liked,
+            likeCount: count || 0
         });
 
     } catch (error: unknown) {
@@ -47,3 +66,4 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }
+
