@@ -1,11 +1,20 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
+
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSubmissionStore } from '@/store/useSubmissionStore';
+import { useFormAutoSave } from '@/hooks/useFormAutoSave';
 import { supabase } from '@/lib/supabase';
+import ReactMarkdown from 'react-markdown';
+
+
+import { submissionSchema, type SubmissionFormData } from '../schema';
+
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
@@ -13,25 +22,92 @@ export function FormStep() {
     const router = useRouter();
     const {
         category, mediaType, setStep,
-        title, setTitle,
-        authors, setAuthors,
-        description, setDescription,
-        whatsapp, setWhatsapp,
-        videoUrl, setVideoUrl,
-        externalLink, setExternalLink,
-        technicalDetails, setTechnicalDetails,
-        altText, setAltText,
-        testimonial, setTestimonial,
-        selectedFiles, setSelectedFiles,
-        reset
+        reset: resetStore
     } = useSubmissionStore();
 
     const [isLoading, setIsLoading] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
-    const [readGuide, setReadGuide] = useState(false);
-    const [acceptedCC, setAcceptedCC] = useState(false);
     const [userEmail, setUserEmail] = useState('');
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+    const [showPreview, setShowPreview] = useState(false);
+
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        setValue,
+        formState: { errors, isDirty },
+        reset: resetForm
+    } = useForm<SubmissionFormData>({
+        resolver: zodResolver(submissionSchema),
+        defaultValues: {
+            title: '',
+            authors: '',
+            description: '',
+            whatsapp: '',
+            videoUrl: '',
+            externalLink: '',
+            technicalDetails: '',
+            altText: '',
+            testimonial: '',
+            readGuide: false,
+            acceptedCC: false,
+            coAuthors: []
+        }
+    });
+
+
+
+    const watchedValues = watch();
+
+    // Auto-save integration
+    useFormAutoSave({ register, handleSubmit, watch, setValue, formState: { errors, isDirty }, reset: resetForm } as any, {
+        key: 'submission-form-draft',
+        debounceMs: 1500
+    });
+
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [isSearching, setIsSearching] = useState(false);
+
+    // Debounced search for co-authors
+    useEffect(() => {
+        if (searchTerm.length < 3) {
+            setSearchResults([]);
+            return;
+        }
+
+        const delayDebounce = setTimeout(async () => {
+            setIsSearching(true);
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('id, full_name, email')
+                .ilike('full_name', `%${searchTerm}%`)
+                .limit(5);
+
+            if (!error && data) {
+                setSearchResults(data);
+            }
+            setIsSearching(false);
+        }, 500);
+
+        return () => clearTimeout(delayDebounce);
+    }, [searchTerm]);
+
+    const addCoAuthor = (user: any) => {
+        const current = watchedValues.coAuthors || [];
+        if (current.find(c => c.id === user.id)) return;
+        setValue('coAuthors', [...current, user], { shouldDirty: true });
+        setSearchTerm('');
+        setSearchResults([]);
+    };
+
+    const removeCoAuthor = (id: string) => {
+        const current = watchedValues.coAuthors || [];
+        setValue('coAuthors', current.filter(c => c.id !== id), { shouldDirty: true });
+    };
 
     React.useEffect(() => {
         const fetchUser = async () => {
@@ -41,7 +117,18 @@ export function FormStep() {
             }
         };
         fetchUser();
-    }, []);
+
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            if (isDirty) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [isDirty]);
+
+
 
     const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
@@ -73,34 +160,47 @@ export function FormStep() {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const files = Array.from(e.target.files);
-            if (files.some(file => file.size > MAX_FILE_SIZE)) {
-                setErrorMsg('Cada arquivo deve ter no máximo 10MB.');
-                setSelectedFiles([]);
-                return;
+            const validFiles = files.filter(f => f.size <= MAX_FILE_SIZE);
+            if (validFiles.length < files.length) {
+                setErrorMsg("Alguns arquivos excedem o limite de 10MB.");
             }
-            if (mediaType === 'image' && files.length > 10) {
-                setErrorMsg('Limite máximo de 10 fotos por submissão.');
-                setSelectedFiles(files.slice(0, 10));
-            } else if (['pdf', 'zip', 'sdocx'].includes(mediaType) && files.length > 1) {
-                setErrorMsg('Apenas um arquivo é permitido para este tipo de mídia.');
-                setSelectedFiles([files[0]]);
-            } else {
-                setErrorMsg('');
-                setSelectedFiles(files);
-            }
+            setSelectedFiles(prev => [...prev, ...validFiles].slice(0, 10));
         }
     };
 
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const files = Array.from(e.dataTransfer.files);
+        const validFiles = files.filter(f => f.size <= MAX_FILE_SIZE);
+        if (validFiles.length < files.length) {
+            setErrorMsg("Alguns arquivos excedem o limite de 10MB.");
+        }
+        setSelectedFiles(prev => [...prev, ...validFiles].slice(0, 10));
+    };
+
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    const removeFile = (index: number) => {
+        setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+    };
+
+
     const insertFormatting = (prefix: string, suffix: string = '') => {
+
         const textarea = descriptionRef.current;
         if (!textarea) return;
         const start = textarea.selectionStart;
         const end = textarea.selectionEnd;
-        const selectedText = description.substring(start, end);
-        const before = description.substring(0, start);
-        const after = description.substring(end);
+        const currentDescription = watchedValues.description || '';
+        const selectedText = currentDescription.substring(start, end);
+        const before = currentDescription.substring(0, start);
+        const after = currentDescription.substring(end);
         const newText = `${before}${prefix}${selectedText || 'texto'}${suffix}${after}`;
-        setDescription(newText);
+        setValue('description', newText, { shouldDirty: true });
         setTimeout(() => {
             textarea.focus();
             const newCursorPos = start + prefix.length;
@@ -109,20 +209,23 @@ export function FormStep() {
         }, 0);
     };
 
+
     const insertLinePrefix = (prefix: string) => {
         const textarea = descriptionRef.current;
         if (!textarea) return;
         const start = textarea.selectionStart;
         const end = textarea.selectionEnd;
-        const selectedText = description.substring(start, end);
-        const before = description.substring(0, start);
-        const after = description.substring(end);
+        const currentDescription = watchedValues.description || '';
+        const selectedText = currentDescription.substring(start, end);
+        const before = currentDescription.substring(0, start);
+        const after = currentDescription.substring(end);
         const lines = selectedText ? selectedText.split('\n') : [''];
         const prefixedLines = lines.map(line => `${prefix}${line}`).join('\n');
         const newText = `${before}${prefixedLines}${after}`;
-        setDescription(newText);
+        setValue('description', newText, { shouldDirty: true });
         setTimeout(() => textarea.focus(), 0);
     };
+
 
     const uploadToCloudinary = async (file: File) => {
         const formData = new FormData();
@@ -149,23 +252,22 @@ export function FormStep() {
         return (match && match[2].length === 11) ? match[2] : null;
     };
 
-    const handleSubmit = async () => {
+    const onFormSubmit = async (data: SubmissionFormData) => {
+
         setIsLoading(true);
         setErrorMsg('');
         try {
             const { data: { session } } = await supabase.auth.getSession();
             if (!session?.user) throw new Error("Você precisa estar logado.");
-            if (!title || !authors) throw new Error("Preencha campos obrigatórios (*)");
-            if (showAltText && !altText) throw new Error("O Texto Alternativo é obrigatório para acessibilidade.");
 
             let finalMediaUrl: string[] = [];
             if (isTextMode) {
-                if (description.trim().length < 50) throw new Error("Texto deve ter 50+ caracteres.");
+                if (data.description.trim().length < 50) throw new Error("Texto deve ter 50+ caracteres.");
             } else if (showFileUpload) {
                 if (selectedFiles.length === 0) throw new Error("Selecione os arquivos.");
                 finalMediaUrl = await Promise.all(selectedFiles.map(f => uploadToCloudinary(f)));
             } else if (showVideoUrl) {
-                const vidId = parseYoutubeUrl(videoUrl);
+                const vidId = parseYoutubeUrl(data.videoUrl || '');
                 if (!vidId) throw new Error("Link YouTube inválido.");
                 finalMediaUrl = [`https://www.youtube.com/embed/${vidId}`];
             }
@@ -177,64 +279,61 @@ export function FormStep() {
                 .eq('id', session.user.id)
                 .single();
 
-            if (profileError && profileError.code !== 'PGRST116') { // PGRST116 is "no rows returned"
+            if (profileError && profileError.code !== 'PGRST116') {
                 console.error("Profile check error:", profileError);
                 throw new Error(`Erro ao verificar perfil: ${profileError.message}`);
             }
 
             if (!profile) {
-                console.log("Profile missing, creating on the fly...");
-                const { error: createError } = await supabase
-                    .from('profiles')
-                    .insert([{
-                        id: session.user.id,
-                        email: session.user.email,
-                        full_name: session.user.user_metadata?.full_name || authors.split(',')[0],
-                        avatar_url: session.user.user_metadata?.avatar_url || null
-                    }]);
-
-                if (createError) {
-                    console.error("Profile creation error:", createError);
-                    throw new Error(`Não foi possível criar seu perfil no banco: ${createError.message}`);
-                }
+                await supabase.from('profiles').insert([{
+                    id: session.user.id,
+                    email: session.user.email,
+                    full_name: session.user.user_metadata?.full_name || data.authors.split(',')[0],
+                    avatar_url: session.user.user_metadata?.avatar_url || null
+                }]);
             }
 
             const { error: insError } = await supabase.from('submissions').insert([{
-                title, authors, description, category, whatsapp,
+                title: data.title,
+                authors: data.authors,
+                description: data.description,
+                category,
+                whatsapp: data.whatsapp,
                 media_type: mediaType,
                 media_url: JSON.stringify(finalMediaUrl),
                 status: 'pendente',
-                external_link: externalLink || null,
-                technical_details: technicalDetails || null,
-                alt_text: altText || null,
-                testimonial: testimonial || null,
-                user_id: session.user.id
+                external_link: data.externalLink || null,
+                technical_details: data.technicalDetails || null,
+                alt_text: data.altText || null,
+                testimonial: data.testimonial || null,
+                user_id: session.user.id,
+                co_authors: data.coAuthors || []
             }]);
 
-            if (insError) {
-                console.error("Supabase Insert Error:", insError);
-                throw new Error(`Erro no banco de dados: ${insError.message || JSON.stringify(insError)} (${insError.code || 'sem código'})`);
-            }
+
+
+            if (insError) throw insError;
 
             fetch('/api/notify', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ authors, title, category })
+                body: JSON.stringify({ authors: data.authors, title: data.title, category })
             }).catch(() => { });
 
-            // Success state instead of immediate redirect
             setIsSubmitted(true);
             setTimeout(() => {
-                reset();
+                resetForm();
+                resetStore();
                 router.push('/');
-            }, 5000); // 5 seconds of success glory
+            }, 5000);
         } catch (err: any) {
-            console.error("Full handle handleSubmit catch error:", err);
+            console.error("Submit error:", err);
             setErrorMsg(err.message || "Erro inesperado.");
         } finally {
             setIsLoading(false);
         }
     };
+
 
     if (isSubmitted) {
         return (
@@ -363,139 +462,362 @@ export function FormStep() {
                     />
                 </div>
                 <div className="space-y-3 lg:col-span-2">
-                    <label className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-brand-blue">
-                        <span className="material-symbols-outlined text-xl">title</span>
-                        Título da Contribuição *
+                    <label className="text-sm font-black uppercase tracking-widest flex items-center justify-between text-brand-blue">
+                        <div className="flex items-center gap-2">
+                            <span className="material-symbols-outlined text-xl">title</span>
+                            Título da Contribuição *
+                        </div>
+                        <span className={`text-[10px] font-bold ${(watchedValues.title || '').length > 60 ? 'text-brand-red' : 'text-gray-400'}`}>
+                            {(watchedValues.title || '').length}/60
+                        </span>
+
+
                     </label>
                     <input
-                        type="text" value={title} onChange={e => setTitle(e.target.value)}
-                        className="w-full bg-white dark:bg-form-dark border-2 border-gray-100 dark:border-gray-800 rounded-2xl px-6 py-4 focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/10 outline-none transition-all dark:text-white"
+                        type="text" {...register('title')}
+                        className={`w-full bg-white dark:bg-form-dark border-2 rounded-2xl px-6 py-4 focus:ring-4 outline-none transition-all dark:text-white ${errors.title ? 'border-red-500 focus:ring-red-500/10' : 'border-gray-100 dark:border-gray-800 focus:border-brand-blue focus:ring-brand-blue/10'}`}
                         placeholder="Ex: Luz e Sombra no Lab de Óptica"
                     />
+                    {errors.title && <p className="text-red-500 text-xs font-bold">{errors.title.message}</p>}
                 </div>
+
                 <div className="space-y-3">
-                    <label className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-brand-red">
-                        <span className="material-symbols-outlined text-xl">group</span>
-                        Autores *
+                    <label className="text-sm font-black uppercase tracking-widest flex items-center justify-between text-brand-red">
+                        <div className="flex items-center gap-2">
+                            <span className="material-symbols-outlined text-xl">group</span>
+                            Autores *
+                        </div>
+                        <span className={`text-[10px] font-bold ${(watchedValues.authors || '').length > 60 ? 'text-brand-red' : 'text-gray-400'}`}>
+                            {(watchedValues.authors || '').length}/60
+                        </span>
+
+
                     </label>
                     <input
-                        type="text" value={authors} onChange={e => setAuthors(e.target.value)}
-                        className="w-full bg-white dark:bg-form-dark border-2 border-gray-100 dark:border-gray-800 rounded-2xl px-6 py-4 focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 outline-none transition-all dark:text-white"
+                        type="text" {...register('authors')}
+                        className={`w-full bg-white dark:bg-form-dark border-2 rounded-2xl px-6 py-4 focus:ring-4 outline-none transition-all dark:text-white ${errors.authors ? 'border-red-500 focus:ring-red-500/10' : 'border-gray-100 dark:border-gray-800 focus:border-brand-red focus:ring-brand-red/10'}`}
                         placeholder="Nome, Sobrenome"
                     />
+                    {errors.authors && <p className="text-red-500 text-xs font-bold">{errors.authors.message}</p>}
                 </div>
                 <div className="space-y-3">
-                    <label className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-gray-400">
-                        <span className="material-symbols-outlined text-xl">phone_iphone</span>
-                        WhatsApp (Opcional)
+                    <label className="text-sm font-black uppercase tracking-widest flex items-center justify-between text-gray-400">
+                        <div className="flex items-center gap-2">
+                            <span className="material-symbols-outlined text-xl">phone_iphone</span>
+                            WhatsApp (Opcional)
+                        </div>
+                        <div className="relative group/tooltip">
+                            <span className="material-symbols-outlined text-gray-300 text-[18px] cursor-help hover:text-brand-blue transition-colors">help</span>
+                            <div className="absolute right-0 bottom-full mb-2 w-56 p-3 bg-gray-900 dark:bg-card-dark text-white text-[10px] rounded-xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-20 shadow-2xl font-medium leading-relaxed border border-white/10 normal-case tracking-normal">
+                                Para comunicação rápida sobre sua submissão. Inclua o DDD.
+                            </div>
+                        </div>
                     </label>
+
                     <input
-                        type="tel" value={whatsapp} onChange={e => setWhatsapp(e.target.value)}
+                        type="tel" {...register('whatsapp')}
                         className="w-full bg-white dark:bg-form-dark border-2 border-gray-100 dark:border-gray-800 rounded-2xl px-6 py-4 focus:border-gray-300 dark:focus:border-gray-600 outline-none transition-all dark:text-white"
                         placeholder="(11) 99999-9999"
                     />
                 </div>
             </motion.div>
 
-            {/* Dynamic Description/Text Body */}
-            <motion.div variants={itemVariants} custom={4} className="space-y-3">
-                <label className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-brand-yellow">
-                    <span className="material-symbols-outlined text-xl">{isTextMode ? 'article' : 'description'}</span>
-                    {isTextMode ? 'Seu Texto (Markdown) *' : 'Descrição e Contexto'}
-                </label>
-                <div className="relative group">
-                    {isTextMode && (
-                        <div className="flex gap-1 p-2 bg-gray-50 dark:bg-gray-800 rounded-t-2xl border-2 border-b-0 border-gray-100 dark:border-gray-800">
-                            <button type="button" onClick={() => insertFormatting('**', '**')} className="p-2 hover:bg-white dark:hover:bg-gray-700 rounded-lg transition-colors">
-                                <span className="material-symbols-outlined text-sm">format_bold</span>
-                            </button>
-                            <button type="button" onClick={() => insertFormatting('*', '*')} className="p-2 hover:bg-white dark:hover:bg-gray-700 rounded-lg transition-colors">
-                                <span className="material-symbols-outlined text-sm">format_italic</span>
-                            </button>
+            {/* Co-Authorship Section */}
+            <motion.div variants={itemVariants} custom={3.5} className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-[32px] border-2 border-dashed border-gray-100 dark:border-gray-800">
+                <div className="flex items-center gap-3 mb-6">
+                    <span className="material-symbols-outlined text-brand-blue text-3xl">person_add</span>
+                    <div>
+                        <h3 className="font-black uppercase tracking-tighter text-gray-900 dark:text-white flex items-center gap-2">
+                            Co-autores (Opcional)
+                            <div className="relative group/tooltip inline-flex">
+                                <span className="material-symbols-outlined text-gray-300 text-[18px] cursor-help hover:text-brand-blue transition-colors">help</span>
+                                <div className="absolute left-0 bottom-full mb-2 w-56 p-3 bg-gray-900 dark:bg-card-dark text-white text-[10px] rounded-xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-20 shadow-2xl font-medium leading-relaxed border border-white/10 normal-case tracking-normal">
+                                    Adicione colegas que também participaram deste trabalho. Eles precisam ter um perfil no Hub para serem encontrados.
+                                </div>
+                            </div>
+                        </h3>
+                        <p className="text-xs text-gray-500">Marque outros usuários do sistema.</p>
+                    </div>
+
+                </div>
+
+                <div className="relative mb-6">
+                    <span className="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400">search</span>
+                    <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                        placeholder="Buscar por nome..."
+                        className="w-full bg-white dark:bg-form-dark border-2 border-gray-100 dark:border-gray-800 rounded-2xl pl-12 pr-6 py-3 outline-none focus:border-brand-blue transition-all dark:text-white text-sm"
+                    />
+                    {isSearching && (
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                            <span className="material-symbols-outlined animate-spin text-brand-blue text-sm">progress_activity</span>
                         </div>
                     )}
-                    <textarea
-                        ref={descriptionRef}
-                        rows={isTextMode ? 12 : 6} value={description} onChange={e => setDescription(e.target.value)}
-                        className={`w-full bg-white dark:bg-form-dark border-2 border-gray-100 dark:border-gray-800 px-6 py-4 outline-none focus:border-brand-yellow focus:ring-4 focus:ring-brand-yellow/10 transition-all dark:text-white ${isTextMode ? 'rounded-b-2xl font-mono' : 'rounded-2xl'}`}
-                        placeholder={isTextMode ? 'Era uma vez no IF...' : 'Explique do que se trata esse material, curiosidades ou o contexto científico.'}
-                    />
+
+                    {searchResults.length > 0 && (
+                        <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-form-dark rounded-2xl shadow-2xl border-2 border-gray-100 dark:border-gray-800 z-50 overflow-hidden">
+                            {searchResults.map(user => (
+                                <button
+                                    key={user.id}
+                                    type="button"
+                                    onClick={() => addCoAuthor(user)}
+                                    className="w-full px-5 py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-between group"
+                                >
+                                    <div>
+                                        <div className="font-bold text-gray-900 dark:text-white">{user.full_name}</div>
+                                        <div className="text-[10px] text-gray-400">{user.email}</div>
+                                    </div>
+                                    <span className="material-symbols-outlined text-gray-300 group-hover:text-brand-blue transition-colors">add_circle</span>
+                                </button>
+                            ))}
+                        </div>
+                    )}
                 </div>
+
+                {watchedValues.coAuthors && watchedValues.coAuthors.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                        {watchedValues.coAuthors.map((user: any) => (
+                            <div key={user.id} className="bg-white dark:bg-form-dark border-2 border-brand-blue/20 rounded-xl px-4 py-2 flex items-center gap-3 group animate-in fade-in zoom-in duration-300">
+                                <div>
+                                    <div className="text-xs font-black text-gray-900 dark:text-white">{user.full_name}</div>
+                                    <div className="text-[9px] text-brand-blue font-bold opacity-60 tracking-wider">CO-AUTOR</div>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => removeCoAuthor(user.id)}
+                                    className="text-gray-300 hover:text-red-500 transition-colors"
+                                >
+                                    <span className="material-symbols-outlined text-lg">close</span>
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </motion.div>
 
-            {showVideoUrl && (
-                <motion.div variants={itemVariants} custom={5} className="space-y-3">
-                    <label className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-brand-red">
-                        <span className="material-symbols-outlined text-xl">smart_display</span>
-                        Link do YouTube *
-                    </label>
-                    <input
-                        type="url" value={videoUrl} onChange={e => setVideoUrl(e.target.value)}
-                        className="w-full bg-white dark:bg-form-dark border-2 border-gray-100 dark:border-gray-800 rounded-2xl px-6 py-4 focus:border-brand-red focus:ring-4 focus:ring-brand-red/10 outline-none transition-all dark:text-white"
-                        placeholder="https://youtu.be/..."
-                    />
-                </motion.div>
-            )}
 
-            {showFileUpload && (
-                <motion.div variants={itemVariants} custom={5} className="space-y-4">
-                    <label className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-brand-blue">
-                        <span className="material-symbols-outlined text-xl">cloud_upload</span>
-                        Upload de Arquivos *
-                    </label>
-                    <div className="border-3 border-dashed border-brand-blue/20 dark:border-brand-blue/10 rounded-[40px] p-12 hover:bg-brand-blue/5 transition-all flex flex-col items-center text-center cursor-pointer group relative overflow-hidden">
-                        <input
-                            type="file" multiple={mediaType === 'image'}
-                            onChange={handleFileChange}
-                            accept={mediaType === 'image' ? "image/*" : ".pdf,.zip,.sdocx"}
-                            className="absolute inset-0 opacity-0 cursor-pointer z-10"
-                        />
-                        <div className="w-20 h-20 bg-brand-blue/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                            <span className="material-symbols-outlined text-4xl text-brand-blue">upload</span>
+            {/* Dynamic Description/Text Body */}
+            <motion.div variants={itemVariants} custom={4} className="space-y-3">
+                <label className="text-sm font-black uppercase tracking-widest flex items-center justify-between text-brand-yellow">
+                    <div className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-xl">{isTextMode ? 'article' : 'description'}</span>
+                        {isTextMode ? 'Seu Texto (Markdown) *' : 'Descrição e Contexto'}
+                    </div>
+                    <span className={`text-[10px] ${(watchedValues.description || '').length > 2000 ? 'text-red-500' : 'text-gray-400'}`}>
+                        {(watchedValues.description || '').length}/2000
+                    </span>
+
+                </label>
+                <div className="relative group">
+                    <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded-t-2xl border-2 border-b-0 border-gray-100 dark:border-gray-800">
+                        <div className="flex gap-1">
+                            {isTextMode && (
+                                <>
+                                    <button type="button" onClick={() => insertFormatting('**', '**')} className="p-2 hover:bg-white dark:hover:bg-gray-700 rounded-lg transition-colors" title="Negrito">
+                                        <span className="material-symbols-outlined text-sm">format_bold</span>
+                                    </button>
+                                    <button type="button" onClick={() => insertFormatting('*', '*')} className="p-2 hover:bg-white dark:hover:bg-gray-700 rounded-lg transition-colors" title="Itálico">
+                                        <span className="material-symbols-outlined text-sm">format_italic</span>
+                                    </button>
+                                    <button type="button" onClick={() => insertLinePrefix('> ')} className="p-2 hover:bg-white dark:hover:bg-gray-700 rounded-lg transition-colors" title="Citação">
+                                        <span className="material-symbols-outlined text-sm">format_quote</span>
+                                    </button>
+                                    <button type="button" onClick={() => insertLinePrefix('- ')} className="p-2 hover:bg-white dark:hover:bg-gray-700 rounded-lg transition-colors" title="Lista">
+                                        <span className="material-symbols-outlined text-sm">format_list_bulleted</span>
+                                    </button>
+                                </>
+                            )}
                         </div>
-                        <p className="text-lg font-black text-gray-900 dark:text-white">
-                            {selectedFiles.length > 0
-                                ? `${selectedFiles.length} arquivo(s) selecionado(s)`
-                                : 'Arraste seus arquivos para cá'}
-                        </p>
-                        <p className="text-xs text-gray-500 mt-2 uppercase tracking-widest font-bold">Máximo 10MB por arquivo</p>
+                        <button
+                            type="button"
+                            onClick={() => setShowPreview(!showPreview)}
+                            className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 ${showPreview ? 'bg-brand-blue text-white shadow-lg' : 'bg-white dark:bg-gray-700 text-gray-500 hover:text-brand-blue'}`}
+                        >
+                            <span className="material-symbols-outlined text-sm">{showPreview ? 'edit' : 'visibility'}</span>
+                            {showPreview ? 'Editar' : 'Preview'}
+                        </button>
 
-                        {/* Selected files indicator bubbles */}
+                    </div>
+                    {showPreview ? (
+                        <div className="w-full bg-white dark:bg-form-dark border-2 border-gray-100 dark:border-gray-800 rounded-b-2xl px-6 py-4 min-h-[300px] prose dark:prose-invert max-w-none">
+                            <ReactMarkdown>{watchedValues.description || '*Sua descrição aparecerá aqui...*'}</ReactMarkdown>
+                        </div>
+                    ) : (
+                        <div className="relative">
+                            <textarea
+                                {...register('description')}
+                                ref={(e) => {
+                                    register('description').ref(e);
+                                    // @ts-ignore
+                                    descriptionRef.current = e;
+                                }}
+                                rows={isTextMode ? 12 : 6}
+                                className={`w-full bg-white dark:bg-form-dark border-2 px-6 py-4 outline-none focus:ring-4 transition-all dark:text-white ${errors.description ? 'border-red-500 focus:ring-red-500/10' : 'border-gray-100 dark:border-gray-800 focus:border-brand-yellow focus:ring-brand-yellow/10'} rounded-b-2xl ${isTextMode ? 'font-mono text-sm' : ''}`}
+                                placeholder={isTextMode ? 'Utilize Markdown para formatar seu texto...' : 'Explique do que se trata esse material, curiosidades ou o contexto científico.'}
+                            />
+                            {isTextMode && !watchedValues.description && (
+                                <div className="absolute bottom-4 right-6 text-[10px] text-gray-300 pointer-events-none flex items-center gap-1 font-mono">
+                                    <span className="material-symbols-outlined text-sm">markdown</span>
+                                    Suporta Markdown
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+
+                {errors.description && <p className="text-red-500 text-xs font-bold mt-1">{errors.description.message}</p>}
+            </motion.div>
+
+
+
+            {
+                showVideoUrl && (
+                    <motion.div variants={itemVariants} custom={5} className="space-y-3">
+                        <label className="text-sm font-black uppercase tracking-widest flex items-center justify-between text-brand-red">
+                            <div className="flex items-center gap-2">
+                                <span className="material-symbols-outlined text-xl">smart_display</span>
+                                Link do YouTube *
+                            </div>
+                            <div className="relative group/tooltip">
+                                <span className="material-symbols-outlined text-gray-300 text-[18px] cursor-help hover:text-brand-blue transition-colors">help</span>
+                                <div className="absolute right-0 bottom-full mb-2 w-56 p-3 bg-gray-900 dark:bg-card-dark text-white text-[10px] rounded-xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-20 shadow-2xl font-medium leading-relaxed border border-white/10 normal-case tracking-normal">
+                                    Cole o link do seu vídeo no YouTube (ou Vimeo se aplicável). Ex: https://youtu.be/abc123
+                                </div>
+                            </div>
+                        </label>
+
+                        <input
+                            type="url" {...register('videoUrl')}
+                            className={`w-full bg-white dark:bg-form-dark border-2 rounded-2xl px-6 py-4 focus:ring-4 outline-none transition-all dark:text-white ${errors.videoUrl ? 'border-red-500 focus:ring-red-500/10' : 'border-gray-100 dark:border-gray-800 focus:border-brand-red focus:ring-brand-red/10'}`}
+                            placeholder="https://youtu.be/..."
+                        />
+                        {errors.videoUrl && <p className="text-red-500 text-xs font-bold">{errors.videoUrl?.message}</p>}
+
+                    </motion.div>
+                )
+            }
+
+
+            {
+                showFileUpload && (
+                    <motion.div variants={itemVariants} custom={5} className="space-y-4">
+                        <label className="text-sm font-black uppercase tracking-widest flex items-center justify-between text-brand-blue">
+                            <div className="flex items-center gap-2">
+                                <span className="material-symbols-outlined text-xl">upload_file</span>
+                                Arquivos (Máx: 10MB cada) *
+                            </div>
+                            <span className="text-[10px] text-gray-400">
+                                {selectedFiles.length || 0}/10 arquivos
+                            </span>
+                        </label>
+                        <div
+                            onDragOver={handleDragOver}
+                            onDrop={handleDrop}
+                            className="relative group border-4 border-dashed border-gray-100 dark:border-gray-800 rounded-[32px] p-10 transition-all hover:border-brand-blue/30 hover:bg-brand-blue/5 flex flex-col items-center justify-center gap-4 text-center cursor-pointer"
+                            onClick={() => document.getElementById('file-upload')?.click()}
+                        >
+                            <input
+                                id="file-upload"
+                                type="file" multiple className="hidden"
+                                onChange={handleFileChange}
+                            />
+                            <div className="w-20 h-20 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center group-hover:scale-110 group-hover:bg-brand-blue group-hover:text-white transition-all duration-500">
+                                <span className="material-symbols-outlined text-4xl text-gray-400 group-hover:text-white">cloud_upload</span>
+                            </div>
+                            <div>
+                                <p className="font-black text-gray-900 dark:text-white uppercase tracking-tight">Arraste seus arquivos ou clique</p>
+                                <p className="text-sm text-gray-400">JPG, PNG, GIF, PDF ou MP4</p>
+                            </div>
+                            <div className="px-4 py-1.5 rounded-full bg-brand-blue/10 text-brand-blue text-[10px] font-black uppercase tracking-widest">
+                                Limite: 10MB por arquivo
+                            </div>
+                        </div>
+
                         {selectedFiles.length > 0 && (
-                            <div className="mt-6 flex flex-wrap justify-center gap-2">
-                                {Array.from(selectedFiles).map((f, i) => (
-                                    <div key={i} className="px-3 py-1 bg-brand-blue text-white text-[10px] rounded-full font-bold">
-                                        {f.name.length > 15 ? f.name.substring(0, 12) + '...' : f.name}
+                            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                {selectedFiles.map((file, idx) => (
+                                    <div key={idx} className="relative group bg-white dark:bg-form-dark p-3 rounded-2xl border-2 border-gray-100 dark:border-gray-800 animate-in fade-in zoom-in duration-300">
+                                        <div className="aspect-square rounded-xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
+                                            {file.type.startsWith('image/') ? (
+                                                <img
+                                                    src={URL.createObjectURL(file)}
+                                                    className="w-full h-full object-cover"
+                                                    alt="Preview"
+                                                    onLoad={(e) => URL.revokeObjectURL((e.target as any).src)}
+                                                />
+                                            ) : (
+                                                <span className="material-symbols-outlined text-3xl text-gray-300">
+                                                    {file.type.includes('pdf') ? 'picture_as_pdf' : 'description'}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={(e) => { e.stopPropagation(); removeFile(idx); }}
+                                            className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center shadow-lg transform scale-0 group-hover:scale-100 transition-transform hover:bg-red-600 focus:outline-none"
+                                        >
+                                            <span className="material-symbols-outlined text-lg">close</span>
+                                        </button>
+                                        <p className="text-[10px] font-bold mt-2 truncate text-gray-500">{file.name}</p>
                                     </div>
                                 ))}
                             </div>
                         )}
-                    </div>
-                </motion.div>
-            )}
+                    </motion.div>
+                )
+            }
 
-            {showAltText && (
-                <motion.div variants={itemVariants} custom={6} className="space-y-3">
-                    <label className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-brand-blue">
-                        <span className="material-symbols-outlined text-xl">accessibility</span>
-                        Texto Alternativo *
-                    </label>
-                    <textarea
-                        rows={2} value={altText} onChange={e => setAltText(e.target.value)}
-                        className="w-full bg-white dark:bg-form-dark border-2 border-gray-100 dark:border-gray-800 rounded-2xl px-6 py-4 focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/10 outline-none transition-all dark:text-white"
-                        placeholder="Descreva visualmente o conteúdo para quem não pode ver."
-                    />
-                </motion.div>
-            )}
+
+            {
+                showAltText && (
+                    <motion.div variants={itemVariants} custom={6} className="space-y-3">
+                        <label className="text-sm font-black uppercase tracking-widest flex items-center justify-between text-brand-blue">
+                            <div className="flex items-center gap-2">
+                                <span className="material-symbols-outlined text-xl">accessibility</span>
+                                Texto Alternativo (Opcional)
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <div className="relative group/tooltip">
+                                    <span className="material-symbols-outlined text-gray-300 text-[18px] cursor-help hover:text-brand-blue transition-colors">help</span>
+                                    <div className="absolute right-0 bottom-full mb-2 w-56 p-3 bg-gray-900 dark:bg-card-dark text-white text-[10px] rounded-xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-20 shadow-2xl font-medium leading-relaxed border border-white/10 normal-case tracking-normal">
+                                        Descreva o que aparece na imagem ou vídeo para pessoas com deficiência visual. Uma boa descrição foca no que é essencial para entender a cena.
+                                    </div>
+                                </div>
+                                <span className={`text-[10px] font-bold ${(watchedValues.altText || '').length > 300 ? 'text-brand-red' : 'text-gray-400'}`}>
+                                    {(watchedValues.altText || '').length}/300
+                                </span>
+                            </div>
+                        </label>
+
+                        <textarea
+                            rows={2} {...register('altText')}
+                            className={`w-full bg-white dark:bg-form-dark border-2 rounded-2xl px-6 py-4 focus:ring-4 outline-none transition-all dark:text-white ${errors.altText ? 'border-red-500 focus:ring-red-500/10' : 'border-gray-100 dark:border-gray-800 focus:border-brand-blue focus:ring-brand-blue/10'}`}
+                            placeholder="Descreva visualmente o conteúdo para quem não pode ver."
+                        />
+                    </motion.div>
+                )
+            }
+
 
             <motion.div variants={itemVariants} custom={7} className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-3">
-                    <label className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-gray-400">
-                        <span className="material-symbols-outlined text-xl">link</span>
-                        Link Externo (Drive/Nuvem)
+                    <label className="text-sm font-black uppercase tracking-widest flex items-center justify-between text-gray-400">
+                        <div className="flex items-center gap-2">
+                            <span className="material-symbols-outlined text-xl">link</span>
+                            Link Externo (Drive/Nuvem)
+                        </div>
+                        <div className="relative group/tooltip">
+                            <span className="material-symbols-outlined text-gray-300 text-[18px] cursor-help hover:text-brand-blue transition-colors">help</span>
+                            <div className="absolute right-0 bottom-full mb-2 w-56 p-3 bg-gray-900 dark:bg-card-dark text-white text-[10px] rounded-xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all z-20 shadow-2xl font-medium leading-relaxed border border-white/10 normal-case tracking-normal">
+                                Use este campo para compartilhar portfólios, pastas no Google Drive ou qualquer link adicional relevante.
+                            </div>
+                        </div>
                     </label>
+
                     <input
-                        type="url" value={externalLink} onChange={e => setExternalLink(e.target.value)}
+                        type="url" {...register('externalLink')}
                         className="w-full bg-white dark:bg-form-dark border-2 border-gray-100 dark:border-gray-800 rounded-2xl px-6 py-4 outline-none focus:border-gray-300 dark:focus:border-gray-600 dark:text-white"
                         placeholder="drive.google.com/..."
                     />
@@ -506,12 +828,13 @@ export function FormStep() {
                         Detalhes Técnicos
                     </label>
                     <input
-                        type="text" value={technicalDetails} onChange={e => setTechnicalDetails(e.target.value)}
+                        type="text" {...register('technicalDetails')}
                         className="w-full bg-white dark:bg-form-dark border-2 border-gray-100 dark:border-gray-800 rounded-2xl px-6 py-4 outline-none focus:border-gray-300 dark:focus:border-gray-600 dark:text-white"
                         placeholder="Câmera, software, técnica..."
                     />
                 </div>
             </motion.div>
+
 
             {/* Testimonial Section - Aesthetic matching Community Cards */}
             <motion.div variants={itemVariants} custom={7.5}
@@ -539,10 +862,11 @@ export function FormStep() {
                     </div>
 
                     <textarea
-                        rows={4} value={testimonial} onChange={e => setTestimonial(e.target.value)}
+                        rows={4} {...register('testimonial')}
                         className="w-full bg-gray-50 dark:bg-form-dark/50 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-3xl px-6 py-4 outline-none focus:border-brand-yellow focus:ring-4 focus:ring-brand-yellow/10 transition-all dark:text-white italic"
                         placeholder="Ex: Este projeto me ajudou a conseguir um estágio no laboratório de..."
                     />
+
                 </div>
             </motion.div>
 
@@ -568,24 +892,29 @@ export function FormStep() {
 
             <motion.div variants={itemVariants} custom={9} className="space-y-5 pt-10 border-t-2 border-gray-100 dark:border-gray-800">
                 <label className="flex items-start gap-4 cursor-pointer group">
-                    <div className={`mt-1 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${readGuide ? 'bg-brand-blue border-brand-blue' : 'border-gray-300 group-hover:border-brand-blue'}`}>
-                        {readGuide && <span className="material-symbols-outlined text-white text-[14px] font-bold">check</span>}
-                        <input type="checkbox" className="hidden" checked={readGuide} onChange={e => setReadGuide(e.target.checked)} />
+                    <div className={`mt-1 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${watchedValues.readGuide ? 'bg-brand-blue border-brand-blue' : 'border-gray-300 group-hover:border-brand-blue'}`}>
+                        {watchedValues.readGuide && <span className="material-symbols-outlined text-white text-[14px] font-bold">check</span>}
+                        <input type="checkbox" className="hidden" {...register('readGuide')} />
                     </div>
-                    <span className="text-xs text-gray-500 group-hover:text-gray-900 dark:group-hover:text-gray-300 transition-colors font-medium">
-                        Confirmo que li o <Link href="/guia" target="_blank" className="text-brand-blue font-black underline decoration-2">Guia de Boas Práticas</Link>. *
+                    <span className="text-xs text-white group-hover:text-white transition-colors font-black">
+                        Confirmo que li o <Link href="/guia" target="_blank" className="text-brand-blue font-black underline decoration-4 decoration-brand-blue/30 hover:decoration-brand-blue transition-all">Guia de Boas Práticas</Link>. *
                     </span>
+                    {errors.readGuide && <p className="text-red-500 text-[10px] font-bold">{errors.readGuide?.message}</p>}
                 </label>
                 <label className="flex items-start gap-4 cursor-pointer group">
-                    <div className={`mt-1 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${acceptedCC ? 'bg-brand-red border-brand-red' : 'border-gray-300 group-hover:border-brand-red'}`}>
-                        {acceptedCC && <span className="material-symbols-outlined text-white text-[14px] font-bold">check</span>}
-                        <input type="checkbox" className="hidden" checked={acceptedCC} onChange={e => setAcceptedCC(e.target.checked)} />
+                    <div className={`mt-1 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${watchedValues.acceptedCC ? 'bg-brand-red border-brand-red' : 'border-gray-300 group-hover:border-brand-red'}`}>
+                        {watchedValues.acceptedCC && <span className="material-symbols-outlined text-white text-[14px] font-bold">check</span>}
+                        <input type="checkbox" className="hidden" {...register('acceptedCC')} />
                     </div>
-                    <span className="text-xs text-gray-500 group-hover:text-gray-900 dark:group-hover:text-gray-300 transition-colors font-medium">
-                        Concordo em disponibilizar este material sob licença <span className="font-black text-brand-red uppercase">Creative Commons</span>. *
+                    <span className="text-xs text-white group-hover:text-white transition-colors font-black">
+                        Concordo em disponibilizar este material sob licença <span className="text-brand-red underline decoration-4 decoration-brand-red/30 hover:decoration-brand-red transition-all">Creative Commons</span>. *
                     </span>
+                    {errors.acceptedCC && <p className="text-red-500 text-[10px] font-bold">{errors.acceptedCC?.message}</p>}
                 </label>
+
+
             </motion.div>
+
 
             <motion.div variants={itemVariants} custom={10} className="flex justify-between items-center pt-10">
                 <button
@@ -596,10 +925,12 @@ export function FormStep() {
                     Voltar
                 </button>
                 <button
-                    onClick={handleSubmit}
-                    disabled={isLoading || !readGuide || !acceptedCC}
-                    className={`group relative overflow-hidden px-12 py-5 rounded-2xl font-black uppercase tracking-widest shadow-2xl transition-all flex items-center gap-3 ${isLoading || !readGuide || !acceptedCC ? 'opacity-50 grayscale cursor-not-allowed' : 'hover:-translate-y-1 hover:shadow-brand-red/20 active:translate-y-0'}`}
+                    type="button"
+                    onClick={handleSubmit(onFormSubmit)}
+                    disabled={isLoading}
+                    className={`group relative overflow-hidden px-12 py-5 rounded-2xl font-black uppercase tracking-widest shadow-2xl transition-all flex items-center gap-3 ${isLoading ? 'opacity-50 grayscale cursor-not-allowed' : 'hover:-translate-y-1 hover:shadow-brand-red/20 active:translate-y-0'}`}
                 >
+
                     <div className="absolute inset-0 bg-gradient-to-r from-brand-blue via-brand-yellow to-brand-red opacity-100 transition-opacity"></div>
                     <span className="relative z-10 text-white flex items-center gap-3">
                         {isLoading ? (
@@ -616,6 +947,8 @@ export function FormStep() {
                     </span>
                 </button>
             </motion.div>
-        </motion.div>
+
+        </motion.div >
     );
 }
+

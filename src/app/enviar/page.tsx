@@ -10,6 +10,8 @@ import { useSubmissionStore } from '@/store/useSubmissionStore';
 import { CategoryStep } from './components/CategoryStep';
 import { FormatStep } from './components/FormatStep';
 import { FormStep } from './components/FormStep';
+import { Stepper } from './components/Stepper';
+
 
 export default function SubmitPage() {
     const router = useRouter();
@@ -59,13 +61,10 @@ export default function SubmitPage() {
                     </button>
 
                     {/* Progress Indicator */}
-                    <div className="flex items-center gap-2">
-                        <StepDot active={currentStep === 'category'} completed={['format', 'form'].includes(currentStep)} />
-                        <div className="w-8 h-px bg-gray-200 dark:bg-gray-800"></div>
-                        <StepDot active={currentStep === 'format'} completed={currentStep === 'form'} />
-                        <div className="w-8 h-px bg-gray-200 dark:bg-gray-800"></div>
-                        <StepDot active={currentStep === 'form'} completed={false} />
+                    <div className="hidden md:block w-64 lg:w-80">
+                        <Stepper currentStep={currentStep} />
                     </div>
+
                 </div>
             </header>
 
@@ -118,11 +117,4 @@ export default function SubmitPage() {
     );
 }
 
-function StepDot({ active, completed }: { active: boolean, completed: boolean }) {
-    return (
-        <div className={`w-3 h-3 rounded-full transition-all duration-500 ring-4 ${completed ? 'bg-brand-blue ring-brand-blue/10' :
-            active ? 'bg-brand-yellow ring-brand-yellow/30 scale-125' :
-                'bg-gray-200 dark:bg-gray-800 ring-transparent'
-            }`} />
-    );
-}
+
