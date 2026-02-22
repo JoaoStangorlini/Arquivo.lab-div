@@ -27,6 +27,8 @@ export interface MediaCardProps {
     tags?: string[];
     reading_time?: number;
     views?: number;
+    commentCount?: number;
+    saveCount?: number;
 }
 
 // Utility functions moved to @/lib/media-utils.ts
@@ -45,7 +47,9 @@ export const MediaCard = ({
     alt_text,
     tags,
     reading_time,
-    views
+    views,
+    commentCount = 0,
+    saveCount = 0
 }: MediaCardProps) => {
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -56,6 +60,8 @@ export const MediaCard = ({
     const [showHeartOverlay, setShowHeartOverlay] = useState(false);
     const [showShareMenu, setShowShareMenu] = useState(false);
     const [saved, setSaved] = useState(false);
+    const [saves, setSaves] = useState(saveCount);
+    const [comments, setComments] = useState(commentCount);
     const [isSaving, setIsSaving] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
@@ -132,7 +138,9 @@ export const MediaCard = ({
 
         // Optimistic UI
         const prevSaved = saved;
+        const prevSaves = saves;
         setSaved(!prevSaved);
+        setSaves(!prevSaved ? prevSaves + 1 : Math.max(0, prevSaves - 1));
 
         setIsSaving(true);
         try {
@@ -146,6 +154,7 @@ export const MediaCard = ({
         } catch (err) {
             console.error('Error saving:', err);
             setSaved(prevSaved);
+            setSaves(prevSaves);
         } finally {
             setIsSaving(false);
         }
@@ -339,27 +348,37 @@ export const MediaCard = ({
             <div className="flex flex-col p-4 pt-3">
                 {/* Action Bar */}
                 <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-[18px]">
                         <button
                             onClick={handleLike}
                             disabled={isLiking}
-                            className={`transition-all active:scale-90 ${liked ? 'text-brand-red' : 'text-gray-700 dark:text-gray-200 hover:text-gray-500'}`}
+                            className={`transition-all active:scale-90 relative flex items-center justify-center ${liked ? 'text-brand-red' : 'text-gray-700 dark:text-gray-200 hover:text-brand-red'}`}
                         >
-                            <span className={`material-symbols-outlined text-[28px] ${liked ? 'filled' : ''}`} style={liked ? { fontVariationSettings: "'FILL' 1" } : {}}>
+                            <span className="material-symbols-outlined text-[32px]">
                                 favorite
                             </span>
+                            {likes > 0 && (
+                                <span className={`absolute inset-0 flex items-center justify-center text-[10px] sm:text-[11px] font-bold pb-0.5 ${liked ? 'text-brand-red' : 'text-gray-700 dark:text-gray-200'}`}>
+                                    {likes > 99 ? '99+' : likes}
+                                </span>
+                            )}
                         </button>
-                        <Link href={`/arquivo/${id}#comments`} onClick={(e) => e.stopPropagation()} className="text-gray-700 dark:text-gray-200 hover:text-gray-500 transition-transform active:scale-90 flex items-center">
-                            <span className="material-symbols-outlined text-[28px]">chat_bubble</span>
+                        <Link href={`/arquivo/${id}#comments`} onClick={(e) => e.stopPropagation()} className="text-gray-700 dark:text-gray-200 hover:text-brand-blue transition-transform active:scale-90 relative flex items-center justify-center">
+                            <span className="material-symbols-outlined text-[32px]">chat_bubble</span>
+                            {comments > 0 && (
+                                <span className="absolute inset-0 flex items-center justify-center text-[10px] sm:text-[11px] font-bold pb-1.5 opacity-90">
+                                    {comments}
+                                </span>
+                            )}
                         </Link>
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setShowShareMenu(true);
                             }}
-                            className="text-gray-700 dark:text-gray-200 hover:text-gray-500 transition-transform active:scale-90"
+                            className="text-gray-700 dark:text-gray-200 hover:text-brand-yellow font-bold transition-transform active:scale-90"
                         >
-                            <span className="material-symbols-outlined text-[28px]">send</span>
+                            <span className="material-symbols-outlined text-[32px]">send</span>
                         </button>
                         {displayUrl && (
                             <a
@@ -367,29 +386,27 @@ export const MediaCard = ({
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={e => e.stopPropagation()}
-                                className="text-gray-700 dark:text-gray-200 hover:text-gray-500 transition-transform active:scale-90"
+                                className="text-gray-700 dark:text-gray-200 hover:text-green-500 transition-transform active:scale-90"
                             >
-                                <span className="material-symbols-outlined text-[28px]">download</span>
+                                <span className="material-symbols-outlined text-[32px]">download</span>
                             </a>
                         )}
                     </div>
                     <button
                         onClick={handleSave}
                         disabled={isSaving}
-                        className={`transition-all active:scale-90 ${saved ? 'text-brand-blue' : 'text-gray-700 dark:text-gray-200 hover:text-gray-500'}`}
+                        className={`transition-all active:scale-90 relative flex items-center justify-center ${saved ? 'text-brand-blue' : 'text-gray-700 dark:text-gray-200 hover:text-brand-blue'}`}
                     >
-                        <span className={`material-symbols-outlined text-[28px] ${saved ? 'filled' : ''}`} style={saved ? { fontVariationSettings: "'FILL' 1" } : {}}>
+                        <span className={`material-symbols-outlined text-[32px]`}>
                             bookmark
                         </span>
+                        {saves > 0 && (
+                            <span className={`absolute inset-0 flex items-center justify-center text-[10px] sm:text-[11px] font-bold pt-1 opacity-90 ${saved ? 'text-brand-blue' : 'text-gray-700 dark:text-gray-200'}`}>
+                                {saves}
+                            </span>
+                        )}
                     </button>
                 </div>
-
-                {/* Likes Count */}
-                {likes > 0 && (
-                    <p className="text-sm font-bold text-gray-900 dark:text-white mb-2">
-                        {likes} {likes === 1 ? 'curtida' : 'curtidas'}
-                    </p>
-                )}
 
                 {/* Caption Block */}
                 <div className="space-y-1">

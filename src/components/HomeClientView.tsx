@@ -272,9 +272,65 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
 
                     </div>
                 </div>
+
+                {/* Destaque da Semana & Em Alta no IFUSP Section */}
+                {(() => {
+                    const featuredItems = initialItems.filter(i => i.isFeatured);
+                    const hasTrending = trendingItems.length > 0;
+
+                    if (featuredItems.length === 0 && !hasTrending) return null;
+
+                    return (
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-16 md:pt-24">
+                            {featuredItems.length > 0 && (
+                                <div className="mb-12">
+                                    <div className="flex items-center gap-3 mb-8">
+                                        <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-brand-red to-brand-yellow text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
+                                            <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                                            Destaque da Semana
+                                        </div>
+                                        <div className="flex-1 h-px bg-gradient-to-r from-brand-yellow/40 to-transparent"></div>
+                                    </div>
+                                    <div className={`grid gap-6 ${featuredItems.length === 1 ? 'grid-cols-1 max-w-2xl mx-auto' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+                                        {featuredItems.map(item => (
+                                            <div key={item.id} className="transform hover:scale-[1.02] transition-transform">
+                                                <div className="relative">
+                                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-red via-brand-yellow to-brand-red rounded-2xl blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                                                    <div className="relative">
+                                                        <MediaCard {...item} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {hasTrending && (
+                                <div>
+                                    <div className="flex items-center gap-3 mb-8">
+                                        <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-brand-blue to-brand-red text-white flex-row-reverse rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
+                                            <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>trending_up</span>
+                                            Em Alta no IFUSP
+                                        </div>
+                                        <div className="flex-1 h-px bg-gradient-to-r from-brand-blue/40 to-transparent"></div>
+                                    </div>
+                                    <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                                        {trendingItems.map(item => (
+                                            <div key={item.id} className="transform hover:scale-[1.02] transition-transform">
+                                                <MediaCard {...item} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    );
+                })()}
+
             </header>
 
-            <section className="py-4 md:py-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark/50 sticky top-24 z-40 backdrop-blur-sm shadow-sm overflow-hidden">
+            <section className="py-4 md:py-6 border-b border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-background-dark/95 sticky top-24 z-40 backdrop-blur-md shadow-sm overflow-hidden border-t border-t-gray-100 dark:border-t-gray-800/50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3 md:space-y-4">
 
                     {/* Media Type Filters */}
@@ -391,65 +447,6 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
                     </div>
                 </div>
             </section>
-
-            {/* Destaque da Semana & Em Alta no IFUSP Section */}
-            {(() => {
-                const featuredItems = initialItems.filter(i => i.isFeatured);
-                const hasTrending = trendingItems.length > 0;
-
-                if (featuredItems.length === 0 && !hasTrending) return null;
-
-                return (
-                    <section className="bg-gradient-to-br from-brand-yellow/5 via-white to-brand-red/5 dark:from-brand-yellow/10 dark:via-background-dark dark:to-brand-red/10 py-10 border-b border-gray-200 dark:border-gray-800">
-                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-                            {featuredItems.length > 0 && (
-                                <div className="mb-12">
-                                    <div className="flex items-center gap-3 mb-8">
-                                        <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-brand-red to-brand-yellow text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
-                                            <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                                            Destaque da Semana
-                                        </div>
-                                        <div className="flex-1 h-px bg-gradient-to-r from-brand-yellow/40 to-transparent"></div>
-                                    </div>
-                                    <div className={`grid gap-6 ${featuredItems.length === 1 ? 'grid-cols-1 max-w-2xl mx-auto' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
-                                        {featuredItems.map(item => (
-                                            <div key={item.id} className="transform hover:scale-[1.02] transition-transform">
-                                                <div className="relative">
-                                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-red via-brand-yellow to-brand-red rounded-2xl blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                                                    <div className="relative">
-                                                        <MediaCard {...item} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-
-                            {hasTrending && (
-                                <div>
-                                    <div className="flex items-center gap-3 mb-8">
-                                        <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-brand-blue to-brand-red text-white flex-row-reverse rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
-                                            <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>trending_up</span>
-                                            Em Alta no IFUSP
-                                        </div>
-                                        <div className="flex-1 h-px bg-gradient-to-r from-brand-blue/40 to-transparent"></div>
-                                    </div>
-                                    <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                                        {trendingItems.map(item => (
-                                            <div key={item.id} className="transform hover:scale-[1.02] transition-transform">
-                                                <MediaCard {...item} />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-
-                        </div>
-                    </section>
-                );
-            })()}
             {/* Main Feed Section */}
             <section className="bg-background-subtle dark:bg-background-dark py-12 transition-colors flex-grow">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
