@@ -38,6 +38,24 @@ export interface MediaCardProps {
 }
 
 // Utility functions moved to @/lib/media-utils.ts
+const highlightMatch = (text: string, query: string) => {
+    if (!query || !query.trim() || query.length < 2) return text;
+    // Handle hash tags specifically if query starts with #
+    const cleanQuery = query.startsWith('#') ? query.slice(1) : query;
+    const regex = new RegExp(`(${cleanQuery})`, 'gi');
+    const parts = text.split(regex);
+    return (
+        <>
+            {parts.map((part, i) =>
+                part.toLowerCase() === cleanQuery.toLowerCase() ? (
+                    <mark key={i} className="bg-brand-yellow/40 text-gray-900 dark:text-white rounded-sm px-0.5 font-black">{part}</mark>
+                ) : (
+                    part
+                )
+            )}
+        </>
+    );
+};
 
 export const MediaCard = React.memo(({
     id,
@@ -73,6 +91,8 @@ export const MediaCard = React.memo(({
 
     const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const query = searchParams.get('q') || searchParams.get('tag') || '';
     const lastLikeClick = useRef<number>(0);
 
     const handleMouseEnter = () => {
@@ -447,8 +467,8 @@ export const MediaCard = React.memo(({
                 {/* Caption Block */}
                 <div className="space-y-1">
                     <div className="text-sm">
-                        <span className="font-bold mr-2 text-gray-900 dark:text-white">{authors}</span>
-                        <span className="font-bold text-gray-800 dark:text-gray-100">{title}</span>
+                        <span className="font-bold mr-2 text-gray-900 dark:text-white">{highlightMatch(authors, query)}</span>
+                        <span className="font-bold text-gray-800 dark:text-gray-100">{highlightMatch(title, query)}</span>
                     </div>
                     {description && (
                         <div className="text-sm text-gray-600 dark:text-gray-400 overflow-hidden max-h-[2.5rem] relative leading-tight">
@@ -493,7 +513,7 @@ export const MediaCard = React.memo(({
                                 }}
                                 className={`px-2 py-0.5 ${colorClass} text-[10px] font-extrabold rounded-md uppercase tracking-wide border transition-all hover:scale-105 select-none cursor-pointer`}
                             >
-                                #{tag.replace('#', '')}
+                                #{highlightMatch(tag.replace('#', ''), query)}
                             </span>
                         );
                     })}
