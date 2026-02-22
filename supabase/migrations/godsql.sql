@@ -1,5 +1,6 @@
 -- ==========================================================
 -- THE GOD SQL - HUB DE COMUNICAÇÃO CIENTÍFICA (IFUSP)
+-- Versão: 2.3.5 (The Final Iteration V3)
 -- ==========================================================
 -- Este script contém a estrutura absoluta e completa do banco 
 -- de dados. Você pode rodar isso em um banco limpo do Supabase.
@@ -36,6 +37,7 @@ CREATE TABLE IF NOT EXISTS public.submissions (
     user_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
     title TEXT NOT NULL,
     authors TEXT NOT NULL,
+    co_author_ids UUID[] DEFAULT '{}',
     description TEXT NOT NULL,
     category TEXT,
     media_type media_type NOT NULL,
@@ -74,6 +76,29 @@ CREATE TABLE IF NOT EXISTS public.reproductions (
     media_url TEXT,
     status submission_status DEFAULT 'pendente',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.analytics_plays (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    submission_id UUID NOT NULL REFERENCES public.submissions(id) ON DELETE CASCADE,
+    type VARCHAR(20) NOT NULL CHECK (type IN ('view', 'audio_play')),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.learning_trails (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT NOT NULL,
+    description TEXT,
+    creator_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.trail_submissions (
+    trail_id UUID REFERENCES public.learning_trails(id) ON DELETE CASCADE,
+    submission_id UUID REFERENCES public.submissions(id) ON DELETE CASCADE,
+    "order" INTEGER DEFAULT 0,
+    added_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    PRIMARY KEY (trail_id, submission_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.testimonials (
@@ -245,12 +270,17 @@ CREATE INDEX IF NOT EXISTS idx_submissions_status_created_at ON public.submissio
 CREATE INDEX IF NOT EXISTS idx_submissions_status_views ON public.submissions (status, views DESC NULLS LAST);
 CREATE INDEX IF NOT EXISTS idx_saved_posts_user ON public.saved_posts(user_id);
 CREATE INDEX IF NOT EXISTS idx_follows_follower ON public.follows(follower_id);
+CREATE INDEX IF NOT EXISTS idx_analytics_submission_type ON public.analytics_plays(submission_id, type);
+CREATE INDEX IF NOT EXISTS idx_trail_submissions_order ON public.trail_submissions(trail_id, "order");
 
 -- 5. SEGURANÇA (RLS)
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.submissions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.reproductions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.analytics_plays ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.learning_trails ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.trail_submissions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.testimonials ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.badges ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_badges ENABLE ROW LEVEL SECURITY;
@@ -281,30 +311,50 @@ DROP POLICY IF EXISTS "Usuários autenticados podem inserir submissões" ON publ
 CREATE POLICY "Usuários autenticados podem inserir submissões" ON public.submissions FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
 DROP POLICY IF EXISTS "Admins manage submissions" ON public.submissions;
 CREATE POLICY "Admins manage submissions" ON public.submissions USING (public.is_admin());
+DROP POLICY IF EXISTS "Authors can update submissions" ON public.submissions;
+CREATE POLICY "Authors can update submissions" ON public.submissions FOR UPDATE USING (auth.uid() = user_id);
 
--- Comments
+-- Comments (Strict Moderation V3)
 DROP POLICY IF EXISTS "Anyone can read all comments" ON public.comments;
-CREATE POLICY "Anyone can read all comments" ON public.comments FOR SELECT USING (status <> 'deleted' OR public.is_admin());
+CREATE POLICY "Anyone can read all comments" ON public.comments FOR SELECT USING (status = 'aprovado' OR user_id = auth.uid() OR public.is_admin());
 DROP POLICY IF EXISTS "Qualquer um pode comentar" ON public.comments;
 CREATE POLICY "Qualquer um pode comentar" ON public.comments FOR INSERT WITH CHECK (true);
 DROP POLICY IF EXISTS "Admins manage comments" ON public.comments;
 CREATE POLICY "Admins manage comments" ON public.comments USING (public.is_admin());
 DROP POLICY IF EXISTS "Anyone can update comments" ON public.comments;
-CREATE POLICY "Anyone can update comments" ON public.comments FOR UPDATE USING (true);
+CREATE POLICY "Anyone can update comments" ON public.comments FOR UPDATE USING (user_id = auth.uid() OR public.is_admin());
 DROP POLICY IF EXISTS "Anyone can delete comments" ON public.comments;
-CREATE POLICY "Anyone can delete comments" ON public.comments FOR DELETE USING (true);
+CREATE POLICY "Anyone can delete comments" ON public.comments FOR DELETE USING (user_id = auth.uid() OR public.is_admin());
 
--- Reproductions
+-- Reproductions (Strict Moderation V3)
 DROP POLICY IF EXISTS "Anyone can read all reproductions" ON public.reproductions;
-CREATE POLICY "Anyone can read all reproductions" ON public.reproductions FOR SELECT USING (status <> 'deleted' OR public.is_admin());
+CREATE POLICY "Anyone can read all reproductions" ON public.reproductions FOR SELECT USING (status = 'aprovado' OR user_id = auth.uid() OR public.is_admin());
 DROP POLICY IF EXISTS "Usuários logados podem enviar reproduções" ON public.reproductions;
 CREATE POLICY "Usuários logados podem enviar reproduções" ON public.reproductions FOR INSERT WITH CHECK (auth.uid() = user_id);
 DROP POLICY IF EXISTS "Admins manage reproductions" ON public.reproductions;
 CREATE POLICY "Admins manage reproductions" ON public.reproductions USING (public.is_admin());
 DROP POLICY IF EXISTS "Anyone can update reproductions" ON public.reproductions;
-CREATE POLICY "Anyone can update reproductions" ON public.reproductions FOR UPDATE USING (true);
+CREATE POLICY "Anyone can update reproductions" ON public.reproductions FOR UPDATE USING (user_id = auth.uid() OR public.is_admin());
 DROP POLICY IF EXISTS "Anyone can delete reproductions" ON public.reproductions;
-CREATE POLICY "Anyone can delete reproductions" ON public.reproductions FOR DELETE USING (true);
+CREATE POLICY "Anyone can delete reproductions" ON public.reproductions FOR DELETE USING (user_id = auth.uid() OR public.is_admin());
+
+-- Analytics Plays
+DROP POLICY IF EXISTS "Public can insert analytics" ON public.analytics_plays;
+CREATE POLICY "Public can insert analytics" ON public.analytics_plays FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "Admins can view analytics" ON public.analytics_plays;
+CREATE POLICY "Admins can view analytics" ON public.analytics_plays FOR SELECT USING (public.is_admin());
+
+-- Learning Trails
+DROP POLICY IF EXISTS "Public can view trails" ON public.learning_trails;
+CREATE POLICY "Public can view trails" ON public.learning_trails FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Admins manage trails" ON public.learning_trails;
+CREATE POLICY "Admins manage trails" ON public.learning_trails USING (public.is_admin());
+
+-- Trail Submissions
+DROP POLICY IF EXISTS "Public can view trail submissions" ON public.trail_submissions;
+CREATE POLICY "Public can view trail submissions" ON public.trail_submissions FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Admins manage trail submissions" ON public.trail_submissions;
+CREATE POLICY "Admins manage trail submissions" ON public.trail_submissions USING (public.is_admin());
 
 -- Testimonials
 DROP POLICY IF EXISTS "Testemunhos aprovados são públicos" ON public.testimonials;

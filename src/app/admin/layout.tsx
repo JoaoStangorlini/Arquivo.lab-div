@@ -13,11 +13,14 @@ export default function AdminLayout({
     const pathname = usePathname();
 
     const navLinks = [
-        { name: 'Visão Geral', href: '/admin', icon: 'pie_chart' },
-        { name: 'Formulário de Envio', href: '/admin/pendentes', icon: 'assignment' },
+        { name: 'Torre de Controle', href: '/admin', icon: 'security' },
+        { name: 'Gerenciador de Acervo', href: '/admin/acervo', icon: 'collections_bookmark' },
+        { name: 'Submissões Pendentes', href: '/admin/pendentes', icon: 'assignment' },
         { name: 'Pergunte a um Cientista', href: '/admin/perguntas', icon: 'quiz' },
-        { name: 'Moderação de Comentários', href: '/admin/comentarios', icon: 'forum' },
-        { name: 'Moderação de Reproduções', href: '/admin/reproducoes', icon: 'cameraswitch' },
+        { name: 'Moderação de Comentários', href: '/admin/comentarios', icon: 'chat_bubble' },
+        { name: 'Moderação de Reproduções', href: '/admin/reproducoes', icon: 'science' },
+        { name: 'Trilhas de Aprendizagem', href: '/admin/trilhas', icon: 'route' },
+        { name: 'Narração & TTS', href: '/admin/narracao', icon: 'record_voice_over' },
         { name: 'Ranking', href: '/admin/ranking', icon: 'trending_up' },
         { name: 'Oportunidades', href: '/admin/oportunidades', icon: 'event' },
     ];
@@ -29,7 +32,7 @@ export default function AdminLayout({
             {/* Mobile Header */}
             <div className="md:hidden bg-neutral-900 text-white p-4 flex items-center justify-between border-b border-gray-800 z-[60]">
                 <div className="font-bold text-lg flex items-center gap-2">
-                    <span className="material-symbols-outlined text-brand-blue">admin_panel_settings</span>
+                    <span className="material-symbols-outlined text-[#0055ff]">security</span>
                     Admin<span className="text-brand-yellow">Panel</span>
                 </div>
                 <button
@@ -42,33 +45,34 @@ export default function AdminLayout({
             </div>
 
             <aside className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:flex w-full md:w-72 bg-neutral-900 border-r border-gray-800 flex-col justify-between shrink-0 h-[calc(100vh-73px)] md:h-screen overflow-hidden md:sticky top-0 absolute inset-x-0 bottom-0 z-50 md:z-40 transition-colors shadow-2xl`}>
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue/10 dark:hidden rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-40 h-40 bg-brand-red/10 dark:hidden rounded-full blur-2xl translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#0055ff]/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-40 h-40 bg-brand-red/10 rounded-full blur-2xl translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
 
                 <div className="flex flex-col gap-4 p-6 relative z-10">
                     <div className="flex items-center gap-3 pb-6 border-b border-gray-800 transition-colors">
                         <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                             <div className="relative w-10 h-10 flex-shrink-0">
-                                <div className="absolute w-6 h-7 bg-brand-blue rounded-[1px] top-0 left-0 z-0"></div>
+                                <div className="absolute w-6 h-7 bg-[#0055ff] rounded-[1px] top-0 left-0 z-0"></div>
                                 <div className="absolute w-6 h-7 bg-brand-red rounded-[1px] bottom-0 right-0 z-0 translate-y-1"></div>
                                 <div className="absolute w-6 h-6 bg-brand-yellow rounded-full top-2 left-2 z-20 shadow-sm border border-transparent"></div>
                             </div>
                             <div className="flex flex-col overflow-hidden">
                                 <h1 className="text-white text-lg font-bold leading-tight truncate">Admin<span className="text-brand-yellow">Panel</span></h1>
-                                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mt-0.5">Lab-Div USP</p>
+                                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mt-0.5">Lab-Div v2.3.5</p>
                             </div>
                         </Link>
                     </div>
 
-                    <nav className="flex flex-col gap-2 overflow-y-auto max-h-[calc(100vh-200px)] no-scrollbar">
+                    <nav className="flex flex-col gap-1.5 overflow-y-auto max-h-[calc(100vh-200px)] no-scrollbar">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
                             return (
                                 <Link
                                     key={link.href}
                                     href={link.href}
+                                    onClick={() => setIsMobileMenuOpen(false)}
                                     className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all group ${isActive
-                                        ? 'bg-brand-blue border border-brand-blue/50 text-white shadow-lg shadow-brand-blue/20'
+                                        ? 'bg-[#0055ff] border border-[#0055ff]/50 text-white shadow-lg shadow-[#0055ff]/20'
                                         : 'text-gray-400 hover:bg-gray-800 hover:text-white border border-transparent'
                                         }`}
                                 >

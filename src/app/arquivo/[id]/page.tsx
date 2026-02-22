@@ -128,6 +128,19 @@ export default async function ArquivoItemPage({ params }: PageProps) {
                     <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
                         <ViewTracker submissionId={id} />
 
+                        {/* ─── Card de Introdução ao Índice (Hierarquia: 2º após Fogo) ─── */}
+                        {submission.description && submission.description.length > 500 && (
+                            <div className="mb-6 bg-white dark:bg-card-dark rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-800 shadow-sm flex items-center gap-4">
+                                <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-[#0055ff]/10 text-[#0055ff] shrink-0">
+                                    <span className="material-symbols-outlined text-2xl">format_list_bulleted</span>
+                                </div>
+                                <div className="min-w-0">
+                                    <h3 className="text-sm font-bold text-gray-900 dark:text-white">Este artigo possui um índice estruturado</h3>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Use o botão <span className="inline-flex items-center align-middle mx-0.5 px-1.5 py-0.5 bg-[#0055ff]/10 text-[#0055ff] rounded text-[10px] font-bold">≡</span> no topo direito para navegar entre as seções.</p>
+                                </div>
+                            </div>
+                        )}
+
                         <div className="bg-white dark:bg-card-dark rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-gray-800">
 
                             {/* Media Section - skip for text/zip/sdocx */}
@@ -236,8 +249,18 @@ export default async function ArquivoItemPage({ params }: PageProps) {
                                     </div>
                                 )}
 
-                                {/* Share Buttons */}
-                                <ShareButtons title={submission.title} id={submission.id} />
+                                {/* Share & Export Buttons */}
+                                <div className="flex flex-wrap items-center gap-3">
+                                    <ShareButtons title={submission.title} id={submission.id} />
+                                    <button
+                                        onClick={() => window.print()}
+                                        className="flex items-center gap-2 px-4 py-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-[#0055ff]/10 hover:text-[#0055ff] text-gray-600 dark:text-gray-300 font-bold rounded-xl text-sm transition-all border border-gray-200 dark:border-gray-700"
+                                        title="Exportar como PDF (usa window.print com KaTeX renderizado)"
+                                    >
+                                        <span className="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+                                        Exportar PDF
+                                    </button>
+                                </div>
 
                                 {/* Eu Reproduzi! Section */}
                                 <ReproductionSection
