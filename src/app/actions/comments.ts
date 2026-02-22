@@ -3,7 +3,7 @@
 import { supabase } from '@/lib/supabase';
 import { revalidatePath } from 'next/cache';
 
-export async function addComment(submissionId: string, authorName: string, content: string) {
+export async function addComment(submissionId: string, authorName: string, content: string, inlineParagraphId?: string) {
     if (!authorName.trim() || !content.trim()) {
         throw new Error('Nome e comentário são obrigatórios.');
     }
@@ -14,6 +14,7 @@ export async function addComment(submissionId: string, authorName: string, conte
             submission_id: submissionId,
             author_name: authorName.trim(),
             content: content.trim(),
+            inline_paragraph_id: inlineParagraphId || null,
             status: 'pendente' // Explicitly set as pending
         }]);
 

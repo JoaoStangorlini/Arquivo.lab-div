@@ -21,7 +21,7 @@ export interface AdminSubmission {
     media_url: string;
     category: string;
     created_at: string;
-    featured?: boolean;
+    is_featured?: boolean;
     status?: string;
     external_link?: string;
     technical_details?: string;
@@ -220,7 +220,7 @@ export function AdminSubmissionLightbox({
                         <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-text-muted dark:text-gray-300 rounded-full text-xs font-bold tracking-wide uppercase">
                             {item.category}
                         </span>
-                        {item.featured && (
+                        {item.is_featured && (
                             <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold tracking-wide uppercase">
                                 Destaque
                             </span>
@@ -365,11 +365,11 @@ export function AdminSubmissionLightbox({
                         {statusType === 'aprovado' && (
                             <>
                                 <button
-                                    onClick={() => onToggleFeatured?.(item.id, !!item.featured)}
+                                    onClick={() => onToggleFeatured?.(item.id, !!item.is_featured)}
                                     className="flex-1 flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 transition-colors text-sm font-medium bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-yellow/10 hover:text-brand-yellow hover:border-brand-yellow/30"
                                 >
-                                    <span className="material-symbols-outlined text-[18px]" style={item.featured ? { fontVariationSettings: "'FILL' 1" } : {}}>star</span>
-                                    {item.featured ? 'Remover Destaque' : 'Destacar'}
+                                    <span className="material-symbols-outlined text-[18px]" style={item.is_featured ? { fontVariationSettings: "'FILL' 1" } : {}}>star</span>
+                                    {item.is_featured ? 'Remover Destaque' : 'Destacar'}
                                 </button>
                                 <button
                                     onClick={() => { onReject?.(item.id); onClose(); }}

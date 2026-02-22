@@ -191,4 +191,20 @@
     -webkit-text-fill-color: transparent;
     animation: shimmer-text 5s linear infinite;
   }
+
+  /* Module 3: Immersive Reading */
+  body.reading-focus-mode nav,
+  body.reading-focus-mode footer,
+  body.reading-focus-mode .fixed:not(.z-\[100\]):not(.focus-toolbar) {
+    display: none !important;
+  }
+
+  body.reading-focus-mode {
+    background-color: var(--color-background-dark) !important;
+  }
+
+  body.reading-focus-mode main {
+    padding-top: 2rem !important;
+    max-width: 800px !important;
+  }
 }

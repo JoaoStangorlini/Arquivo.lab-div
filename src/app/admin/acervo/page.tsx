@@ -8,7 +8,7 @@ import { CATEGORIES } from '@/app/enviar/constants';
 
 interface Submission extends AdminSubmission {
     id: string;
-    featured: boolean;
+    is_featured: boolean;
 }
 
 export default function GerenciadorAcervoPage() {
@@ -116,9 +116,9 @@ export default function GerenciadorAcervoPage() {
     };
 
     const handleToggleFeatured = async (id: string, current: boolean) => {
-        const { error } = await supabase.from('submissions').update({ featured: !current }).eq('id', id);
+        const { error } = await supabase.from('submissions').update({ is_featured: !current }).eq('id', id);
         if (error) { alert('Erro: ' + error.message); return; }
-        setAllSubmissions(prev => prev.map(s => s.id === id ? { ...s, featured: !current } : s));
+        setAllSubmissions(prev => prev.map(s => s.id === id ? { ...s, is_featured: !current } : s));
     };
 
     // Save edit
@@ -228,14 +228,14 @@ export default function GerenciadorAcervoPage() {
                                 {/* Edit + Star overlay */}
                                 <div className="absolute top-3 right-3 z-10 flex gap-1.5 opacity-0 group-hover/card:opacity-100 transition-opacity">
                                     <button
-                                        onClick={(e) => { e.stopPropagation(); handleToggleFeatured(item.id, item.featured); }}
-                                        className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all shadow ${item.featured
+                                        onClick={(e) => { e.stopPropagation(); handleToggleFeatured(item.id, item.is_featured); }}
+                                        className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all shadow ${item.is_featured
                                             ? 'bg-brand-yellow text-white'
                                             : 'bg-white/80 dark:bg-gray-800/80 text-gray-400 hover:text-brand-yellow backdrop-blur-sm'
                                             }`}
-                                        title={item.featured ? 'Remover Destaque' : 'Marcar Destaque'}
+                                        title={item.is_featured ? 'Remover Destaque' : 'Marcar Destaque'}
                                     >
-                                        <span className="material-symbols-outlined text-[16px]" style={item.featured ? { fontVariationSettings: "'FILL' 1" } : {}}>star</span>
+                                        <span className="material-symbols-outlined text-[16px]" style={item.is_featured ? { fontVariationSettings: "'FILL' 1" } : {}}>star</span>
                                     </button>
                                     <button
                                         onClick={(e) => { e.stopPropagation(); setEditingItem({ ...item }); }}

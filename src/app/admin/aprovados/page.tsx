@@ -54,13 +54,13 @@ export default function AprovadosPage() {
     const handleToggleFeatured = async (id: string, currentFeatured: boolean) => {
         const { error } = await supabase
             .from('submissions')
-            .update({ featured: !currentFeatured })
+            .update({ is_featured: !currentFeatured })
             .eq('id', id);
 
         if (error) {
             alert('Erro ao alterar destaque: ' + error.message);
         } else {
-            setSubmissions(prev => prev.map(s => s.id === id ? { ...s, featured: !currentFeatured } : s));
+            setSubmissions(prev => prev.map(s => s.id === id ? { ...s, is_featured: !currentFeatured } : s));
         }
     };
 
@@ -128,7 +128,7 @@ export default function AprovadosPage() {
                                 category: item.category,
                                 mediaType: item.media_type,
                                 mediaUrl: item.media_url,
-                                isFeatured: item.featured ?? false,
+                                isFeatured: (item as any).is_featured ?? false,
                             };
                             return (
                                 <div key={item.id} className="flex flex-col gap-3">
@@ -137,15 +137,15 @@ export default function AprovadosPage() {
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <button
-                                            onClick={() => handleToggleFeatured(item.id, item.featured ?? false)}
-                                            className={`flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg border transition-colors text-sm font-medium ${item.featured
+                                            onClick={() => handleToggleFeatured(item.id, (item as any).is_featured ?? false)}
+                                            className={`flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg border transition-colors text-sm font-medium ${(item as any).is_featured
                                                 ? 'bg-brand-yellow/10 text-brand-yellow border-brand-yellow/30 hover:bg-brand-yellow/20'
                                                 : 'bg-gray-50 dark:bg-gray-800 text-gray-400 border-gray-200 dark:border-gray-700 hover:text-brand-yellow hover:border-brand-yellow/30'
                                                 }`}
-                                            title={item.featured ? 'Remover Destaque' : 'Marcar como Destaque'}
+                                            title={(item as any).is_featured ? 'Remover Destaque' : 'Marcar como Destaque'}
                                         >
-                                            <span className="material-symbols-outlined text-[18px]" style={item.featured ? { fontVariationSettings: "'FILL' 1" } : {}}>star</span>
-                                            <span>{item.featured ? 'Destaque' : 'Destacar'}</span>
+                                            <span className="material-symbols-outlined text-[18px]" style={(item as any).is_featured ? { fontVariationSettings: "'FILL' 1" } : {}}>star</span>
+                                            <span>{(item as any).is_featured ? 'Destaque' : 'Destacar'}</span>
                                         </button>
                                         <button
                                             onClick={() => handleReject(item.id)}
