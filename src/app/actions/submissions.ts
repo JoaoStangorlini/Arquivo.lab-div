@@ -74,6 +74,33 @@ export async function fetchSubmissions({ page, limit, query, categories, mediaTy
         }
     }
 
+    // Fetch comment counts
+    const { data: commentCounts } = await supabase
+        .from('comments')
+        .select('submission_id')
+        .in('submission_id', submissionIds)
+        .eq('status', 'aprovado');
+
+    const commentMap: Record<string, number> = {};
+    if (commentCounts) {
+        for (const row of commentCounts) {
+            commentMap[row.submission_id] = (commentMap[row.submission_id] || 0) + 1;
+        }
+    }
+
+    // Fetch save counts
+    const { data: saveCounts } = await supabase
+        .from('saved_posts')
+        .select('submission_id')
+        .in('submission_id', submissionIds);
+
+    const saveMap: Record<string, number> = {};
+    if (saveCounts) {
+        for (const row of saveCounts) {
+            saveMap[row.submission_id] = (saveMap[row.submission_id] || 0) + 1;
+        }
+    }
+
     const items: MediaCardProps[] = submissions.map(sub => ({
         id: sub.id,
         title: sub.title,
@@ -84,6 +111,8 @@ export async function fetchSubmissions({ page, limit, query, categories, mediaTy
         category: sub.category,
         isFeatured: sub.featured,
         likeCount: likeMap[sub.id] || 0,
+        commentCount: commentMap[sub.id] || 0,
+        saveCount: saveMap[sub.id] || 0,
         external_link: sub.external_link || null,
         created_at: sub.created_at,
         technical_details: sub.technical_details || null,
@@ -149,6 +178,22 @@ export async function fetchTrendingSubmissions(): Promise<MediaCardProps[]> {
         }
     }
 
+    const { data: commentCounts } = await supabase.from('comments').select('submission_id').in('submission_id', submissionIds).eq('status', 'aprovado');
+    const commentMap: Record<string, number> = {};
+    if (commentCounts) {
+        for (const row of commentCounts) {
+            commentMap[row.submission_id] = (commentMap[row.submission_id] || 0) + 1;
+        }
+    }
+
+    const { data: saveCounts } = await supabase.from('saved_posts').select('submission_id').in('submission_id', submissionIds);
+    const saveMap: Record<string, number> = {};
+    if (saveCounts) {
+        for (const row of saveCounts) {
+            saveMap[row.submission_id] = (saveMap[row.submission_id] || 0) + 1;
+        }
+    }
+
     return submissions.map((sub: any) => ({
         id: sub.id,
         title: sub.title,
@@ -159,6 +204,8 @@ export async function fetchTrendingSubmissions(): Promise<MediaCardProps[]> {
         category: sub.category,
         isFeatured: sub.featured,
         likeCount: likeMap[sub.id] || 0,
+        commentCount: commentMap[sub.id] || 0,
+        saveCount: saveMap[sub.id] || 0,
         external_link: sub.external_link || null,
         created_at: sub.created_at,
         technical_details: sub.technical_details || null,

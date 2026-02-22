@@ -368,7 +368,7 @@ export const MediaCard = ({
                             </span>
                             <span className="text-xs font-bold tabular-nums">{likes}</span>
                         </button>
-                        <Link href={`/arquivo/${id}#comments`} onClick={(e) => e.stopPropagation()} className="text-gray-700 dark:text-gray-200 hover:text-brand-blue transition-transform active:scale-90 flex items-center gap-1">
+                        <Link href={`/arquivo/${id}#comments`} onClick={(e) => e.stopPropagation()} className="text-gray-700 dark:text-gray-200 hover:text-blue-400 transition-transform active:scale-90 flex items-center gap-1">
                             <span className="material-symbols-outlined text-[26px]">chat_bubble</span>
                             <span className="text-xs font-bold tabular-nums">{comments}</span>
                         </Link>
@@ -387,7 +387,7 @@ export const MediaCard = ({
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={e => e.stopPropagation()}
-                                className="text-gray-700 dark:text-gray-200 hover:text-green-500 transition-transform active:scale-90"
+                                className="text-gray-700 dark:text-gray-200 hover:text-brand-yellow transition-transform active:scale-90"
                             >
                                 <span className="material-symbols-outlined text-[26px]">download</span>
                             </a>
@@ -396,7 +396,7 @@ export const MediaCard = ({
                     <button
                         onClick={handleSave}
                         disabled={isSaving}
-                        className={`transition-all active:scale-90 flex items-center gap-1 ${saved ? 'text-brand-blue' : 'text-gray-700 dark:text-gray-200 hover:text-brand-blue'}`}
+                        className={`transition-all active:scale-90 flex items-center gap-1 ${saved ? 'text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:text-blue-400'}`}
                     >
                         <span className={`material-symbols-outlined text-[26px] ${saved ? 'filled' : ''}`} style={saved ? { fontVariationSettings: "'FILL' 1" } : {}}>
                             bookmark

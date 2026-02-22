@@ -118,7 +118,7 @@ export const ShareMenu = ({ id, title, author, onClose }: ShareMenuProps) => {
                         </div>
                     </div>
 
-                    {navigator.share && (
+                    {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
                         <button
                             onClick={handleNativeShare}
                             className="w-full mt-8 py-3 bg-primary dark:bg-blue-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
