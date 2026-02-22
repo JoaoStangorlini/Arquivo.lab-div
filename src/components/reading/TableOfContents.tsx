@@ -100,7 +100,7 @@ export function TableOfContents() {
             {/* Mobile FAB — visible only on small screens */}
             <button
                 onClick={() => setIsSheetOpen(true)}
-                className="lg:hidden fixed right-4 bottom-24 z-[90] bg-brand-blue text-white rounded-full shadow-xl p-3 min-h-[48px] min-w-[48px] flex items-center justify-center hover:scale-110 active:scale-95 transition-all print:hidden"
+                className="lg:hidden fixed right-4 bottom-28 z-[90] bg-brand-blue text-white rounded-full shadow-xl p-3 min-h-[48px] min-w-[48px] flex items-center justify-center hover:scale-110 active:scale-95 transition-all print:hidden"
                 aria-label="Abrir índice"
             >
                 <span className="material-symbols-outlined text-[22px]">toc</span>

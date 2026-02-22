@@ -188,7 +188,7 @@ function ToolbarButton({
             <span className={`material-symbols-outlined text-[20px] ${active ? 'fill-current' : ''} ${colorClasses[color].split(' ')[0]}`}>
                 {icon}
             </span>
-            <span className="hidden sm:block text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+            <span className="hidden md:block text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                 {label}
             </span>
 

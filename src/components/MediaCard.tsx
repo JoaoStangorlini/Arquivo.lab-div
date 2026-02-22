@@ -200,9 +200,10 @@ export const MediaCard = React.memo(({
     const buttonColorClass = ['bg-brand-blue text-white', 'bg-brand-red text-white', 'bg-brand-yellow text-gray-900'][colorNum];
     return (
         <div
-            className={`masonry-item group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-card-dark shadow-sm transition-all hover:shadow-xl border ${isFeatured ? 'border-brand-yellow/50 animate-premium-glow z-10' : 'border-gray-100 dark:border-gray-800'} ${sizeModifierStyles}`}
+            className={`masonry-item group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-card-dark shadow-sm transition-all hover:shadow-xl border cursor-pointer ${isFeatured ? 'border-brand-yellow/50 animate-premium-glow z-10' : 'border-gray-100 dark:border-gray-800'} ${sizeModifierStyles}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onClick={() => router.push(`/arquivo/${id}`)}
         >
             {/* Hover Preview Overlay */}
             <AnimatePresence>
@@ -241,17 +242,23 @@ export const MediaCard = React.memo(({
                     <Link
                         href={`/?autor=${encodeURIComponent(authors)}`}
                         onClick={(e) => {
+                            e.preventDefault();
                             e.stopPropagation();
+                            router.push(`/?autor=${encodeURIComponent(authors)}`);
                         }}
-                        className="text-xs font-bold text-gray-900 dark:text-gray-100 hover:text-brand-blue transition-colors"
+                        className="text-xs font-bold text-gray-900 dark:text-gray-100 hover:text-brand-blue transition-colors truncate max-w-[120px] sm:max-w-[180px]"
                     >
                         {authors}
                     </Link>
                 </div>
                 <Link
                     href={`/arquivo/${id}`}
-                    onClick={(e) => e.stopPropagation()}
-                    className={`inline-flex items-center justify-center gap-1 rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider shadow-md transition-all hover:scale-105 hover:shadow-lg hover:opacity-90 ${buttonColorClass}`}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        router.push(`/arquivo/${id}`);
+                    }}
+                    className={`inline-flex items-center justify-center gap-1 rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider shadow-md transition-all hover:scale-105 hover:shadow-lg hover:opacity-90 whitespace-nowrap shrink-0 ${buttonColorClass}`}
                 >
                     <span className="flex items-center gap-1">
                         Abrir página completa
@@ -447,7 +454,14 @@ export const MediaCard = React.memo(({
                         const colorClass = colors[hash % colors.length];
 
                         return (
-                            <span key={idx} className={`px-2 py-0.5 ${colorClass} text-[10px] font-extrabold rounded-md uppercase tracking-wide border transition-all hover:scale-105 select-none`}>
+                            <span
+                                key={idx}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    router.push(`/?tag=${tag.replace('#', '')}`);
+                                }}
+                                className={`px-2 py-0.5 ${colorClass} text-[10px] font-extrabold rounded-md uppercase tracking-wide border transition-all hover:scale-105 select-none cursor-pointer`}
+                            >
                                 #{tag.replace('#', '')}
                             </span>
                         );
