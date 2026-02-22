@@ -155,7 +155,7 @@ export function ReproductionSection({ submissionId, submissionTitle, initialRepr
                         {isFormOpen ? 'Cancelar' : 'Enviar minha versão'}
                     </button>
                 ) : (
-                    <div className="bg-brand-blue/5 border border-brand-blue/10 p-4 rounded-2xl flex items-center gap-3 text-brand-blue text-sm font-medium">
+                    <div className="bg-brand-blue/5 border border-brand-blue/10 p-4 rounded-2xl flex items-center gap-3 text-brand-blue dark:text-blue-400 text-sm font-medium">
                         <span className="material-symbols-outlined">info</span>
                         <span>Faça login para compartilhar sua reprodução!</span>
                     </div>

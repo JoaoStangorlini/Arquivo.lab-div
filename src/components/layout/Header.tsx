@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import { signOut } from '@/app/actions/auth';
 
@@ -22,8 +23,10 @@ export function Header() {
 
     const [user, setUser] = useState<any>(null);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
 
     useEffect(() => {
+        setIsDarkMode(document.documentElement.classList.contains('dark'));
         const checkUser = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             setUser(session?.user ?? null);
@@ -45,6 +48,19 @@ export function Header() {
             console.error('Logout error:', error);
             // Fallback: just redirect
             window.location.href = '/';
+        }
+    };
+
+    const toggleTheme = () => {
+        if (isDarkMode === null) return;
+        const newDarkMode = !isDarkMode;
+        setIsDarkMode(newDarkMode);
+        if (newDarkMode) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
         }
     };
 
@@ -139,6 +155,43 @@ export function Header() {
                                     <span className="hidden sm:inline">Entrar</span>
                                 </Link>
                             )}
+
+                            {/* Theme Toggle */}
+                            <button
+                                onClick={toggleTheme}
+                                className="relative w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors overflow-hidden border-2 border-transparent hover:border-brand-blue/20 dark:hover:border-brand-yellow/20"
+                                aria-label="Alterar tema"
+                            >
+                                <AnimatePresence mode="wait" initial={false}>
+                                    {isDarkMode === false && (
+                                        <motion.span
+                                            key="moon"
+                                            initial={{ y: -30, opacity: 0, rotate: -90 }}
+                                            animate={{ y: 0, opacity: 1, rotate: 0 }}
+                                            exit={{ y: 30, opacity: 0, rotate: 90 }}
+                                            transition={{ duration: 0.3, type: "spring", stiffness: 200, damping: 10 }}
+                                            className="material-symbols-outlined absolute"
+                                        >
+                                            dark_mode
+                                        </motion.span>
+                                    )}
+                                    {isDarkMode === true && (
+                                        <motion.span
+                                            key="sun"
+                                            initial={{ y: -30, opacity: 0, rotate: -90 }}
+                                            animate={{ y: 0, opacity: 1, rotate: 0 }}
+                                            exit={{ y: 30, opacity: 0, rotate: 90 }}
+                                            transition={{ duration: 0.3, type: "spring", stiffness: 200, damping: 10 }}
+                                            className="material-symbols-outlined absolute"
+                                        >
+                                            light_mode
+                                        </motion.span>
+                                    )}
+                                </AnimatePresence>
+                                {isDarkMode === null && (
+                                    <span className="w-5 h-5 rounded-full border-2 border-transparent border-t-brand-blue animate-spin"></span>
+                                )}
+                            </button>
 
                             {/* Mobile Menu Toggle */}
                             <button

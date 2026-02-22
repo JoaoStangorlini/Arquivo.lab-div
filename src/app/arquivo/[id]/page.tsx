@@ -157,11 +157,11 @@ export default async function ArquivoItemPage({ params }: PageProps) {
                         </h1>
 
                         <div className="flex items-center gap-3 py-4 border-y border-gray-100 dark:border-gray-800">
-                            <div className="size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm uppercase shrink-0">
+                            <div className="size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary dark:text-blue-400 font-bold text-sm uppercase shrink-0">
                                 {submission.authors.substring(0, 2)}
                             </div>
                             <div className="flex flex-col">
-                                <span className="text-xs text-gray-500 font-medium uppercase tracking-wider">Autores</span>
+                                <span className="text-xs text-gray-500 font-medium uppercase tracking-wider">Autore(s)</span>
                                 <span className="text-base font-bold text-gray-900 dark:text-white">{submission.authors}</span>
                             </div>
                         </div>

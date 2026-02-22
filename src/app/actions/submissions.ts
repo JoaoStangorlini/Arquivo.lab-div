@@ -10,9 +10,10 @@ export interface FetchParams {
     categories?: string[]; // Multiple categories
     mediaTypes?: string[]; // Multiple media types
     sort: 'recentes' | 'antigas';
+    author?: string; // New: Filter by author name
 }
 
-export async function fetchSubmissions({ page, limit, query, categories, mediaTypes, sort }: FetchParams): Promise<{ items: MediaCardProps[], hasMore: boolean }> {
+export async function fetchSubmissions({ page, limit, query, categories, mediaTypes, sort, author }: FetchParams): Promise<{ items: MediaCardProps[], hasMore: boolean }> {
     let queryBuilder = supabase
         .from('submissions')
         .select('*', { count: 'exact' })
@@ -21,6 +22,11 @@ export async function fetchSubmissions({ page, limit, query, categories, mediaTy
     // Filtering by Category
     if (categories && categories.length > 0 && !categories.includes('Todos')) {
         queryBuilder = queryBuilder.in('category', categories);
+    }
+
+    // Filtering by Author
+    if (author) {
+        queryBuilder = queryBuilder.eq('authors', author);
     }
 
     // Filtering by Media Type

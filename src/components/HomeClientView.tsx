@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { MediaCard, MediaCardProps } from './MediaCard';
 import { fetchSubmissions } from '@/app/actions/submissions';
-import { SubmissionModalContent } from './SubmissionModalContent';
 
 interface HomeClientViewProps {
     initialItems: MediaCardProps[];
@@ -12,6 +12,10 @@ interface HomeClientViewProps {
 }
 
 export const HomeClientView = ({ initialItems, initialHasMore, initialCategory = 'Todos' }: HomeClientViewProps) => {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const authorFilter = searchParams.get('autor');
+
     // Search & Filter State
     const [searchQuery, setSearchQuery] = useState('');
     const [debouncedQuery, setDebouncedQuery] = useState('');
@@ -25,10 +29,6 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
     const [hasMore, setHasMore] = useState(initialHasMore);
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
-
-    // Modal State
-    const [selectedItem, setSelectedItem] = useState<MediaCardProps | null>(null);
-    const [modalImageIdx, setModalImageIdx] = useState(0);
 
 
     // No need for mousePos React state anymore! Using CSS Variables for performance.
@@ -77,7 +77,8 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
                     query: debouncedQuery,
                     categories: selectedCategories,
                     mediaTypes: selectedMediaTypes,
-                    sort: sortOrder
+                    sort: sortOrder,
+                    author: authorFilter || undefined
                 });
                 setItems(res.items);
                 setHasMore(res.hasMore);
@@ -89,7 +90,7 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
             }
         };
         fetchFiltered();
-    }, [debouncedQuery, selectedCategories, selectedMediaTypes, sortOrder]);
+    }, [debouncedQuery, selectedCategories, selectedMediaTypes, sortOrder, authorFilter]);
 
     const handleLoadMore = async () => {
         if (!hasMore || isLoadingMore) return;
@@ -102,7 +103,8 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
                 query: debouncedQuery,
                 categories: selectedCategories,
                 mediaTypes: selectedMediaTypes,
-                sort: sortOrder
+                sort: sortOrder,
+                author: authorFilter || undefined
             });
             setItems(prev => [...prev, ...res.items]);
             setHasMore(res.hasMore);
@@ -114,35 +116,7 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
         }
     };
 
-    const openModal = (item: MediaCardProps) => {
-        setSelectedItem(item);
-        setModalImageIdx(0);
-    };
-
-    const currentSubmissionIndex = selectedItem ? items.findIndex(i => i.id === selectedItem.id) : -1;
-    const hasPrevSubmission = currentSubmissionIndex > 0;
-    const hasNextSubmission = currentSubmissionIndex !== -1 && currentSubmissionIndex < items.length - 1;
-
-    const handlePrevSubmission = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        if (hasPrevSubmission) {
-            setSelectedItem(items[currentSubmissionIndex - 1]);
-            setModalImageIdx(0);
-        }
-    };
-
-    const handleNextSubmission = async (e: React.MouseEvent) => {
-        e.stopPropagation();
-        if (hasNextSubmission) {
-            setSelectedItem(items[currentSubmissionIndex + 1]);
-            setModalImageIdx(0);
-
-            // Fetch more if we navigate close to the end (prefetching)
-            if (currentSubmissionIndex + 1 >= items.length - 3 && hasMore && !isLoadingMore) {
-                await handleLoadMore();
-            }
-        }
-    };
+    // Removal of modal navigation logic
 
     const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
         if (!headerRef.current) return;
@@ -185,8 +159,8 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="max-w-3xl">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 border border-brand-blue/20 dark:border-brand-blue/30 text-brand-blue dark:text-brand-blue text-xs font-semibold uppercase tracking-wide mb-6">
-                            <span className="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 border border-brand-blue/20 dark:border-brand-blue/30 text-brand-blue dark:text-blue-400 text-xs font-semibold uppercase tracking-wide mb-6">
+                            <span className="w-2 h-2 rounded-full bg-brand-blue dark:bg-blue-400 animate-pulse"></span>
                             Excelência em Pesquisa
                         </div>
                         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-7xl tracking-tight mb-6 text-gray-900 dark:text-white leading-[1.1]">
@@ -224,7 +198,7 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
                                     <span className="w-1.5 h-1.5 rounded-full bg-brand-blue shrink-0"></span>
                                     <span>Você quer levar ciência para os alunos?</span>
                                 </div>
-                                <span className="font-semibold text-brand-blue cursor-pointer hover:underline sm:ml-0 ml-3.5" onClick={() => setSelectedCategories(['Uso Didático'])}>Uso Didático</span>
+                                <span className="font-semibold text-brand-blue dark:text-blue-400 cursor-pointer hover:underline sm:ml-0 ml-3.5" onClick={() => setSelectedCategories(['Uso Didático'])}>Uso Didático</span>
                                 <span className="sm:ml-0 ml-3.5">é ideal para o ensino.</span>
                             </div>
                             <div className="text-sm text-gray-600 dark:text-gray-400 flex sm:items-center gap-2 opacity-90 transition-opacity hover:opacity-100 flex-col sm:flex-row">
@@ -378,7 +352,7 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
                             </div>
                             <div className={`grid gap-6 ${featuredItems.length === 1 ? 'grid-cols-1 max-w-2xl mx-auto' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
                                 {featuredItems.map(item => (
-                                    <div key={item.id} onClick={() => openModal(item)} className="transform hover:scale-[1.02] transition-transform">
+                                    <div key={item.id} className="transform hover:scale-[1.02] transition-transform">
                                         <div className="relative">
                                             <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-red via-brand-yellow to-brand-red rounded-2xl blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
                                             <div className="relative">
@@ -392,9 +366,34 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
                     </section>
                 );
             })()}
-
+            {/* Main Feed Section */}
             <section className="bg-background-subtle dark:bg-background-dark py-12 transition-colors flex-grow">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    {authorFilter && (
+                        <div className="mb-8 flex flex-col sm:flex-row items-center justify-between p-6 bg-white dark:bg-card-dark rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm gap-4">
+                            <div className="flex items-center gap-4">
+                                <div className="h-16 w-16 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-xl font-bold text-primary">
+                                    {authorFilter.substring(0, 2).toUpperCase()}
+                                </div>
+                                <div>
+                                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{authorFilter}</h1>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Autor(a) no Arquivo Lab-Div</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <button className="px-6 py-2 bg-primary text-white rounded-xl font-bold hover:opacity-90 transition-opacity active:scale-95">
+                                    Seguir
+                                </button>
+                                <button
+                                    onClick={() => router.push('/')}
+                                    className="px-4 py-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                                >
+                                    Ver tudo
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     {isLoading ? (
                         <div className="flex flex-col items-center justify-center py-24">
                             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-blue mb-4"></div>
@@ -412,15 +411,15 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
                                     <span className="text-sm font-semibold text-gray-500 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">{items.length} iten(s)</span>
                                 </div>
                             )}
-                            <div className="masonry-grid">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
                                 {items.length > 0 ? (
                                     items.map((item) => (
-                                        <div key={item.id} onClick={() => openModal(item)}>
+                                        <div key={item.id} className="w-full">
                                             <MediaCard {...item} />
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="col-span-1 sm:col-span-2 lg:col-span-3 text-center py-24 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center">
+                                    <div className="col-span-full text-center py-24 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center">
                                         <span className="material-symbols-outlined text-5xl text-gray-300 dark:text-gray-600 mb-3">search_off</span>
                                         <h3 className="text-xl font-bold text-gray-700 dark:text-gray-300">Nenhum resultado encontrado</h3>
                                         <p className="text-gray-500 mt-2">Tente ajustar seus filtros ou termo de busca.</p>
@@ -461,20 +460,9 @@ export const HomeClientView = ({ initialItems, initialHasMore, initialCategory =
                         </div>
                     )}
                 </div>
-            </section>
+            </section >
 
-            {selectedItem && (
-                <SubmissionModalContent
-                    item={selectedItem}
-                    imageIdx={modalImageIdx}
-                    setImageIdx={setModalImageIdx}
-                    onClose={() => setSelectedItem(null)}
-                    hasPrev={hasPrevSubmission}
-                    hasNext={hasNextSubmission}
-                    onPrev={handlePrevSubmission}
-                    onNext={handleNextSubmission}
-                />
-            )}
+            {/* Modal removed */}
         </>
     );
 };

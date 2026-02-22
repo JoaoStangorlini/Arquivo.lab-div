@@ -1,104 +1,82 @@
 @import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+
 @plugin "@tailwindcss/typography";
 
-@theme inline {
-  --color-primary: #0099CC;
-  /* brand-blue */
-  --color-secondary: #FF4D4D;
-  /* brand-red */
-  --color-accent: #FFCC00;
-  /* brand-yellow */
-
-  --color-brand-blue: #0099CC;
-  --color-brand-red: #FF4D4D;
-  --color-brand-yellow: #FFCC00;
-  --color-brand-darkBlue: #007aa3;
-  --color-brand-lightBlue: #e5f5fa;
-
+@theme {
+  --color-primary: #002752;
+  --color-secondary: #001A33;
+  --color-brand-yellow: #FFB300;
+  --color-brand-red: #E63946;
+  --color-brand-blue: #002752;
+  --color-card-dark: #1E1E1E;
   --color-background-light: #F8FAFC;
-  --color-background-subtle: #F1F5F9;
   --color-background-dark: #121212;
-
-  --color-card-light: #FFFFFF;
-  --color-card-dark: #1e2939;
-  --color-form-dark: #151f34;
-
-  --color-text-main: #111827;
-  --color-text-muted: #6B7280;
-
-  --font-display: "Space Grotesk", sans-serif;
-  --font-body: var(--font-inter), sans-serif;
-  --font-sans: var(--font-inter), sans-serif;
-
-  --radius-DEFAULT: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
-  --radius-full: 9999px;
+  --color-background-subtle: #F1F5F9;
+  --color-form-dark: #2A2A2A;
 }
 
 @layer base {
-  body {
-    font-family: var(--font-sans);
-  }
 
-  h6 {
-    @apply font-display text-gray-900 dark:text-gray-100 font-bold;
-  }
-
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+  *,
+  ::after,
+  ::before {
+    @apply border-gray-200 dark:border-gray-800 transition-colors duration-200;
   }
 }
 
 @layer components {
-  .card-accent-blue {
-    border-top: 4px solid var(--color-brand-blue);
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-white transition-all hover:bg-secondary hover:shadow-lg active:scale-95 disabled:opacity-50;
   }
 
-  .card-accent-red {
-    border-top: 4px solid var(--color-brand-red);
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border-2 border-primary/20 bg-white px-6 py-3 text-sm font-bold text-primary transition-all hover:bg-slate-50 hover:shadow-md active:scale-95 dark:border-white/10 dark:bg-card-dark dark:text-white;
   }
 
-  .card-accent-yellow {
-    border-top: 4px solid var(--color-brand-yellow);
+  .card-hover {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl;
   }
 }
 
 @layer utilities {
-  .masonry-grid {
-    column-count: 1;
-    column-gap: 1.5rem;
+  .card-gradient-border {
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.3s;
   }
 
-  @media (min-width: 640px) {
-    .masonry-grid {
-      column-count: 2;
-    }
+  .card-gradient-border:hover {
+    border-color: var(--color-brand-yellow);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   }
 
-  @media (min-width: 1024px) {
-    .masonry-grid {
-      column-count: 3;
-    }
+  /* Custom gradient text */
+  .text-gradient-brand {
+    @apply bg-gradient-to-r from-brand-yellow via-brand-red to-brand-blue bg-clip-text text-transparent;
   }
 
-  .masonry-item {
-    break-inside: avoid;
-    margin-bottom: 1.5rem;
+  .lab-div-gradient {
+    @apply bg-gradient-to-r from-brand-yellow via-brand-red to-brand-blue;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-xl dark:bg-slate-900/70 dark:border-white/10;
+  }
+
+  /* Animation for scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   @keyframes blob-bounce {
@@ -106,7 +84,7 @@
     0%,
     100% {
       transform: scale(1);
-      opacity: 1;
+      opacity: 0.3;
     }
 
     50% {
@@ -126,5 +104,31 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  @keyframes heart-pop {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    25% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+
+    50% {
+      transform: scale(0.9);
+      opacity: 1;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+
+  .animate-heart-pop {
+    animation: heart-pop 0.8s ease-out forwards;
   }
 }
