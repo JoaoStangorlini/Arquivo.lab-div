@@ -1,6 +1,8 @@
 import { supabase } from '@/lib/supabase';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import React from 'react';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { ShareButtons } from './ShareButtons';
@@ -18,6 +20,11 @@ import { MarkdownImage } from '@/components/reading/MarkdownImageLightbox';
 import { ViewTracker } from '@/components/ViewTracker';
 import { ReadingExperienceProvider } from '@/components/reading/ReadingExperienceProvider';
 import { ReadingViewManager } from '@/components/reading/ReadingViewManager';
+import { ReadingHistoryTracker } from '@/components/history/ReadingHistoryTracker';
+import { ReactionSystem } from '@/components/engagement/ReactionSystem';
+import { KudosButton } from '@/components/engagement/KudosButton';
+import { FollowTagButton } from '@/components/engagement/FollowTagButton';
+import { ArquivoItemClientHydration } from '@/components/engagement/ArquivoItemClientHydration';
 
 interface PageProps {
     params: Promise<{ id: string }>;
@@ -120,6 +127,9 @@ export default async function ArquivoItemPage({ params }: PageProps) {
         .eq('status', 'aprovado')
         .order('created_at', { ascending: false });
 
+    // Get user for history tracking
+    const { data: { user } } = await supabase.auth.getUser();
+
     return (
         <ReadingExperienceProvider>
             <div className="min-h-screen bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 flex flex-col">
@@ -127,7 +137,6 @@ export default async function ArquivoItemPage({ params }: PageProps) {
 
                 <ReadingViewManager submission={submission}>
                     <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-                        <ViewTracker submissionId={id} />
 
                         {/* ─── Card de Introdução ao Índice (Hierarquia: 2º após Fogo) ─── */}
                         {submission.description && submission.description.length > 500 && (
@@ -178,6 +187,17 @@ export default async function ArquivoItemPage({ params }: PageProps) {
                                             Destaque
                                         </span>
                                     )}
+                                    {submission.tags?.map((tag: string, idx: number) => (
+                                        <div key={idx} className="flex items-center gap-2">
+                                            <Link
+                                                href={`/?tag=${tag.replace('#', '')}`}
+                                                className="px-3 py-1 bg-gray-50 dark:bg-gray-800 text-gray-500 hover:text-brand-blue border border-gray-100 dark:border-gray-700 rounded-full text-xs font-bold transition-all"
+                                            >
+                                                #{tag.replace('#', '')}
+                                            </Link>
+                                            <FollowTagButton tagName={tag.replace('#', '')} userId={user?.id} />
+                                        </div>
+                                    ))}
                                 </div>
 
                                 <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white leading-tight">
@@ -203,6 +223,14 @@ export default async function ArquivoItemPage({ params }: PageProps) {
                                         )}
                                     </div>
                                 </div>
+                                <ArquivoItemClientHydration
+                                    type="bar"
+                                    submissionId={submission.id}
+                                    userId={user?.id}
+                                    receiverId={submission.user_id}
+                                    reactionsSummary={submission.reactions_summary || {}}
+                                    kudosTotal={submission.kudos_total || 0}
+                                />
 
                                 {submission.description && (
                                     <div id="submission-content" className="mt-8">
@@ -249,28 +277,22 @@ export default async function ArquivoItemPage({ params }: PageProps) {
                                         </div>
                                     </div>
                                 )}
-
-                                {/* Share & Export Buttons */}
-                                <div className="flex flex-wrap items-center gap-3">
-                                    <ShareButtons title={submission.title} id={submission.id} />
-                                    <ExportPDFButton />
-                                </div>
-
-                                {/* Eu Reproduzi! Section */}
-                                <ReproductionSection
-                                    submissionId={submission.id}
-                                    submissionTitle={submission.title}
-                                    initialReproductions={routeReproductions}
-                                />
-
-                                {/* Interactive Comments */}
-                                <CommentsSection
-                                    submissionId={submission.id}
-                                    submissionTitle={submission.title}
-                                    initialComments={(routeComments as Comment[]) || []}
-                                />
                             </div>
                         </div>
+
+                        {/* Eu Reproduzi! Section */}
+                        <ReproductionSection
+                            submissionId={submission.id}
+                            submissionTitle={submission.title}
+                            initialReproductions={routeReproductions}
+                        />
+
+                        {/* Interactive Comments */}
+                        <CommentsSection
+                            submissionId={submission.id}
+                            submissionTitle={submission.title}
+                            initialComments={(routeComments as Comment[]) || []}
+                        />
 
                         {/* Related Materials Section */}
                         {relatedSubmissions.length > 0 && (
@@ -316,6 +338,14 @@ export default async function ArquivoItemPage({ params }: PageProps) {
 
                 <Footer />
             </div>
+            <ArquivoItemClientHydration
+                type="hub"
+                submissionId={submission.id}
+                userId={user?.id}
+                receiverId={submission.user_id}
+                reactionsSummary={submission.reactions_summary || {}}
+                kudosTotal={submission.kudos_total || 0}
+            />
         </ReadingExperienceProvider>
     );
 }

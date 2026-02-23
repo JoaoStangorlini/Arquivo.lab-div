@@ -7,6 +7,8 @@ import { fetchSubmissions } from '@/app/actions/submissions';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TrendingTags } from './TrendingTags';
 import { FeaturedCarousel } from './FeaturedCarousel';
+import { useSearchAutocomplete } from '@/hooks/useSearchAutocomplete';
+import { highlightMatch } from '@/lib/utils';
 
 interface HomeClientViewProps {
     initialItems: MediaCardProps[];
@@ -17,22 +19,6 @@ interface HomeClientViewProps {
     trendingTags?: string[];
 }
 
-const highlightMatch = (text: string, query: string) => {
-    if (!query.trim() || query.length < 2) return text;
-    const regex = new RegExp(`(${query})`, 'gi');
-    const parts = text.split(regex);
-    return (
-        <span>
-            {parts.map((part, i) =>
-                part.toLowerCase() === query.toLowerCase() ? (
-                    <mark key={i} className="bg-brand-yellow/40 text-gray-900 dark:text-white rounded-sm px-0.5 font-black">{part}</mark>
-                ) : (
-                    part
-                )
-            )}
-        </span>
-    );
-};
 
 export const HomeClientView = ({
     initialItems,
@@ -51,7 +37,10 @@ export const HomeClientView = ({
     const [debouncedQuery, setDebouncedQuery] = useState('');
     const [selectedCategories, setSelectedCategories] = useState<string[]>([initialCategory]);
     const [selectedMediaTypes, setSelectedMediaTypes] = useState<string[]>([]);
+    const [selectedYear, setSelectedYear] = useState<number | undefined>(undefined);
     const [sortOrder, setSortOrder] = useState<'recentes' | 'antigas'>('recentes');
+
+    const { suggestions, isLoading: isAutocompleteLoading } = useSearchAutocomplete(searchQuery);
 
     // Pagination & Data State
     const [items, setItems] = useState<MediaCardProps[]>(initialItems);
@@ -139,6 +128,9 @@ export const HomeClientView = ({
         { label: 'Notas', value: 'sdocx', icon: 'edit_note' },
     ];
 
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: 40 }, (_, i) => currentYear - i);
+
     // Debounce Search 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -174,7 +166,8 @@ export const HomeClientView = ({
                     is_featured: selectedCategories.includes('Destaques') ? true : undefined,
                     mediaTypes: selectedMediaTypes,
                     sort: sortOrder,
-                    author: authorFilter || undefined
+                    author: authorFilter || undefined,
+                    year: selectedYear
                 });
                 setItems(res.items);
                 setHasMore(res.hasMore);
@@ -186,7 +179,7 @@ export const HomeClientView = ({
             }
         };
         fetchFiltered();
-    }, [debouncedQuery, selectedCategories, selectedMediaTypes, sortOrder, authorFilter]);
+    }, [debouncedQuery, selectedCategories, selectedMediaTypes, sortOrder, authorFilter, selectedYear]);
 
     const handleLoadMore = async () => {
         if (!hasMore || isLoadingMore) return;
@@ -201,7 +194,8 @@ export const HomeClientView = ({
                 is_featured: selectedCategories.includes('Destaques') ? true : undefined,
                 mediaTypes: selectedMediaTypes,
                 sort: sortOrder,
-                author: authorFilter || undefined
+                author: authorFilter || undefined,
+                year: selectedYear
             });
             setItems(prev => [...prev, ...res.items]);
             setHasMore(res.hasMore);
@@ -284,45 +278,52 @@ export const HomeClientView = ({
 
                             {/* Autocomplete Dropdown */}
                             <AnimatePresence>
-                                {isSearchFocused && debouncedQuery.length > 1 && (
+                                {isSearchFocused && (debouncedQuery.length > 1 || suggestions.length > 0) && (
                                     <motion.div
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -10 }}
                                         className="absolute top-full mt-2 left-0 right-0 bg-white dark:bg-card-dark rounded-xl shadow-2xl border border-gray-100 dark:border-gray-800 z-50 overflow-hidden"
                                     >
-                                        {isLoading ? (
+                                        {isAutocompleteLoading ? (
                                             <div className="p-4 text-center text-sm font-medium text-gray-400 flex items-center justify-center gap-2">
                                                 <span className="material-symbols-outlined animate-spin text-sm">progress_activity</span>
                                                 Buscando sugestões...
                                             </div>
-                                        ) : items.length > 0 ? (
+                                        ) : suggestions.length > 0 ? (
                                             <div className="flex flex-col">
                                                 <div className="px-4 py-2 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800 text-[10px] font-bold uppercase tracking-wider text-gray-500">
-                                                    Sugestões Inteligentes
+                                                    Sugestões do Arquiteto
                                                 </div>
-                                                {items.slice(0, 4).map((item: MediaCardProps) => (
-                                                    <div key={item.id} onClick={() => router.push(`/arquivo/${item.id}`)} className="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer flex items-center gap-3 border-b border-gray-50 dark:border-gray-800/50 last:border-0 transition-colors">
+                                                {suggestions.map((sug, idx) => (
+                                                    <div
+                                                        key={idx}
+                                                        onClick={() => {
+                                                            if (sug.type === 'tag') setSearchQuery(`#${sug.suggestion}`);
+                                                            else setSearchQuery(sug.suggestion);
+                                                            setIsSearchFocused(false);
+                                                        }}
+                                                        className="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer flex items-center gap-3 border-b border-gray-50 dark:border-gray-800/50 last:border-0 transition-colors"
+                                                    >
                                                         <span className="material-symbols-outlined text-gray-400">
-                                                            {item.mediaType === 'video' ? 'play_circle' : item.mediaType === 'text' ? 'article' : item.mediaType === 'pdf' ? 'picture_as_pdf' : 'image'}
+                                                            {sug.type === 'tag' ? 'local_offer' : 'article'}
                                                         </span>
                                                         <div className="flex flex-col flex-1 truncate">
                                                             <span className="text-sm font-bold text-gray-900 dark:text-gray-100 truncate">
-                                                                {highlightMatch(item.title, debouncedQuery)}
+                                                                {highlightMatch(sug.suggestion, searchQuery)}
                                                             </span>
-                                                            <span className="text-xs text-brand-blue dark:text-blue-400 font-medium truncate">
-                                                                {highlightMatch(item.authors, debouncedQuery)}
+                                                            <span className="text-[10px] text-gray-400 font-bold uppercase">
+                                                                {sug.type === 'tag' ? 'Tag Popular' : 'Mídia Sugerida'}
                                                             </span>
                                                         </div>
                                                         <span className="material-symbols-outlined text-gray-300 text-sm">north_west</span>
                                                     </div>
                                                 ))}
-                                                <div onClick={() => setIsSearchFocused(false)} className="px-4 py-3 bg-gray-50 dark:bg-gray-900/50 text-center text-xs font-bold text-brand-blue dark:text-brand-yellow cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-t border-gray-100 dark:border-gray-800">
-                                                    Ver todos os {items.length} resultados para "{debouncedQuery}"
-                                                </div>
                                             </div>
-                                        ) : (
-                                            <div className="p-4 text-center text-sm font-medium text-gray-500">Nenhum resultado encontrado para "{debouncedQuery}"</div>
+                                        ) : searchQuery.length > 1 && (
+                                            <div className="p-4 text-center text-sm font-medium text-gray-500">
+                                                Nenhum resultado pronto encontrado para "{searchQuery}"
+                                            </div>
                                         )}
                                     </motion.div>
                                 )}
@@ -446,42 +447,82 @@ export const HomeClientView = ({
             <section className="py-4 md:py-6 border-b border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-background-dark/95 sticky top-24 z-40 backdrop-blur-md shadow-sm overflow-hidden border-t border-t-gray-100 dark:border-t-gray-800/50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3 md:space-y-4">
 
-                    {/* Media Type Filters */}
-                    <div className="flex flex-wrap items-center gap-3 pb-4">
-                        <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mr-2 flex items-center gap-1">
-                            <span className="material-symbols-outlined text-sm">filter_list</span>
-                            Formato:
-                        </span>
-                        <div className="flex flex-wrap gap-2">
-                            {mediaTypeOptions.map(option => {
-                                const isActive = selectedMediaTypes.includes(option.value);
-                                let colorClass = 'brand-blue';
-                                let textColor = 'text-white';
-                                if (option.value === 'video') { colorClass = 'brand-yellow'; textColor = 'text-black'; }
-                                if (option.value === 'pdf') { colorClass = 'brand-red'; textColor = 'text-white'; }
-                                if (option.value === 'text') { colorClass = 'brand-blue'; textColor = 'text-white'; }
-                                if (option.value === 'zip') { colorClass = 'brand-blue'; textColor = 'text-white'; }
-                                if (option.value === 'sdocx') { colorClass = 'brand-red'; textColor = 'text-white'; }
+                    {/* Media Type & Year Filters */}
+                    <div className="flex flex-wrap items-center gap-6 pb-4">
+                        <div className="flex items-center gap-3">
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1">
+                                <span className="material-symbols-outlined text-sm">filter_list</span>
+                                Formato:
+                            </span>
+                            <div className="flex flex-wrap gap-2">
+                                {mediaTypeOptions.map(option => {
+                                    const isActive = selectedMediaTypes.includes(option.value);
+                                    let colorClass = 'brand-blue';
+                                    let textColor = 'text-white';
+                                    if (option.value === 'video') { colorClass = 'brand-yellow'; textColor = 'text-black'; }
+                                    if (option.value === 'pdf') { colorClass = 'brand-red'; textColor = 'text-white'; }
+                                    if (option.value === 'text') { colorClass = 'brand-blue'; textColor = 'text-white'; }
+                                    if (option.value === 'zip') { colorClass = 'brand-blue'; textColor = 'text-white'; }
+                                    if (option.value === 'sdocx') { colorClass = 'brand-red'; textColor = 'text-white'; }
 
-                                return (
+                                    return (
+                                        <button
+                                            key={option.value}
+                                            onClick={() => {
+                                                if (isActive) {
+                                                    setSelectedMediaTypes(prev => prev.filter(t => t !== option.value));
+                                                } else {
+                                                    setSelectedMediaTypes(prev => [...prev, option.value]);
+                                                }
+                                            }}
+                                            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${isActive
+                                                ? `bg-${colorClass} ${textColor} border-${colorClass} shadow-md shadow-${colorClass}/20`
+                                                : `bg-white dark:bg-form-dark text-gray-500 border-gray-200 dark:border-gray-700 hover:border-${colorClass} hover:text-${colorClass} hover:bg-${colorClass}/5`}`}
+                                        >
+                                            <span className="material-symbols-outlined text-[16px]">{option.icon}</span>
+                                            {option.label}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1">
+                                <span className="material-symbols-outlined text-sm">calendar_month</span>
+                                Ano:
+                            </span>
+                            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar max-w-[300px] sm:max-w-none">
+                                <button
+                                    onClick={() => setSelectedYear(undefined)}
+                                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${selectedYear === undefined
+                                        ? 'bg-brand-blue text-white border-brand-blue shadow-md'
+                                        : 'bg-white dark:bg-form-dark text-gray-500 border-gray-200 dark:border-gray-700 hover:border-brand-blue'}`}
+                                >
+                                    Todos
+                                </button>
+                                {years.slice(0, 10).map(year => (
                                     <button
-                                        key={option.value}
-                                        onClick={() => {
-                                            if (isActive) {
-                                                setSelectedMediaTypes(prev => prev.filter(t => t !== option.value));
-                                            } else {
-                                                setSelectedMediaTypes(prev => [...prev, option.value]);
-                                            }
-                                        }}
-                                        className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${isActive
-                                            ? `bg-${colorClass} ${textColor} border-${colorClass} shadow-md shadow-${colorClass}/20`
-                                            : `bg-white dark:bg-form-dark text-gray-500 border-gray-200 dark:border-gray-700 hover:border-${colorClass} hover:text-${colorClass} hover:bg-${colorClass}/5`}`}
+                                        key={year}
+                                        onClick={() => setSelectedYear(year === selectedYear ? undefined : year)}
+                                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${selectedYear === year
+                                            ? 'bg-brand-blue text-white border-brand-blue shadow-md'
+                                            : 'bg-white dark:bg-form-dark text-gray-500 border-gray-200 dark:border-gray-700 hover:border-brand-blue'}`}
                                     >
-                                        <span className="material-symbols-outlined text-[16px]">{option.icon}</span>
-                                        {option.label}
+                                        {year}
                                     </button>
-                                );
-                            })}
+                                ))}
+                                <select
+                                    value={selectedYear || ''}
+                                    onChange={(e) => setSelectedYear(e.target.value ? Number(e.target.value) : undefined)}
+                                    className="bg-white dark:bg-form-dark text-xs font-bold text-gray-500 border border-gray-200 dark:border-gray-700 rounded-xl px-2 py-1.5 focus:ring-0 outline-none"
+                                >
+                                    <option value="">Mais...</option>
+                                    {years.slice(10).map(year => (
+                                        <option key={year} value={year}>{year}</option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -621,6 +662,7 @@ export const HomeClientView = ({
                                     <h2 className="text-lg font-bold text-gray-800 dark:text-gray-200">
                                         {debouncedQuery ? `Resultados para "${debouncedQuery}"` : 'Resultados Exploratórios'}
                                         {!selectedCategories.includes('Todos') && <span className="text-brand-blue dark:text-brand-yellow font-extrabold ml-1">em {selectedCategories.join(', ')}</span>}
+                                        {selectedYear && <span className="text-brand-red font-extrabold ml-1">de {selectedYear}</span>}
                                         {selectedMediaTypes.length > 0 && <span className="text-gray-400 dark:text-gray-500 font-medium ml-1">({selectedMediaTypes.map(t => mediaTypeOptions.find(o => o.value === t)?.label).join(', ')})</span>}
                                     </h2>
                                     <span className="text-sm font-semibold text-gray-500 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">{items.length} iten(s)</span>
@@ -628,9 +670,9 @@ export const HomeClientView = ({
                             )}
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
                                 {items.length > 0 ? (
-                                    items.map((item) => (
+                                    items.map((item, index) => (
                                         <div key={item.id} className="w-full">
-                                            <MediaCard {...item} />
+                                            <MediaCard {...item} priority={index < 3} />
                                         </div>
                                     ))
                                 ) : (

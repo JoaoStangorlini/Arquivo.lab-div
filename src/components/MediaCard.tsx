@@ -1,17 +1,21 @@
 'use client';
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { parseMediaUrl, formatYoutubeUrl, getYoutubeThumbnail, getDownloadUrl, getPdfViewerUrl } from '@/lib/media-utils';
+import { parseMediaUrl, formatYoutubeUrl, getYoutubeThumbnail, getDownloadUrl, getPdfViewerUrl, getOptimizedUrl } from '@/lib/media-utils';
 import { ShareMenu } from './ShareMenu';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeSanitize from 'rehype-sanitize';
-import { stripMarkdownAndLatex } from '@/lib/utils';
+import { stripMarkdownAndLatex, highlightMatch } from '@/lib/utils';
 import { CardPresenceBadge } from './CardPresenceBadge';
+import { supabase } from '@/lib/supabase';
+import { ReactionSystem } from './engagement/ReactionSystem';
+import { FollowTagButton } from './engagement/FollowTagButton';
+import { CollectionManager } from './engagement/CollectionManager';
 
 export interface MediaCardProps {
     id: string;
@@ -35,27 +39,15 @@ export interface MediaCardProps {
     views?: number;
     commentCount?: number;
     saveCount?: number;
+    location_lat?: number | null;
+    location_lng?: number | null;
+    location_name?: string | null;
+    reactions_summary?: Record<string, number>;
+    kudos_total?: number;
+    priority?: boolean; // New: LCP optimization
 }
 
 // Utility functions moved to @/lib/media-utils.ts
-const highlightMatch = (text: string, query: string) => {
-    if (!query || !query.trim() || query.length < 2) return text;
-    // Handle hash tags specifically if query starts with #
-    const cleanQuery = query.startsWith('#') ? query.slice(1) : query;
-    const regex = new RegExp(`(${cleanQuery})`, 'gi');
-    const parts = text.split(regex);
-    return (
-        <>
-            {parts.map((part, i) =>
-                part.toLowerCase() === cleanQuery.toLowerCase() ? (
-                    <mark key={i} className="bg-brand-yellow/40 text-gray-900 dark:text-white rounded-sm px-0.5 font-black">{part}</mark>
-                ) : (
-                    part
-                )
-            )}
-        </>
-    );
-};
 
 export const MediaCard = React.memo(({
     id,
@@ -73,8 +65,13 @@ export const MediaCard = React.memo(({
     reading_time,
     views,
     commentCount = 0,
-    saveCount = 0
+    saveCount = 0,
+    reactions_summary = {},
+    kudos_total = 0,
+    priority = false
 }: MediaCardProps) => {
+
+    const [userId, setUserId] = useState<string | undefined>(undefined);
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [likes, setLikes] = useState(initialLikeCount);
@@ -87,6 +84,7 @@ export const MediaCard = React.memo(({
     const [saves, setSaves] = useState(saveCount);
     const [comments, setComments] = useState(commentCount);
     const [isSaving, setIsSaving] = useState(false);
+    const [showCollectionManager, setShowCollectionManager] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
     const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -94,6 +92,12 @@ export const MediaCard = React.memo(({
     const searchParams = useSearchParams();
     const query = searchParams.get('q') || searchParams.get('tag') || '';
     const lastLikeClick = useRef<number>(0);
+
+    useEffect(() => {
+        supabase.auth.getUser().then(({ data: { user } }) => {
+            if (user) setUserId(user.id);
+        });
+    }, []);
 
     const handleMouseEnter = () => {
         hoverTimeoutRef.current = setTimeout(() => {
@@ -227,6 +231,9 @@ export const MediaCard = React.memo(({
         displayUrl = displayUrl.replace(/\.pdf$/i, '.jpg');
     }
 
+    // Apply dynamic optimization for thumbnails
+    const optimizedDisplayUrl = getOptimizedUrl(displayUrl, 600, 70, category, mediaType);
+
     const categoryStyles = {
         'Laboratórios': 'card-accent-yellow',
         'Pesquisadores': 'card-accent-red',
@@ -273,9 +280,9 @@ export const MediaCard = React.memo(({
             {/* Instagram Style Header */}
             <div className="flex items-center justify-between p-3 border-b border-gray-100 dark:border-gray-800">
                 <div className="flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden flex items-center justify-center text-[10px] font-bold text-primary dark:text-blue-400 shrink-0">
+                    <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden flex items-center justify-center text-[10px] font-bold text-[#0055ff] dark:text-blue-400 shrink-0">
                         {avatarUrl ? (
-                            <img src={avatarUrl} alt={authors} className="h-full w-full object-cover" loading="lazy" />
+                            <img src={avatarUrl} alt={authors} className="h-full w-full object-cover" loading={priority ? "eager" : "lazy"} />
                         ) : (
                             <span className="uppercase">{authors.substring(0, 2)}</span>
                         )}
@@ -331,7 +338,7 @@ export const MediaCard = React.memo(({
                         }}
                         alt={alt_text || "Video Thumbnail"}
                         className="h-full w-full object-cover opacity-80"
-                        loading="lazy"
+                        loading={priority ? "eager" : "lazy"}
                     />
                 ) : mediaType === 'text' || mediaType === 'zip' || mediaType === 'sdocx' ? (
                     <div className={`h-full w-full flex flex-col items-center justify-center p-8 text-center bg-slate-100 dark:bg-slate-800`}>
@@ -346,10 +353,10 @@ export const MediaCard = React.memo(({
                     </div>
                 ) : displayUrl ? (
                     <img
-                        src={displayUrl}
+                        src={optimizedDisplayUrl}
                         alt={alt_text || `${title} - image ${currentImageIndex + 1}`}
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
+                        loading={priority ? "eager" : "lazy"}
                     />
                 ) : (
                     <div className="h-full w-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
@@ -407,16 +414,11 @@ export const MediaCard = React.memo(({
                 {/* Action Bar */}
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-4">
-                        <button
-                            onClick={handleLike}
-                            disabled={isLiking}
-                            className={`transition-all active:scale-90 flex items-center gap-1 ${liked ? 'text-brand-red' : 'text-gray-700 dark:text-gray-200 hover:text-brand-red'}`}
-                        >
-                            <span className={`material-symbols-outlined text-[26px] ${liked ? 'filled' : ''}`} style={liked ? { fontVariationSettings: "'FILL' 1" } : {}}>
-                                favorite
-                            </span>
-                            <span className="text-xs font-bold tabular-nums">{likes}</span>
-                        </button>
+                        <ReactionSystem
+                            submissionId={id}
+                            userId={userId}
+                            initialSummary={reactions_summary}
+                        />
                         <Link href={`/arquivo/${id}#comments`} onClick={(e) => e.stopPropagation()} className="text-gray-700 dark:text-gray-200 hover:text-blue-400 transition-transform active:scale-90 flex items-center gap-1">
                             <span className="material-symbols-outlined text-[26px]">chat_bubble</span>
                             <span className="text-xs font-bold tabular-nums">{comments}</span>
@@ -453,11 +455,13 @@ export const MediaCard = React.memo(({
                         )}
                     </div>
                     <button
-                        onClick={handleSave}
-                        disabled={isSaving}
-                        className={`transition-all active:scale-90 flex items-center gap-1 ${saved ? 'text-blue-400' : 'text-gray-700 dark:text-gray-200 hover:text-blue-400'}`}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setShowCollectionManager(true);
+                        }}
+                        className={`transition-all active:scale-90 flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-blue-400`}
                     >
-                        <span className={`material-symbols-outlined text-[26px] ${saved ? 'filled' : ''}`} style={saved ? { fontVariationSettings: "'FILL' 1" } : {}}>
+                        <span className={`material-symbols-outlined text-[26px]`}>
                             bookmark
                         </span>
                         <span className="text-xs font-bold tabular-nums">{saves}</span>
@@ -505,16 +509,18 @@ export const MediaCard = React.memo(({
                         const colorClass = colors[hash % colors.length];
 
                         return (
-                            <span
-                                key={idx}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    router.push(`/?tag=${tag.replace('#', '')}`);
-                                }}
-                                className={`px-2 py-0.5 ${colorClass} text-[10px] font-extrabold rounded-md uppercase tracking-wide border transition-all hover:scale-105 select-none cursor-pointer`}
-                            >
-                                #{highlightMatch(tag.replace('#', ''), query)}
-                            </span>
+                            <React.Fragment key={idx}>
+                                <span
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        router.push(`/?tag=${tag.replace('#', '')}`);
+                                    }}
+                                    className={`px-2 py-0.5 ${colorClass} text-[10px] font-extrabold rounded-md uppercase tracking-wide border transition-all hover:scale-105 select-none cursor-pointer`}
+                                >
+                                    #{highlightMatch(tag.replace('#', ''), query)}
+                                </span>
+                                <FollowTagButton tagName={tag.replace('#', '')} userId={userId} />
+                            </React.Fragment>
                         );
                     })}
                     <span className="flex items-center gap-1 px-2 py-0.5 bg-brand-blue/5 dark:bg-brand-yellow/10 text-brand-blue dark:text-brand-yellow text-[10px] font-bold rounded-md uppercase tracking-wide border border-brand-blue/10 dark:border-brand-yellow/20">
@@ -530,15 +536,26 @@ export const MediaCard = React.memo(({
                 </div>
             </div>
 
-            {showShareMenu && (
-                <ShareMenu
-                    id={id}
-                    title={title}
-                    author={authors}
-                    onClose={() => setShowShareMenu(false)}
-                />
-            )}
-        </div>
+            {
+                showShareMenu && (
+                    <ShareMenu
+                        id={id}
+                        title={title}
+                        author={authors}
+                        onClose={() => setShowShareMenu(false)}
+                    />
+                )
+            }
+            {
+                showCollectionManager && (
+                    <CollectionManager
+                        submissionId={id}
+                        userId={userId}
+                        onClose={() => setShowCollectionManager(false)}
+                    />
+                )
+            }
+        </div >
     );
 });
 

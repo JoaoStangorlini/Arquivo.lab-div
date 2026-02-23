@@ -5,10 +5,15 @@ import { supabase } from '@/lib/supabase';
 import { MediaCard, MediaCardProps } from '@/components/MediaCard';
 import { AdminSubmissionLightbox, AdminSubmission } from '@/components/AdminSubmissionLightbox';
 import { CATEGORIES } from '@/app/enviar/constants';
+import { validateAISuggestionsBulk, reprocessAI } from '@/app/actions/admin';
+import { toast } from 'react-hot-toast';
 
 interface Submission extends AdminSubmission {
     id: string;
     is_featured: boolean;
+    ai_suggested_tags?: string[];
+    ai_suggested_alt?: string;
+    ai_status?: string;
 }
 
 export default function GerenciadorAcervoPage() {
@@ -164,6 +169,34 @@ export default function GerenciadorAcervoPage() {
         }
     };
 
+    const handleBulkValidateAI = async () => {
+        if (selectedIds.size === 0) return;
+        setIsLoading(true);
+        const ids = Array.from(selectedIds);
+
+        // Regra Sênior: Server Action com Zod e RPC Atômica
+        const res = await validateAISuggestionsBulk(ids);
+
+        if (res.error) {
+            toast.error(res.error);
+        } else {
+            toast.success('Sugestões validadas com sucesso!');
+            await fetchAll();
+            setSelectedIds(new Set());
+        }
+        setIsLoading(false);
+    };
+
+    const handleReprocess = async (id: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        const res = await reprocessAI(id);
+        if (res.error) toast.error(res.error);
+        else {
+            toast.success('Reprocessamento solicitado!');
+            await fetchAll();
+        }
+    };
+
     const handleBulkApprove = async () => {
         if (selectedIds.size === 0) return;
         const ids = Array.from(selectedIds);
@@ -273,6 +306,15 @@ export default function GerenciadorAcervoPage() {
                             <span className="hidden sm:inline">Aprovar Selecionados</span>
                             <span className="sm:hidden">Aprovar</span>
                         </button>
+                        {Array.from(selectedIds).some(id => allSubmissions.find(s => s.id === id)?.ai_suggested_tags?.length) && (
+                            <button
+                                onClick={handleBulkValidateAI}
+                                className="px-4 py-2 bg-[#0055ff]/10 text-[#0055ff] border border-[#0055ff]/30 hover:bg-[#0055ff]/20 animate-pulse rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-sm"
+                            >
+                                <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
+                                Validar Sugestões de IA
+                            </button>
+                        )}
                         <button
                             onClick={handleBulkReject}
                             className="px-4 py-2 bg-brand-red text-white hover:bg-brand-red/80 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-sm"
@@ -319,8 +361,22 @@ export default function GerenciadorAcervoPage() {
                         return (
                             <div key={item.id} className={`flex flex-col gap-2 relative group/card ${isRejected ? 'opacity-50 hover:opacity-80 transition-opacity' : ''}`}>
                                 {/* Status badge overlay */}
-                                <div className="absolute top-3 left-12 z-10 transition-all">
+                                <div className="absolute top-3 left-12 z-10 transition-all flex items-center gap-2">
                                     {getStatusBadge(item.status)}
+                                    {item.ai_suggested_tags && item.ai_suggested_tags.length > 0 && (
+                                        <div className="bg-[#0055ff] text-white p-1 rounded-full shadow-[0_0_10px_rgba(0,85,255,0.5)] animate-pulse" title="Sugestões de IA Pendentes">
+                                            <span className="material-symbols-outlined text-[14px]">auto_awesome</span>
+                                        </div>
+                                    )}
+                                    {item.ai_status === 'error' && (
+                                        <button
+                                            onClick={(e) => handleReprocess(item.id, e)}
+                                            className="bg-brand-red text-white p-1 rounded-full shadow-lg hover:scale-110 transition-all"
+                                            title="IA falhou. Clique para reprocessar."
+                                        >
+                                            <span className="material-symbols-outlined text-[14px]">refresh</span>
+                                        </button>
+                                    )}
                                 </div>
 
                                 {/* Edit + Star overlay */}

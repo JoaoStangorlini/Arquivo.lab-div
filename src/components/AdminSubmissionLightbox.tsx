@@ -27,6 +27,9 @@ export interface AdminSubmission {
     technical_details?: string;
     user_id?: string;
     admin_feedback?: string;
+    ai_suggested_tags?: string[];
+    ai_suggested_alt?: string;
+    ai_status?: string;
 }
 
 interface AdminSubmissionLightboxProps {
@@ -248,6 +251,63 @@ export function AdminSubmissionLightbox({
                             <div className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed prose prose-sm dark:prose-invert max-w-none">
                                 <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex, rehypeSanitize]}>{item.description}</ReactMarkdown>
                             </div>
+                        </div>
+                    )}
+
+                    {/* AI Suggestions Section */}
+                    {((item as any).ai_suggested_tags?.length > 0 || (item as any).ai_suggested_alt) && (
+                        <div className="p-4 bg-[#0055ff]/5 border border-[#0055ff]/20 rounded-2xl space-y-3">
+                            <h3 className="text-[10px] font-black text-[#0055ff] uppercase tracking-[0.2em] flex items-center gap-2">
+                                <span className="material-symbols-outlined text-[16px]">auto_awesome</span>
+                                Sugestões da Inteligência
+                            </h3>
+
+                            {(item as any).ai_suggested_tags?.length > 0 && (
+                                <div className="flex flex-wrap gap-1.5">
+                                    {(item as any).ai_suggested_tags.map((tag: string) => (
+                                        <span key={tag} className="px-2 py-0.5 bg-[#0055ff]/10 text-[#0055ff] border border-[#0055ff]/20 rounded-md text-[10px] font-medium border-dashed">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+
+                            {(item as any).ai_suggested_alt && (
+                                <p className="text-[11px] text-gray-500 italic leading-snug border-l-2 border-[#0055ff]/30 pl-2">
+                                    Alt sugerido: "{(item as any).ai_suggested_alt}"
+                                </p>
+                            )}
+
+                            <button
+                                onClick={async () => {
+                                    setIsActioning(true);
+                                    const { error } = await (window as any).supabase.rpc('accept_ai_suggestions', { submission_id: item.id });
+                                    if (error) alert(error.message);
+                                    else window.location.reload(); // Simplificação para atualizar os dados
+                                    setIsActioning(false);
+                                }}
+                                className="w-full py-2 bg-[#0055ff] text-white text-[10px] font-bold rounded-lg hover:bg-[#0055ff]/80 transition-all flex items-center justify-center gap-2"
+                            >
+                                <span className="material-symbols-outlined text-[14px]">check_circle</span>
+                                Aceitar e Mesclar Sugestões
+                            </button>
+
+                            {(item as any).ai_status === 'error' && (
+                                <button
+                                    onClick={async () => {
+                                        setIsActioning(true);
+                                        const { reprocessAI } = await import('@/app/actions/admin');
+                                        const res = await reprocessAI(item.id);
+                                        if (res.error) alert(res.error);
+                                        else window.location.reload();
+                                        setIsActioning(false);
+                                    }}
+                                    className="w-full py-2 bg-brand-red text-white text-[10px] font-bold rounded-lg hover:bg-brand-red/80 transition-all flex items-center justify-center gap-2"
+                                >
+                                    <span className="material-symbols-outlined text-[14px]">refresh</span>
+                                    Tentar IA Novamente
+                                </button>
+                            )}
                         </div>
                     )}
 

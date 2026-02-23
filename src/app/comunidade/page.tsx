@@ -11,12 +11,12 @@ import { useState, useEffect } from 'react';
 const communityFeatures = [
     {
         title: 'Mural do Deu Ruim',
-        description: 'Falhas de laboratório, códigos quebrados e perrengues que ensinam.',
+        description: 'Falhas de laboratório, códigos quebrados e desafios que ensinam.',
         icon: 'error',
         color: 'brand-red',
         link: '/?category=Mural do Deu Ruim',
         cta: 'Ver Mural',
-        placeholder: 'Perrengue em breve',
+        placeholder: 'Em obras | Green Master',
         decoIcon: 'report_problem'
     },
     {
@@ -26,7 +26,7 @@ const communityFeatures = [
         color: 'brand-blue',
         link: '/?category=Guia de Sobrevivência',
         cta: 'Estudar',
-        placeholder: 'Dica em breve',
+        placeholder: 'Em obras | Green Master',
         decoIcon: 'school'
     },
     {
@@ -36,7 +36,7 @@ const communityFeatures = [
         color: 'brand-yellow',
         link: '/?category=Física Fora da Caixa',
         cta: 'Explorar',
-        placeholder: 'Post em breve',
+        placeholder: 'Em obras | Green Master',
         decoIcon: 'rocket_launch'
     },
     {
@@ -46,7 +46,7 @@ const communityFeatures = [
         color: 'brand-blue',
         link: '/?category=Central de Anotações',
         cta: 'Quero Participar',
-        placeholder: 'Anotações em breve',
+        placeholder: 'Em obras | Green Master',
         decoIcon: 'description'
     }
 ];
@@ -86,7 +86,7 @@ export default function CommunityPage() {
                             Comunidade <span className="text-brand-blue">Hub</span>
                         </h1>
                         <p className="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-                            O espaço para troca de experiências, colaboração e os perrengues que todo mundo passa, mas ninguém conta.
+                            O espaço para troca de experiências, colaboração e os desafios que todo mundo passa, mas ninguém conta.
                         </p>
                     </div>
 

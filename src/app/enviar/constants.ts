@@ -18,7 +18,7 @@ export const CATEGORIES = [
     {
         id: 'Mural do Deu Ruim',
         title: 'Mural do Deu Ruim',
-        description: 'Falhas, erros e perrengues que fazem parte do aprendizado científico.',
+        description: 'Falhas, erros e desafios que fazem parte do aprendizado científico.',
         icon: 'report_problem',
         color: 'brand-red',
         examples: 'Equipamentos quebrados, códigos com erro, resultados inesperados.'

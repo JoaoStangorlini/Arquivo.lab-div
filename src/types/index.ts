@@ -36,7 +36,26 @@ export interface Submission {
     view_count?: number;
     tags?: string[];
     reading_time?: number;
+    event_date?: string;
+    location_lat?: number;
+    location_lng?: number;
+    location_name?: string;
+    reactions_summary?: Record<string, number>;
+    kudos_total?: number;
+    ocr_content?: string;
+    ai_suggested_tags?: string[];
+    ai_suggested_alt?: string;
+    ai_status?: 'pending' | 'processing' | 'completed' | 'error';
+    ai_last_processed?: string;
     created_at: string;
+}
+
+export interface ReadingHistory {
+    id: string;
+    user_id: string;
+    submission_id: string;
+    progress_percent: number;
+    last_accessed_at: string;
 }
 
 export interface Comment {

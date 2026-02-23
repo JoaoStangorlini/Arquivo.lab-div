@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSubmissionStore } from '@/store/useSubmissionStore';
 import { useFormAutoSave } from '@/hooks/useFormAutoSave';
 import { supabase } from '@/lib/supabase';
-import { getTrendingTags } from '@/app/actions/submissions';
+import { getTrendingTags, createSubmission } from '@/app/actions/submissions';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -370,28 +370,28 @@ export function FormStep() {
                 }]);
             }
 
-            const { error: insError } = await supabase.from('submissions').insert([{
+            // Perform Server Action (Zod Hardened)
+            const result = await createSubmission({
                 title: data.title,
                 authors: data.authors,
                 description: data.description,
-                category,
-                whatsapp: data.whatsapp,
-                media_type: mediaType,
+                category: category || 'Outros',
+                whatsapp: data.whatsapp || null,
+                media_type: mediaType as any,
                 media_url: JSON.stringify(finalMediaUrl),
-                status: 'pendente',
                 external_link: data.externalLink || null,
                 technical_details: data.technicalDetails || null,
                 alt_text: data.altText || null,
                 testimonial: data.testimonial || null,
-                user_id: session.user.id,
                 co_authors: data.coAuthors || [],
                 tags: data.tags || [],
                 reading_time: data.readingTime || 0
-            }]);
+            });
 
-
-
-            if (insError) throw insError;
+            if (result.error) {
+                const firstErr = Object.values(result.error)[0];
+                throw new Error(Array.isArray(firstErr) ? firstErr[0] : "Erro na validação do servidor.");
+            }
 
             fetch('/api/notify', {
                 method: 'POST',

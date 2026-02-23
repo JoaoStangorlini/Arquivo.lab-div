@@ -71,3 +71,32 @@ export const getPdfViewerUrl = (url: string) => {
     }
     return viewerUrl;
 };
+export const getOptimizedUrl = (url: string, width = 800, quality = 70, category?: string, type?: string) => {
+    if (!url) return '';
+
+    // Regra Sênior: Documentos, Textos e Scans (mesmo JPG) exigem q=85 para legibilidade
+    let finalQuality = quality;
+    const isDoc = category?.toLowerCase().includes('documento') ||
+        category?.toLowerCase().includes('texto') ||
+        category?.toLowerCase().includes('arquivo') ||
+        category?.toLowerCase().includes('biblioteca') ||
+        type === 'pdf' ||
+        type === 'text' ||
+        url.toLowerCase().endsWith('.pdf');
+
+    if (isDoc) {
+        finalQuality = 85;
+    }
+
+    // Cloudinary Optimization
+    if (url.includes('cloudinary.com') && url.includes('/upload/')) {
+        return url.replace('/upload/', `/upload/w_${width},q_${finalQuality},f_auto/`);
+    }
+
+    // Supabase Storage Optimization
+    if (url.includes('/storage/v1/object/public/')) {
+        return `${url}?width=${width}&quality=${finalQuality}&format=webp`;
+    }
+
+    return url;
+};

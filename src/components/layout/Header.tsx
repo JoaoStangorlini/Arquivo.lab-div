@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import { signOut } from '@/app/actions/auth';
 import { getAvatarUrl } from '@/lib/utils';
+import { NotificationBell } from './NotificationBell';
+import { LevelUpNotification } from '../gamification/LevelUpNotification';
 
 export function Header() {
     const pathname = usePathname();
@@ -19,6 +21,7 @@ export function Header() {
         { name: 'Divulgação', href: '/iniciativas', hoverClass: 'hover:text-brand-blue hover:border-brand-blue', activeClass: 'text-brand-blue border-brand-blue', mobileHover: 'hover:bg-brand-blue/10 hover:text-brand-blue', mobileActive: 'bg-brand-blue/10 text-brand-blue' },
         { name: 'Pergunte', href: '/perguntas', hoverClass: 'hover:text-brand-red hover:border-brand-red', activeClass: 'text-brand-red border-brand-red', mobileHover: 'hover:bg-brand-red/10 hover:text-brand-red', mobileActive: 'bg-brand-red/10 text-brand-red' },
         { name: 'Criadores', href: '/criadores', hoverClass: 'hover:text-brand-yellow hover:border-brand-yellow', activeClass: 'text-brand-yellow border-brand-yellow', mobileHover: 'hover:bg-brand-yellow/10 hover:text-brand-yellow', mobileActive: 'bg-brand-yellow/10 text-brand-yellow' },
+        { name: 'Mapa', href: '/mapa', hoverClass: 'hover:text-brand-blue hover:border-brand-blue', activeClass: 'text-brand-blue border-brand-blue', mobileHover: 'hover:bg-brand-blue/10 hover:text-brand-blue', mobileActive: 'bg-brand-blue/10 text-brand-blue' },
         { name: 'Sobre', href: '/sobre', hoverClass: 'hover:text-brand-red hover:border-brand-red', activeClass: 'text-brand-red border-brand-red', mobileHover: 'hover:bg-brand-red/10 hover:text-brand-red', mobileActive: 'bg-brand-red/10 text-brand-red' },
     ];
 
@@ -152,6 +155,9 @@ export function Header() {
                                 </Link>
                             )}
 
+                            {/* Notifications */}
+                            <NotificationBell userId={user?.id} />
+
                             {/* Theme Toggle */}
                             <button
                                 onClick={toggleTheme}
@@ -252,6 +258,8 @@ export function Header() {
                 <span className="material-symbols-outlined text-[24px] group-hover:scale-110 transition-transform">add_circle</span>
                 <span className="hidden sm:inline">Enviar Contribuição</span>
             </Link>
+            {/* Gamification: Real-time feedback */}
+            <LevelUpNotification />
         </>
     );
 }

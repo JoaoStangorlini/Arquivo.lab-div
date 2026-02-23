@@ -2,7 +2,9 @@
 
 import { supabase } from '@/lib/supabase';
 import { MediaCardProps } from '@/components/MediaCard';
-import { unstable_cache } from 'next/cache';
+import { unstable_cache, revalidatePath, revalidateTag } from 'next/cache';
+import { SubmissionSchema } from '@/lib/validations';
+import { z } from 'zod';
 
 export interface FetchParams {
     page: number;
@@ -13,12 +15,13 @@ export interface FetchParams {
     sort: 'recentes' | 'antigas';
     author?: string; // New: Filter by author name
     is_featured?: boolean; // New: Filter by featured status
+    year?: number; // New: Filter by event_date year
 }
 
-export async function fetchSubmissions({ page, limit, query, categories, mediaTypes, sort, author, is_featured: featured }: FetchParams): Promise<{ items: MediaCardProps[], hasMore: boolean }> {
+export async function fetchSubmissions({ page, limit, query, categories, mediaTypes, sort, author, is_featured: featured, year }: FetchParams): Promise<{ items: MediaCardProps[], hasMore: boolean }> {
     let queryBuilder = supabase
         .from('submissions')
-        .select('id, title, description, authors, media_type, media_url, category, is_featured, external_link, created_at, technical_details, alt_text, tags, views, reading_time, like_count', { count: 'exact' })
+        .select('*, reactions_summary, kudos_total', { count: 'exact' })
         .eq('status', 'aprovado');
 
     // Filtering by Featured
@@ -39,6 +42,13 @@ export async function fetchSubmissions({ page, limit, query, categories, mediaTy
     // Filtering by Media Type
     if (mediaTypes && mediaTypes.length > 0) {
         queryBuilder = queryBuilder.in('media_type', mediaTypes);
+    }
+
+    // Filtering by Year (using event_date)
+    if (year) {
+        const startDate = `${year}-01-01T00:00:00Z`;
+        const endDate = `${year}-12-31T23:59:59Z`;
+        queryBuilder = queryBuilder.gte('event_date', startDate).lte('event_date', endDate);
     }
 
     if (query) {
@@ -121,7 +131,12 @@ export async function fetchSubmissions({ page, limit, query, categories, mediaTy
         alt_text: sub.alt_text || null,
         tags: sub.tags || [],
         views: sub.views || 0,
-        reading_time: sub.reading_time || 0
+        reading_time: sub.reading_time || 0,
+        location_lat: sub.location_lat ? Number(sub.location_lat) : null,
+        location_lng: sub.location_lng ? Number(sub.location_lng) : null,
+        location_name: sub.location_name || null,
+        reactions_summary: sub.reactions_summary || {},
+        kudos_total: sub.kudos_total || 0
     }));
 
     const hasMore = count ? from + submissions.length < count : false;
@@ -276,4 +291,49 @@ export async function getFeaturedSubmissions(limit: number = 10): Promise<MediaC
         commentCount: 0,
         saveCount: 0
     })) as MediaCardProps[];
+}
+
+export async function createSubmission(formData: z.infer<typeof SubmissionSchema>) {
+    // 1. Validate Input (Native Shielding)
+    const validated = SubmissionSchema.safeParse(formData);
+    if (!validated.success) {
+        return { error: validated.error.flatten().fieldErrors };
+    }
+
+    // 2. Get User ID (Session Validation)
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { error: { auth: ["Usuário não autenticado"] } };
+
+    // 3. Rate Limiting (Server Side Protection)
+    const { data: submissions, error: countError } = await supabase
+        .from('submissions')
+        .select('id')
+        .eq('user_id', user.id)
+        .gte('created_at', new Date(Date.now() - 3600000).toISOString()); // Last hour
+
+    if (submissions && submissions.length >= 5) {
+        return { error: { rateLimit: ["Limite de envios atingido (máx 5/hora). Tente novamente mais tarde."] } };
+    }
+
+    // 4. Transform and Insert
+    const { data, error } = await supabase
+        .from('submissions')
+        .insert([{
+            ...validated.data,
+            user_id: user.id,
+            status: 'pendente', // Default status for review
+            created_at: new Date().toISOString()
+        }])
+        .select()
+        .single();
+
+    if (error) {
+        console.error('Submission error:', error);
+        return { error: { database: ["Falha ao salvar submissão. Verifique os dados."] } };
+    }
+
+    // 5. Cache Busting
+    revalidatePath('/', 'layout');
+
+    return { success: true, data };
 }
