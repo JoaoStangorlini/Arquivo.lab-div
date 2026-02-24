@@ -251,7 +251,7 @@ export const HomeClientView = ({
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="max-w-3xl">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 border border-brand-blue/20 dark:border-brand-blue/30 text-brand-blue dark:text-blue-400 text-xs font-semibold uppercase tracking-wide mb-6">
-                            <span className="w-2 h-2 rounded-full bg-brand-blue dark:bg-blue-400 animate-pulse"></span>
+                            <span className="w-2 h-2 rounded-full bg-brand-blue dark:bg-blue-400 animate-shimmer-labdiv"></span>
                             Excelência em Pesquisa
                         </div>
                         <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-7xl tracking-tight mb-6 text-gray-900 dark:text-white leading-[1.1]">
@@ -295,9 +295,9 @@ export const HomeClientView = ({
                                                 <div className="px-4 py-2 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800 text-[10px] font-bold uppercase tracking-wider text-gray-500">
                                                     Sugestões do Arquiteto
                                                 </div>
-                                                {suggestions.map((sug, idx) => (
+                                                {suggestions.map((sug) => (
                                                     <div
-                                                        key={idx}
+                                                        key={`${sug.type}-${sug.suggestion}`}
                                                         onClick={() => {
                                                             if (sug.type === 'tag') setSearchQuery(`#${sug.suggestion}`);
                                                             else setSearchQuery(sug.suggestion);

@@ -8,6 +8,7 @@ import { MediaCardProps } from '@/components/MediaCard';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { getAvatarUrl } from '@/lib/utils';
+import { PasskeyManager } from '@/components/PasskeyManager';
 
 function ProfileContent() {
     const router = useRouter();
@@ -98,6 +99,7 @@ function ProfileContent() {
                         {[
                             { id: 'publicacoes', label: 'PUBLICAÇÕES', icon: 'grid_on' },
                             { id: 'selos', label: 'SELOS', icon: 'military_tech' },
+                            { id: 'seguranca', label: 'SEGURANÇA', icon: 'lock' },
                         ].map((tab) => (
                             <button
                                 key={tab.id}
@@ -203,6 +205,10 @@ function ProfileContent() {
                                     );
                                 })}
                             </div>
+                        )}
+
+                        {activeTab === 'seguranca' && (
+                            <PasskeyManager />
                         )}
                     </div>
                 </div>

@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
 import "katex/dist/katex.min.css";
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -64,12 +65,37 @@ export default async function RootLayout({
             `,
           }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  const buildId = "${process.env.NEXT_PUBLIC_BUILD_ID || 'v3-golden'}";
+                  navigator.serviceWorker.register('/sw.js?id=' + buildId).then(function(registration) {
+                    // Registration successful
+                  }, function(err) {
+                    // Registration failed
+                  });
+                });
+              }
+            `,
+          }}
+        />
       </head>
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} font-sans selection:bg-brand-yellow selection:text-brand-blue bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 transition-colors duration-200 antialiased`}
         suppressHydrationWarning
       >
         <ReadingExperienceProvider>
+          <Toaster position="top-right" toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#1E1E1E',
+              color: '#fff',
+              border: '1px solid #334155',
+              borderRadius: '16px',
+            }
+          }} />
           <ReadingProgressBar />
           <ScrollToTop />
           {children}

@@ -13,6 +13,9 @@ interface Submission {
     status: string;
     created_at: string;
     is_featured: boolean;
+    tags: string[];
+    media_url: string;
+    media_type: string;
 }
 
 export default function EditarPage() {
@@ -20,6 +23,7 @@ export default function EditarPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [editingItem, setEditingItem] = useState<Submission | null>(null);
     const [isSaving, setIsSaving] = useState(false);
+    const [imageError, setImageError] = useState(false);
 
     const fetchSubmissions = async () => {
         setIsLoading(true);
@@ -57,6 +61,9 @@ export default function EditarPage() {
                 authors: editingItem.authors,
                 category: editingItem.category,
                 description: editingItem.description,
+                tags: editingItem.tags,
+                media_url: editingItem.media_url,
+                media_type: editingItem.media_type,
                 status: 'pendente'
             })
             .eq('id', editingItem.id);
@@ -221,6 +228,68 @@ export default function EditarPage() {
                                                 <option key={cat.id} value={cat.id}>{cat.title}</option>
                                             ))}
                                         </select>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Tags (separadas por vírgula)</label>
+                                        <input
+                                            type="text"
+                                            value={editingItem.tags ? editingItem.tags.join(', ') : ''}
+                                            onChange={e => {
+                                                const tagsArray = e.target.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+                                                setEditingItem({ ...editingItem, tags: tagsArray });
+                                            }}
+                                            className="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-form-dark text-slate-900 dark:text-white py-2 px-3 focus:ring-primary focus:border-primary sm:text-sm"
+                                            placeholder="Ex: física, ensaio, história"
+                                        />
+                                        {editingItem.tags && editingItem.tags.length > 0 && (
+                                            <div className="flex flex-wrap gap-1.5 mt-2">
+                                                {editingItem.tags.map(tag => (
+                                                    <span key={tag} className="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-bold rounded-md">
+                                                        #{tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">URL da Capa / Mídia</label>
+                                        <div className="flex gap-4 items-start">
+                                            <div className="w-20 h-20 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 flex-shrink-0 bg-gray-50 dark:bg-background-dark flex items-center justify-center">
+                                                {editingItem.media_url && !imageError ? (
+                                                    <img
+                                                        src={editingItem.media_url}
+                                                        alt="Preview"
+                                                        className="w-full h-full object-cover"
+                                                        onError={() => setImageError(true)}
+                                                    />
+                                                ) : (
+                                                    <span className="material-symbols-outlined text-gray-300">broken_image</span>
+                                                )}
+                                            </div>
+                                            <div className="flex-1 space-y-2">
+                                                <input
+                                                    type="text"
+                                                    value={editingItem.media_url}
+                                                    onChange={e => {
+                                                        setEditingItem({ ...editingItem, media_url: e.target.value });
+                                                        setImageError(false);
+                                                    }}
+                                                    className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-background-dark text-gray-900 dark:text-white py-2.5 px-4 focus:ring-2 focus:ring-brand-blue/50 focus:border-brand-blue text-sm"
+                                                    placeholder="Link direto da imagem (Ex: Imgur, Unsplash)"
+                                                />
+                                                <p className="text-[10px] text-gray-500 dark:text-gray-400 italic">
+                                                    [Aviso] Cole uma URL pública. No momento não suportamos upload direto de arquivos.
+                                                </p>
+                                                {editingItem.media_url && !editingItem.media_url.match(/\.(jpeg|jpg|gif|png|webp|avif)/i) && (
+                                                    <p className="text-[10px] text-brand-red font-bold flex items-center gap-1">
+                                                        <span className="material-symbols-outlined text-[12px]">warning</span>
+                                                        A URL pode não ser uma imagem válida.
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div className="space-y-2">

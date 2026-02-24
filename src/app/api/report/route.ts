@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createServerSupabase } from '@/lib/supabase/server';
 
 export async function POST(request: Request) {
     try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session?.user) {
+        const supabase = await createServerSupabase();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
 
@@ -19,7 +20,7 @@ export async function POST(request: Request) {
             .from('reports')
             .insert({
                 submission_id,
-                reporter_id: session.user.id,
+                reporter_id: user.id,
                 reason,
                 status: 'pendente'
             });

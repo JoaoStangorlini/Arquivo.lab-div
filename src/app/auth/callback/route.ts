@@ -1,18 +1,18 @@
-import { supabase } from '@/lib/supabase';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
-    const { searchParams, origin } = new URL(request.url);
+    const { searchParams } = new URL(request.url);
     const code = searchParams.get('code');
     const next = searchParams.get('next') ?? '/';
 
-    // In a Route Handler, we use the request's origin to avoid absolute URL construction issues
-    // on platforms like Google App Hosting/Cloud Run
     if (code) {
-        // Exchange the code for a session
+        // Use the cookie-aware server client so the session
+        // is properly persisted in the browser via set-cookie headers
+        const supabase = await createServerSupabase();
         const { error } = await supabase.auth.exchangeCodeForSession(code);
+
         if (!error) {
-            // Success: redirect to the 'next' destination
             const redirectUrl = new URL(next, request.url);
             return NextResponse.redirect(redirectUrl);
         }
@@ -26,3 +26,4 @@ export async function GET(request: NextRequest) {
     errorUrl.searchParams.set('error', 'auth-code-error');
     return NextResponse.redirect(errorUrl);
 }
+

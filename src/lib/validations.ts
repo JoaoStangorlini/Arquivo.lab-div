@@ -20,6 +20,7 @@ export const SubmissionSchema = z.object({
     testimonial: z.string().optional().nullable(),
     reading_time: z.number().optional().nullable(),
     co_authors: z.any().optional(), // jsonb
+    use_pseudonym: z.boolean().optional(),
 });
 
 // Reaction/Engagement Schema

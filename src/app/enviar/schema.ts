@@ -15,6 +15,7 @@ export const submissionSchema = z.object({
     acceptedCC: z.boolean().refine(v => v === true, 'Você deve aceitar a licença'),
     tags: z.array(z.string()),
     readingTime: z.number(),
+    use_pseudonym: z.boolean(),
     coAuthors: z.array(z.object({
         id: z.string(),
         full_name: z.string(),

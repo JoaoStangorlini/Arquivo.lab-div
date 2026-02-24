@@ -1,6 +1,6 @@
 'use server';
 
-import { supabase } from '@/lib/supabase';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -26,8 +26,8 @@ export async function login(formData: FormData) {
 
 export async function signOut(redirectTo: string = '/') {
     (await cookies()).delete('admin_session');
-    const { error } = await supabase.auth.signOut();
-    // if (error) throw new Error(error.message); // Ignore error if not logged into Supabase auth
+    const supabase = await createServerSupabase();
+    await supabase.auth.signOut();
     revalidatePath('/');
     redirect(redirectTo);
 }

@@ -13,10 +13,18 @@ export function useFormAutoSave<T extends FieldValues>(
     const { watch, setValue, reset } = form;
     const { key, debounceMs = 1000 } = options;
     const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const memoryFallbackRef = useRef<string | null>(null);
 
-    // Load from localStorage on mount
+    // Load from localStorage or memory on mount
     useEffect(() => {
-        const saved = localStorage.getItem(key);
+        let saved: string | null = null;
+        try {
+            saved = localStorage.getItem(key);
+        } catch (e) {
+            // Private browsing or QuotaExceeded
+            saved = memoryFallbackRef.current;
+        }
+
         if (saved) {
             try {
                 const parsed = JSON.parse(saved);
@@ -24,11 +32,10 @@ export function useFormAutoSave<T extends FieldValues>(
                     const age = Date.now() - parsed.timestamp;
                     if (age < 24 * 60 * 60 * 1000) { // 24 hours validity
                         reset(parsed.data);
-                    } else {
-                        localStorage.removeItem(key); // Expired payload
+                    } else if (typeof window !== 'undefined') {
+                        try { localStorage.removeItem(key); } catch (e) { }
                     }
                 } else {
-                    // Legacy format
                     reset(parsed);
                 }
             } catch (e) {
@@ -37,17 +44,34 @@ export function useFormAutoSave<T extends FieldValues>(
         }
     }, [key, reset]);
 
-    // Save to localStorage when watched values change
+    // Save to localStorage with memory fallback
     useEffect(() => {
         const subscription = watch((value) => {
             if (timerRef.current) clearTimeout(timerRef.current);
 
             timerRef.current = setTimeout(() => {
-                const payload = {
+                const payload = JSON.stringify({
                     timestamp: Date.now(),
                     data: value
-                };
-                localStorage.setItem(key, JSON.stringify(payload));
+                });
+
+                try {
+                    localStorage.setItem(key, payload);
+                } catch (e) {
+                    // 🛡️ [GOLDEN MASTER] Storage Resilience Fallback
+                    memoryFallbackRef.current = payload;
+
+                    // Solo aviso visual una vez si falla el storage real
+                    if (!window.sessionStorage.getItem('storage-fallback-warned')) {
+                        import('react-hot-toast').then(({ toast }) => {
+                            toast.error('Privacidade ou Armazenamento Cheio: O rascunho será mantido apenas enquanto a aba estiver aberta.', {
+                                icon: '🛡️',
+                                id: 'storage-fallback'
+                            });
+                        });
+                        window.sessionStorage.setItem('storage-fallback-warned', 'true');
+                    }
+                }
             }, debounceMs);
         });
 
@@ -58,7 +82,8 @@ export function useFormAutoSave<T extends FieldValues>(
     }, [watch, key, debounceMs]);
 
     const clearAutoSave = () => {
-        localStorage.removeItem(key);
+        try { localStorage.removeItem(key); } catch (e) { }
+        memoryFallbackRef.current = null;
     };
 
     return { clearAutoSave };

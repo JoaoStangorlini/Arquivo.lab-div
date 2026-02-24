@@ -17,7 +17,7 @@ export const ForYouFeed = ({ items }: ForYouFeedProps) => {
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
                     <div className="space-y-1 text-center md:text-left">
                         <div className="flex items-center justify-center md:justify-start gap-2">
-                            <span className="material-symbols-outlined text-brand-red animate-pulse">auto_awesome</span>
+                            <span className="material-symbols-outlined text-brand-red animate-shimmer-labdiv">auto_awesome</span>
                             <span className="text-xs font-black uppercase tracking-widest text-brand-red">Personalizado</span>
                         </div>
                         <h2 className="text-3xl font-display font-black text-gray-900 dark:text-white">Para Você</h2>

@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { parseMediaUrl, formatYoutubeUrl, getYoutubeThumbnail, getDownloadUrl, getPdfViewerUrl, getOptimizedUrl } from '@/lib/media-utils';
 import { ShareMenu } from './ShareMenu';
@@ -16,6 +17,7 @@ import { supabase } from '@/lib/supabase';
 import { ReactionSystem } from './engagement/ReactionSystem';
 import { FollowTagButton } from './engagement/FollowTagButton';
 import { CollectionManager } from './engagement/CollectionManager';
+import { DownloadModal } from './DownloadModal';
 
 export interface MediaCardProps {
     id: string;
@@ -85,6 +87,7 @@ export const MediaCard = React.memo(({
     const [comments, setComments] = useState(commentCount);
     const [isSaving, setIsSaving] = useState(false);
     const [showCollectionManager, setShowCollectionManager] = useState(false);
+    const [showDownloadModal, setShowDownloadModal] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
     const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -245,7 +248,7 @@ export const MediaCard = React.memo(({
     const buttonColorClass = ['bg-brand-blue text-white', 'bg-brand-red text-white', 'bg-brand-yellow text-gray-900'][colorNum];
     return (
         <div
-            className={`masonry-item group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-card-dark shadow-sm transition-all hover:shadow-xl border cursor-pointer ${isFeatured ? 'border-brand-yellow/50 animate-premium-glow z-10' : 'border-gray-100 dark:border-gray-800'} ${sizeModifierStyles}`}
+            className={`masonry-item group relative flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-card-dark shadow-sm transition-all hover:shadow-xl border cursor-pointer gpu-isolate ${isFeatured ? 'border-brand-yellow/50 animate-premium-glow z-10' : 'border-gray-100 dark:border-gray-800'} ${sizeModifierStyles}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onClick={() => router.push(`/arquivo/${id}`)}
@@ -329,16 +332,14 @@ export const MediaCard = React.memo(({
                     </div>
                 )}
                 {mediaType === 'video' ? (
-                    <img
+                    <Image
                         src={urls.length > 0 ? getYoutubeThumbnail(urls[0]) : "https://images.unsplash.com/photo-1616423640778-28d1b53229bd?auto=format&fit=crop&q=80&w=800"}
-                        onError={(e) => {
-                            if (e.currentTarget.src.includes('maxresdefault.jpg')) {
-                                e.currentTarget.src = e.currentTarget.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
-                            }
-                        }}
                         alt={alt_text || "Video Thumbnail"}
-                        className="h-full w-full object-cover opacity-80"
-                        loading={priority ? "eager" : "lazy"}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover opacity-80"
+                        priority={priority}
+                        unoptimized
                     />
                 ) : mediaType === 'text' || mediaType === 'zip' || mediaType === 'sdocx' ? (
                     <div className={`h-full w-full flex flex-col items-center justify-center p-8 text-center bg-slate-100 dark:bg-slate-800`}>
@@ -352,11 +353,13 @@ export const MediaCard = React.memo(({
                         </div>
                     </div>
                 ) : displayUrl ? (
-                    <img
+                    <Image
                         src={optimizedDisplayUrl}
                         alt={alt_text || `${title} - image ${currentImageIndex + 1}`}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading={priority ? "eager" : "lazy"}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        priority={priority}
                     />
                 ) : (
                     <div className="h-full w-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
@@ -443,15 +446,15 @@ export const MediaCard = React.memo(({
                             <span className="material-symbols-outlined text-[26px]">flag</span>
                         </button>
                         {displayUrl && (
-                            <a
-                                href={getDownloadUrl(displayUrl)}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={e => e.stopPropagation()}
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShowDownloadModal(true);
+                                }}
                                 className="text-gray-700 dark:text-gray-200 hover:text-brand-yellow transition-transform active:scale-90"
                             >
                                 <span className="material-symbols-outlined text-[26px]">download</span>
-                            </a>
+                            </button>
                         )}
                     </div>
                     <button
@@ -552,6 +555,18 @@ export const MediaCard = React.memo(({
                         submissionId={id}
                         userId={userId}
                         onClose={() => setShowCollectionManager(false)}
+                    />
+                )
+            }
+            {
+                showDownloadModal && (
+                    <DownloadModal
+                        id={id}
+                        title={title}
+                        authors={authors}
+                        description={description}
+                        mediaUrl={displayUrl}
+                        onClose={() => setShowDownloadModal(false)}
                     />
                 )
             }

@@ -1,6 +1,7 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+/**
+ * Backward-compatible re-export.
+ * All existing `import { supabase } from '@/lib/supabase'` continue to work.
+ * For server-side (Route Handlers, Server Actions), use:
+ *   import { createServerSupabase } from '@/lib/supabase/server';
+ */
+export { supabase, createClientSupabase } from './supabase/client';

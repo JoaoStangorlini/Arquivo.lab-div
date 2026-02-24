@@ -1,6 +1,7 @@
 'use server';
 
 import { supabase } from '@/lib/supabase';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { MediaCardProps } from '@/components/MediaCard';
 import { unstable_cache, revalidatePath, revalidateTag } from 'next/cache';
 import { SubmissionSchema } from '@/lib/validations';
@@ -300,8 +301,9 @@ export async function createSubmission(formData: z.infer<typeof SubmissionSchema
         return { error: validated.error.flatten().fieldErrors };
     }
 
-    // 2. Get User ID (Session Validation)
-    const { data: { user } } = await supabase.auth.getUser();
+    // 2. Get User ID (Session Validation) — uses cookie-aware server client
+    const serverSupabase = await createServerSupabase();
+    const { data: { user } } = await serverSupabase.auth.getUser();
     if (!user) return { error: { auth: ["Usuário não autenticado"] } };
 
     // 3. Rate Limiting (Server Side Protection)
@@ -315,7 +317,29 @@ export async function createSubmission(formData: z.infer<typeof SubmissionSchema
         return { error: { rateLimit: ["Limite de envios atingido (máx 5/hora). Tente novamente mais tarde."] } };
     }
 
-    // 4. Transform and Insert
+    // 4. [I04] Intelligent Authorship - Pseudonym Limit (Max 2 per account)
+    if (validated.data.use_pseudonym) {
+        const { data: existingPseudonyms, error: pseudonymError } = await supabase
+            .from('submissions')
+            .select('authors')
+            .eq('user_id', user.id)
+            .eq('use_pseudonym', true);
+
+        if (pseudonymError) return { error: { database: ["Erro ao verificar pseudônimos existentes."] } };
+
+        const distinctPseudonyms = new Set(existingPseudonyms?.map(s => s.authors.trim().toLowerCase()) || []);
+        const newPseudonym = validated.data.authors.trim().toLowerCase();
+
+        if (!distinctPseudonyms.has(newPseudonym) && distinctPseudonyms.size >= 2) {
+            return {
+                error: {
+                    authors: ["Você atingiu o limite de 2 pseudônimos diferentes. Por favor, use um de seus nomes já utilizados ou seu nome real."]
+                }
+            };
+        }
+    }
+
+    // 5. Transform and Insert
     const { data, error } = await supabase
         .from('submissions')
         .insert([{
@@ -329,11 +353,85 @@ export async function createSubmission(formData: z.infer<typeof SubmissionSchema
 
     if (error) {
         console.error('Submission error:', error);
-        return { error: { database: ["Falha ao salvar submissão. Verifique os dados."] } };
+
+        // 🛡️ [GOLDEN MASTER] Pure Code Mapping
+        if (error.message?.includes('LIMITE_PSEUDONIMO_ATINGIDO')) {
+            return { error: { authors: ["ERR_PSEUDONYM_LIMIT"] } };
+        }
+
+        return { error: { database: ["ERR_DATABASE_GENERAL"] } };
     }
 
     // 5. Cache Busting
     revalidatePath('/', 'layout');
+
+    return { success: true, data };
+}
+
+/**
+ * 🛠️ updateSubmissionAdmin (Golden Master V3.6)
+ * White-List Validation + Zero-Payload Protection + RLS Optimization.
+ */
+export async function updateSubmissionAdmin(id: string, formData: Partial<z.infer<typeof SubmissionSchema>> & { status?: string, admin_feedback?: string | null, is_featured?: boolean }) {
+    const serverSupabase = await createServerSupabase();
+
+    // 1. Proactive Session Audit
+    const { data: { user } } = await serverSupabase.auth.getUser();
+    if (!user) return { error: "AUTH_REQUIRED", message: "Sessão expirada. Por favor, faça login novamente." };
+
+    // 2. White-List Validation (Deep Shield)
+    // Somente campos autorizados passam. Status e metadados protegidos são tratados separadamente ou via RLS.
+    const whiteListSchema = SubmissionSchema.pick({
+        title: true,
+        description: true,
+        authors: true,
+        category: true,
+        external_link: true,
+        use_pseudonym: true,
+        media_url: true,
+        tags: true
+    }).partial();
+
+    const validated = whiteListSchema.safeParse(formData);
+    if (!validated.success) {
+        return { error: "INVALID_DATA", message: validated.error.issues[0].message };
+    }
+
+    // 3. Atomic Data Preparation
+    const updateData: any = { ...validated.data };
+
+    // Campos administrativos explícitos (se fornecidos)
+    if (formData.status) updateData.status = formData.status;
+    if (formData.admin_feedback !== undefined) updateData.admin_feedback = formData.admin_feedback;
+    if (formData.is_featured !== undefined) updateData.is_featured = formData.is_featured;
+
+    // 4. Zero-Payload Protection (Atomic Efficiency)
+    if (Object.keys(updateData).length === 0) {
+        return { success: true, message: "Nenhuma alteração detectada." };
+    }
+
+    // 5. Database Mutation (RLS Optimized)
+    // Confiamos no RLS do Supabase para negar a mutação se o user não for dono/admin.
+    const { data, error } = await serverSupabase
+        .from('submissions')
+        .update(updateData)
+        .eq('id', id)
+        .select()
+        .single();
+
+    if (error) {
+        console.error('Update collision/permission error:', error);
+        // Distinguindo entre erro de permissão (403) e outros
+        if (error.code === '42501') {
+            return { error: "FORBIDDEN", message: "Você não tem permissão para editar esta submissão." };
+        }
+        return { error: "DATABASE_ERROR", message: "Falha ao processar atualização no banco de dados." };
+    }
+
+    // 6. Cache Busting
+    revalidatePath('/admin/pendentes');
+    revalidatePath('/admin/acervo');
+    revalidatePath(`/arquivo/${id}`);
 
     return { success: true, data };
 }

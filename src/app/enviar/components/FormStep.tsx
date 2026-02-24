@@ -11,6 +11,7 @@ import { useSubmissionStore } from '@/store/useSubmissionStore';
 import { useFormAutoSave } from '@/hooks/useFormAutoSave';
 import { supabase } from '@/lib/supabase';
 import { getTrendingTags, createSubmission } from '@/app/actions/submissions';
+import { useErrorMap } from '@/hooks/useErrorMap';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -23,6 +24,7 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 export function FormStep() {
     const router = useRouter();
+    const { notifyError } = useErrorMap();
     const {
         category, mediaType, setStep,
         reset: resetStore
@@ -46,7 +48,7 @@ export function FormStep() {
         formState: { errors, isDirty },
         reset: resetForm
     } = useForm<SubmissionFormData>({
-        resolver: zodResolver(submissionSchema),
+        resolver: zodResolver(submissionSchema) as any,
         defaultValues: {
             title: '',
             authors: '',
@@ -61,9 +63,13 @@ export function FormStep() {
             acceptedCC: false,
             tags: [],
             readingTime: 0,
-            coAuthors: []
+            coAuthors: [],
+            use_pseudonym: false
         }
     });
+
+    const [realName, setRealName] = useState('');
+    const usePseudonym = watch('use_pseudonym');
 
     const [tagInput, setTagInput] = useState('');
     const [smartTags, setSmartTags] = useState<string[]>([]);
@@ -168,8 +174,23 @@ export function FormStep() {
     React.useEffect(() => {
         const fetchUser = async () => {
             const { data: { session } } = await supabase.auth.getSession();
-            if (session?.user?.email) {
-                setUserEmail(session.user.email);
+            if (session?.user) {
+                setUserEmail(session.user.email || '');
+
+                // Fetch Profile for real name
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('full_name')
+                    .eq('id', session.user.id)
+                    .single();
+
+                if (profile?.full_name) {
+                    setRealName(profile.full_name);
+                    // Set default author as real name if not using pseudonym
+                    if (!watchedValues.use_pseudonym) {
+                        setValue('authors', profile.full_name);
+                    }
+                }
             }
         };
         fetchUser();
@@ -182,7 +203,7 @@ export function FormStep() {
         };
         window.addEventListener('beforeunload', handleBeforeUnload);
         return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-    }, [isDirty]);
+    }, [isDirty, watchedValues.use_pseudonym, setValue]);
 
 
 
@@ -385,12 +406,16 @@ export function FormStep() {
                 testimonial: data.testimonial || null,
                 co_authors: data.coAuthors || [],
                 tags: data.tags || [],
-                reading_time: data.readingTime || 0
+                reading_time: data.readingTime || 0,
+                use_pseudonym: data.use_pseudonym
             });
 
             if (result.error) {
                 const firstErr = Object.values(result.error)[0];
-                throw new Error(Array.isArray(firstErr) ? firstErr[0] : "Erro na validação do servidor.");
+                const msg = Array.isArray(firstErr) ? firstErr[0] : "ERR_DATABASE_GENERAL";
+
+                notifyError(msg);
+                throw new Error("Erro de validação processado.");
             }
 
             fetch('/api/notify', {
@@ -562,23 +587,50 @@ export function FormStep() {
                     {errors.title && <p className="text-red-500 text-xs font-bold">{errors.title.message}</p>}
                 </div>
 
-                <div className="space-y-3">
-                    <label className="text-sm font-black uppercase tracking-widest flex items-center justify-between text-brand-red">
-                        <div className="flex items-center gap-2">
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                        <label className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-brand-red">
                             <span className="material-symbols-outlined text-xl">group</span>
-                            Autores *
-                        </div>
-                        <span className={`text-[10px] font-bold ${(watchedValues.authors || '').length > 60 ? 'text-brand-red' : 'text-gray-400'}`}>
-                            {(watchedValues.authors || '').length}/60
-                        </span>
+                            Autor(es) *
+                        </label>
 
+                        {/* [I04] Pseudonym Toggle */}
+                        <label className="flex items-center gap-2 cursor-pointer select-none">
+                            <input
+                                type="checkbox"
+                                {...register('use_pseudonym')}
+                                className="peer sr-only"
+                            />
+                            <div className="w-10 h-6 bg-gray-200 dark:bg-gray-700 rounded-full peer peer-checked:bg-brand-blue relative transition-all after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-4"></div>
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Usar Pseudônimo</span>
+                        </label>
+                    </div>
 
-                    </label>
-                    <input
-                        type="text" {...register('authors')}
-                        className={`w-full bg-white dark:bg-form-dark border-2 rounded-2xl px-6 py-4 focus:ring-4 outline-none transition-all dark:text-white ${errors.authors ? 'border-red-500 focus:ring-red-500/10' : 'border-gray-100 dark:border-gray-800 focus:border-brand-red focus:ring-brand-red/10'}`}
-                        placeholder="Nome, Sobrenome"
-                    />
+                    <div className="relative">
+                        <input
+                            type="text"
+                            {...register('authors')}
+                            readOnly={!usePseudonym}
+                            className={`w-full bg-white dark:bg-form-dark border-2 rounded-2xl px-6 py-4 focus:ring-4 outline-none transition-all dark:text-white 
+                                ${!usePseudonym ? 'opacity-60 cursor-not-allowed bg-gray-50/50 dark:bg-gray-800/10' : ''}
+                                ${errors.authors ? 'border-red-500 focus:ring-red-500/10' : 'border-gray-100 dark:border-gray-800 focus:border-brand-red focus:ring-brand-red/10'}`}
+                            placeholder={usePseudonym ? "Nome Criativo / Pseudônimo" : "Nome do Perfil (Travado)"}
+                        />
+                        {!usePseudonym && (
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[10px] font-bold text-gray-400">
+                                <span className="material-symbols-outlined text-sm">lock</span>
+                                NOME REAL
+                            </div>
+                        )}
+                    </div>
+
+                    {usePseudonym && (
+                        <p className="text-[10px] text-brand-yellow font-bold italic flex items-center gap-1 animate-in slide-in-from-top-1 duration-300">
+                            <span className="material-symbols-outlined text-sm">warning</span>
+                            Limite de 2 pseudônimos por conta. Use com sabedoria.
+                        </p>
+                    )}
+
                     {errors.authors && <p className="text-red-500 text-xs font-bold">{errors.authors.message}</p>}
                 </div>
                 <div className="space-y-3">

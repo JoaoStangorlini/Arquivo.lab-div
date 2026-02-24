@@ -3,6 +3,37 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+:root {
+  color-scheme: light dark;
+  --background: #ffffff;
+}
+
+.dark {
+  --background: #0f172a;
+  /* Sophisticated Slate-950 for better depth */
+}
+
+/* 📱 Responsive Gutter Audit: Only for Desktop (1024px+) */
+:root {
+  scrollbar-gutter: auto;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    scrollbar-gutter: stable both-edges;
+  }
+}
+
+@media (max-width: 1023px) {
+  :root {
+    scrollbar-gutter: auto !important;
+  }
+}
+
+body {
+  background-color: var(--background);
+  scrollbar-color: auto var(--background);
+}
 
 @plugin "@tailwindcss/typography";
 
@@ -12,9 +43,12 @@
   --color-brand-yellow: #FFB300;
   --color-brand-red: #E63946;
   --color-brand-blue: #002752;
-  --color-card-dark: #1E1E1E;
+  --color-brand-blue-dark: #60A5FA;
+  /* Luminous blue for Dark Mode contrast */
+  --color-card-dark: #1E293B;
+  /* Slate-900 elevation for modern glass look */
   --color-background-light: #F8FAFC;
-  --color-background-dark: #121212;
+  --color-background-dark: #0F172A;
   --color-background-subtle: #F1F5F9;
   --color-form-dark: #2A2A2A;
 }
@@ -190,6 +224,72 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shimmer-text 5s linear infinite;
+  }
+
+  /* v3.6 Golden Master: Ultimate GPU Aspect Guard */
+  @keyframes shimmer-labdiv {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .animate-shimmer-labdiv {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background: #f3f4f6;
+    border-radius: 1rem;
+    isolation: isolate;
+    will-change: transform;
+    /* 🚀 GPU Activation */
+  }
+
+  .dark .animate-shimmer-labdiv {
+    background: #1e1e1e;
+  }
+
+  /* 🛡️ [V3.6] Webkit-Proof Aspect Guard (Hybrid Approach) */
+  .webkit-aspect-guard {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    /* Native Priority */
+  }
+
+  @supports not (aspect-ratio: 16/9) {
+    .webkit-aspect-guard {
+      height: 0;
+      padding-bottom: 56.25%;
+      /* 16:9 Legacy Fallback */
+    }
+  }
+
+  .animate-shimmer-labdiv::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 57, 70, 0.08) 30%,
+        rgba(255, 179, 0, 0.15) 50%,
+        rgba(255, 57, 70, 0.08) 70%,
+        rgba(255, 255, 255, 0) 100%);
+    animation: shimmer-labdiv 1.8s infinite ease-in-out;
+  }
+
+  .gpu-isolate {
+    isolation: isolate;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: opacity, transform;
   }
 
   /* Module 3: Immersive Reading */

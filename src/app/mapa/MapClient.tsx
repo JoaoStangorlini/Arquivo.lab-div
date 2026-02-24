@@ -9,21 +9,7 @@ import { MediaCardProps } from '@/components/MediaCard';
 const CampusMap = dynamic(() => import('@/components/map/CampusMap').then(mod => mod.CampusMap), {
     ssr: false,
     loading: () => (
-        <div className="w-full max-w-5xl mx-auto aspect-video rounded-3xl overflow-hidden bg-gray-100 dark:bg-gray-800 animate-pulse flex flex-col items-center justify-center text-gray-400 gap-4">
-            <motion.div
-                animate={{
-                    scale: [1, 1.05, 1],
-                    opacity: [0.5, 1, 0.5]
-                }}
-                transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                }}
-                className="w-20 h-20 rounded-full border-4 border-[#0055ff]/30 border-t-[#0055ff] shadow-[0_0_20px_rgba(0,85,255,0.2)]"
-            />
-            <span className="font-bold text-xs uppercase tracking-widest text-[#0055ff]">Navegação Gamificada</span>
-        </div>
+        <div className="webkit-aspect-guard w-full rounded-3xl overflow-hidden animate-shimmer-labdiv border border-gray-800 shadow-2xl" />
     )
 });
 

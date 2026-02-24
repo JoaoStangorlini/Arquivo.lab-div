@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { createServerSupabase } from '@/lib/supabase/server';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import React from 'react';
@@ -66,23 +67,42 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         return { title: 'Submissão não encontrada' };
     }
 
-    const mediaUrls = Array.isArray(submission.media_url) ? submission.media_url : [submission.media_url];
-    const firstImage = mediaUrls[0] || '';
+    const urls = parseMediaUrl(submission.media_url);
+
+    // [I06] Robust SEO Fallback Logic
+    let previewImage = '';
+
+    if (submission.media_type === 'image' && urls[0]) {
+        previewImage = urls[0];
+    } else if (submission.media_type === 'video' && urls[0]) {
+        const vidId = urls[0].split('/').pop()?.split('?')[0]; // Simple extract
+        if (vidId && vidId.length === 11) {
+            previewImage = `https://img.youtube.com/vi/${vidId}/maxresdefault.jpg`;
+        }
+    }
+
+    // Final fallback to brand logo
+    const finalImage = previewImage || 'https://if-usp-ciencia.vercel.app/arquivo-logo.png';
+
+    const cleanDescription = submission.description
+        ? submission.description.replace(/[#*`$]/g, '').substring(0, 160).trim() + '...'
+        : `Contribuição de ${submission.authors} na categoria ${submission.category}.`;
 
     return {
         title: `${submission.title} — Hub Lab-Div`,
-        description: submission.description || `Por ${submission.authors}`,
+        description: cleanDescription,
         openGraph: {
             title: submission.title,
-            description: submission.description || `Submissão de ${submission.authors} no Hub de Comunicação Científica do Lab-Div`,
-            images: submission.media_type === 'image' && firstImage ? [{ url: firstImage }] : [],
+            description: cleanDescription,
+            images: [{ url: finalImage }],
             type: 'article',
+            siteName: 'Hub de Comunicação Científica Lab-Div'
         },
         twitter: {
             card: 'summary_large_image',
             title: submission.title,
-            description: submission.description || `Por ${submission.authors}`,
-            images: submission.media_type === 'image' && firstImage ? [firstImage] : [],
+            description: cleanDescription,
+            images: [finalImage],
         },
     };
 }
@@ -127,8 +147,9 @@ export default async function ArquivoItemPage({ params }: PageProps) {
         .eq('status', 'aprovado')
         .order('created_at', { ascending: false });
 
-    // Get user for history tracking
-    const { data: { user } } = await supabase.auth.getUser();
+    // Get user for history tracking — use cookie-aware server client
+    const serverSupabase = await createServerSupabase();
+    const { data: { user } } = await serverSupabase.auth.getUser();
 
     return (
         <ReadingExperienceProvider>

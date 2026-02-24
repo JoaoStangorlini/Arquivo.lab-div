@@ -4,13 +4,18 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "step-zero": "node scripts/generate-id.js",
+    "prebuild": "npm run step-zero",
+    "build": "next build && npm run audit-logs",
+    "postbuild": "node scripts/clean.js",
+    "clean": "node scripts/clean.js",
+    "audit-logs": "node scripts/audit.js",
     "start": "next start",
-    "lint": "eslint",
-    "prebuild": "node cleanup-artifacts.js"
+    "lint": "eslint"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.97.0",
     "@tailwindcss/typography": "^0.5.19",
     "@types/canvas-confetti": "^1.9.0",
