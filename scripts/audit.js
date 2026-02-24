@@ -1,53 +1,87 @@
 const fs = require('fs');
 const path = require('path');
 
-function walk(dir, callback) {
-    fs.readdirSync(dir).forEach(f => {
-        let dirPath = path.join(dir, f);
-        let isDirectory = fs.statSync(dirPath).isDirectory();
-        isDirectory ? walk(dirPath, callback) : callback(path.join(dir, f));
-    });
-}
+/**
+ * 🛡️ Hub de Comunicação Científica - V3.9 GOLDEN MASTER
+ * Script: audit-integrity.js
+ * Objetivo: Auditoria de Logs + Validação de Sincronia de Artefatos
+ */
 
-const chunksDir = path.join(process.cwd(), '.next', 'static', 'chunks');
-
-if (!fs.existsSync(chunksDir)) {
-    console.log('⚠️ Diretório de chunks não encontrado. Pulando auditoria.');
-    process.exit(0);
-}
+const buildEnvPath = path.join(__dirname, '../.env.production.local');
+const swPath = path.join(__dirname, '../public/sw.js');
+const projectRoot = path.join(__dirname, '..');
+const scanDirs = ['src', 'scripts'];
+const ignorePatterns = ['node_modules', '.next', 'audit.js', 'audit-integrity.js'];
 
 let foundLogs = false;
 
-walk(chunksDir, (filePath) => {
-    if (filePath.endsWith('.js')) {
-        const content = fs.readFileSync(filePath, 'utf8');
-        /**
-         * 🛡️ Filtro Avançado de Auditoria (Golden Master V3.3)
-         * Ignoramos:
-         * 1. console.error/warn (Comumente usados por libs como KaTeX/Supabase para erros fatais)
-         * 2. Checks de boilerplate de minifiers (ex: typeof console.log === 'function')
-         */
-        const logMatches = content.match(/console\.log\(/g);
-        if (logMatches) {
-            // Se houver console.log, verificamos se ele se parece com código de aplicação
-            // ou se é apenas boilerplate de detecção global.
-            const suspectedLogs = logMatches.filter(() => {
-                // Heurística: No Hub, removemos TODOS os console.log da SRC.
-                // Se o chunk contém console.log e não é boilerplate conhecido, avisamos.
-                // Para o Golden Master, seremos flexíveis com boilerplate de libs mas rígidos com aplicação.
-                return !content.includes('typeof console');
-            });
+function performIntegrityCheck() {
+    console.log('🔍 [V3.9] Iniciando Auditoria de Integridade...');
 
-            if (suspectedLogs.length > 0) {
-                console.warn(`⚠️ [AUDITORIA] Log potencial detectado em: ${filePath}`);
-                // foundLogs = true; // Desativado temporariamente para permitir libs, mas avisamos no terminal.
-            }
-        }
+    // 1. Verificar .env.production.local
+    if (!fs.existsSync(buildEnvPath)) {
+        console.error('❌ ERRO: .env.production.local não encontrado.');
+        process.exit(1);
     }
+    const envContent = fs.readFileSync(buildEnvPath, 'utf8');
+    const buildIdMatch = envContent.match(/NEXT_PUBLIC_BUILD_ID=(\d+)/);
+
+    if (!buildIdMatch) {
+        console.error('❌ ERRO: BUILD_ID não encontrado no .env.');
+        process.exit(1);
+    }
+    const buildId = buildIdMatch[1];
+
+    // 2. Verificar public/sw.js
+    if (!fs.existsSync(swPath)) {
+        console.error('❌ ERRO: public/sw.js não foi gerado.');
+        process.exit(1);
+    }
+    const swContent = fs.readFileSync(swPath, 'utf8');
+
+    // 3. Validar Sincronia
+    if (!swContent.includes(buildId)) {
+        console.error(`❌ ERRO: Desincronia détectada!
+        ENV ID: ${buildId}
+        O Service Worker pode estar desatualizado ou não contém o ID correto.`);
+        process.exit(1);
+    }
+
+    console.log(`✅ [V3.9] Integridade de Artefatos OK (ID: ${buildId})`);
+}
+
+function scanFiles(dir) {
+    const files = fs.readdirSync(dir);
+    files.forEach(file => {
+        const fullPath = path.join(dir, file);
+        if (ignorePatterns.some(p => fullPath.includes(p))) return;
+
+        if (fs.statSync(fullPath).isDirectory()) {
+            scanFiles(fullPath);
+        } else if (file.match(/\.(ts|tsx|js|jsx)$/)) {
+            const content = fs.readFileSync(fullPath, 'utf8');
+            const lines = content.split('\n');
+            lines.forEach((line, idx) => {
+                if (line.includes('console.log(') && !line.includes('//') && !line.includes('✅')) {
+                    console.error(`🚩 LOG DETECTADO: ${fullPath}:${idx + 1}`);
+                    foundLogs = true;
+                }
+            });
+        }
+    });
+}
+
+// 🚀 Execução do Gate
+performIntegrityCheck();
+
+console.log('🔍 [V3.9] Scan de Logs em andamento...');
+scanDirs.forEach(dir => {
+    const targetDir = path.join(projectRoot, dir);
+    if (fs.existsSync(targetDir)) scanFiles(targetDir);
 });
 
 if (foundLogs) {
-    console.error('❌ Erro de Segurança: Logs encontrados em produção!');
+    console.error('❌ Falha na auditoria: Remova os console.logs antes do Master.');
     process.exit(1);
 } else {
     console.log('✅ Auditoria de Logs: ZERO-LOG detectado.');

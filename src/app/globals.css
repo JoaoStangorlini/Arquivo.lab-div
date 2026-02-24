@@ -226,7 +226,13 @@ body {
     animation: shimmer-text 5s linear infinite;
   }
 
-  /* v3.6 Golden Master: Ultimate GPU Aspect Guard */
+  /* v3.9 Golden Master: Chrono-Chromatic Sync */
+  :root {
+    --shimmer-duration: 1.5s;
+    --shimmer-base: #1E1E1E;
+    --shimmer-highlight: rgba(255, 179, 0, 0.12);
+  }
+
   @keyframes shimmer-labdiv {
     0% {
       transform: translateX(-100%);
@@ -241,31 +247,23 @@ body {
     display: block;
     position: relative;
     overflow: hidden;
-    background: #f3f4f6;
+    background: var(--shimmer-base);
     border-radius: 1rem;
     isolation: isolate;
-    will-change: transform;
-    /* 🚀 GPU Activation */
   }
 
-  .dark .animate-shimmer-labdiv {
-    background: #1e1e1e;
-  }
-
-  /* 🛡️ [V3.6] Webkit-Proof Aspect Guard (Hybrid Approach) */
+  /* 🛡️ [V3.9] Hybrid Aspect Guard */
   .webkit-aspect-guard {
     display: block;
     position: relative;
     width: 100%;
     aspect-ratio: 16/9;
-    /* Native Priority */
   }
 
   @supports not (aspect-ratio: 16/9) {
     .webkit-aspect-guard {
       height: 0;
       padding-bottom: 56.25%;
-      /* 16:9 Legacy Fallback */
     }
   }
 
@@ -278,11 +276,9 @@ body {
     height: 100%;
     background: linear-gradient(90deg,
         rgba(255, 255, 255, 0) 0%,
-        rgba(255, 57, 70, 0.08) 30%,
-        rgba(255, 179, 0, 0.15) 50%,
-        rgba(255, 57, 70, 0.08) 70%,
+        var(--shimmer-highlight) 50%,
         rgba(255, 255, 255, 0) 100%);
-    animation: shimmer-labdiv 1.8s infinite ease-in-out;
+    animation: shimmer-labdiv var(--shimmer-duration) infinite ease-in-out;
   }
 
   .gpu-isolate {
