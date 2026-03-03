@@ -26,6 +26,7 @@
     "jspdf": "^4.2.0",
     "katex": "^0.16.28",
     "lucide-react": "^0.575.0",
+    "material-symbols": "^0.40.2",
     "modern-screenshot": "^4.6.8",
     "next": "16.1.6",
     "react": "19.2.3",

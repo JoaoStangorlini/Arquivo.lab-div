@@ -33,7 +33,7 @@ export function ColisorClientView({ oportunidades }: ColisorClientViewProps) {
                     <h1 className="text-3xl md:text-5xl font-black tracking-tighter uppercase italic">O Grande Colisor</h1>
                 </div>
                 <p className="text-gray-500 dark:text-gray-400 text-lg max-w-2xl leading-relaxed">
-                    O repositório técnico de conhecimento estruturado do Instituto de Física. Explore a conexão entre iniciativas e oportunidades.
+                    O repositório técnico de conhecimento estruturado do Instituto de Física e da USP. Explore a conexão entre iniciativas e oportunidades.
                 </p>
             </div>
 
@@ -85,7 +85,10 @@ export function ColisorClientView({ oportunidades }: ColisorClientViewProps) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Lab-Div Card */}
-                    <div className="bg-white dark:bg-card-dark rounded-[32px] p-8 border border-gray-100 dark:border-gray-800 shadow-xl shadow-gray-200/5 hover:-translate-y-1 transition-transform group">
+                    <div className="bg-white dark:bg-card-dark rounded-[32px] p-8 border border-gray-100 dark:border-gray-800 shadow-xl shadow-gray-200/5 hover:-translate-y-1 transition-transform group relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <span className="material-symbols-outlined text-6xl text-brand-blue">science</span>
+                        </div>
                         <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 overflow-hidden">
                             <img src="/labdiv-logo.png" alt="Logo do Lab-Div" className="w-full h-full object-contain" />
                         </div>
@@ -95,13 +98,16 @@ export function ColisorClientView({ oportunidades }: ColisorClientViewProps) {
                         <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
                             Inspirada no CommLab do MIT, foca na comunicação científica no IFUSP. Oferece tutoria entre pares para escrita científica, apresentações e design.
                         </p>
-                        <a href="https://labdiv.notion.site" target="_blank" rel="noopener noreferrer" className="text-brand-blue font-black flex items-center gap-2 group-hover:underline text-sm">
-                            Acessar Notion <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                        </a>
+                        <Link href="/arquivo-labdiv" className="text-brand-blue font-black flex items-center gap-2 group-hover:underline text-sm">
+                            Explorar Acervo <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                        </Link>
                     </div>
 
                     {/* Hackerspace IFUSP Card */}
-                    <div className="bg-white dark:bg-card-dark rounded-[32px] p-8 border border-gray-100 dark:border-gray-800 shadow-xl shadow-gray-200/5 hover:-translate-y-1 transition-transform group">
+                    <div className="bg-white dark:bg-card-dark rounded-[32px] p-8 border border-gray-100 dark:border-gray-800 shadow-xl shadow-gray-200/5 hover:-translate-y-1 transition-transform group relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <span className="material-symbols-outlined text-6xl text-brand-green">memory</span>
+                        </div>
                         <div className="w-16 h-16 bg-brand-green/10 rounded-2xl flex items-center justify-center mb-6">
                             <span className="material-symbols-outlined text-4xl text-brand-green">memory</span>
                         </div>
@@ -113,22 +119,60 @@ export function ColisorClientView({ oportunidades }: ColisorClientViewProps) {
                             Conhecer <span className="material-symbols-outlined text-sm">arrow_forward</span>
                         </a>
                     </div>
+
+                    {/* Boletim Supernova */}
+                    <div className="bg-white dark:bg-card-dark rounded-[32px] p-8 border border-gray-100 dark:border-gray-800 shadow-xl shadow-gray-200/5 hover:-translate-y-1 transition-transform group relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <span className="material-symbols-outlined text-6xl text-brand-yellow">newspaper</span>
+                        </div>
+                        <div className="w-16 h-16 bg-brand-yellow/10 rounded-2xl flex items-center justify-center mb-6">
+                            <span className="material-symbols-outlined text-4xl text-brand-yellow">newspaper</span>
+                        </div>
+                        <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-3">Boletim Supernova</h2>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
+                            Publicação do CEFISMA que serve como espaço de diálogo crítico e cultural no IFUSP. Traz textos de estudantes, artigos de opinião e artes.
+                        </p>
+                        <a href="https://cefisma.com.br" target="_blank" rel="noopener noreferrer" className="text-brand-yellow font-black flex items-center gap-2 group-hover:underline text-sm">
+                            Ler Boletim <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+
+                    {/* DigitalLab */}
+                    <div className="bg-white dark:bg-card-dark rounded-[32px] p-8 border border-gray-100 dark:border-gray-800 shadow-xl shadow-gray-200/5 hover:-translate-y-1 transition-transform group relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <span className="material-symbols-outlined text-6xl text-brand-red">desktop_windows</span>
+                        </div>
+                        <div className="w-16 h-16 bg-brand-red/10 rounded-2xl flex items-center justify-center mb-6">
+                            <span className="material-symbols-outlined text-4xl text-brand-red">desktop_windows</span>
+                        </div>
+                        <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-3">DigitalLab</h2>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
+                            Foco na criação de experiências digitais, programação e conteúdos audiovisuais voltados para a popularização da ciência na internet.
+                        </p>
+                        <div className="text-brand-red font-black flex items-center gap-2 text-sm opacity-50 cursor-default">
+                            Em breve <span className="material-symbols-outlined text-sm">hourglass_empty</span>
+                        </div>
+                    </div>
+
+                    {/* Cientec Card */}
+                    <div className="bg-white dark:bg-card-dark rounded-[32px] p-8 border border-gray-100 dark:border-gray-800 shadow-xl shadow-gray-200/5 hover:-translate-y-1 transition-transform group relative overflow-hidden md:col-span-2">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-brand-blue">
+                            <span className="material-symbols-outlined text-8xl">park</span>
+                        </div>
+                        <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 overflow-hidden">
+                            <img src="/cientec-logo.png" alt="Logo do Parque CienTec" className="w-full h-full object-contain" />
+                        </div>
+                        <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-3">Parque CienTec</h2>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
+                            Museu interativo e a céu aberto dedicado à divulgação científica e preservação ambiental. Inclui trilhas, observatório astronômico e estação meteorológica.
+                        </p>
+                        <a href="https://parquecientec.usp.br" target="_blank" rel="noopener noreferrer" className="text-brand-blue font-black flex items-center gap-2 group-hover:underline text-sm">
+                            Visitar Site <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
                 </div>
             </section>
 
-            {/* Help Section */}
-            <div className="mt-20 p-10 bg-gradient-to-br from-brand-red to-brand-red/80 rounded-[40px] text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl shadow-brand-red/20 border border-white/10">
-                <div className="max-w-md text-center md:text-left">
-                    <h3 className="text-2xl font-black mb-2 italic uppercase">Dúvidas Técnicas?</h3>
-                    <p className="text-white/80 text-sm font-medium">Use o botão de Reportar no topo da página ou entre em contato com a nossa curadoria técnica.</p>
-                </div>
-                <Link
-                    href="mailto:labdiv@usp.br"
-                    className="px-8 py-4 bg-white text-brand-red font-black rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-black/20"
-                >
-                    Falar com Suporte
-                </Link>
-            </div>
         </div>
     );
 }

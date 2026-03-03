@@ -56,7 +56,7 @@ export interface UserDTO {
 /**
  * Converter: Map database Submission to PostDTO
  */
-export function mapToPostDTO(submission: any, counts?: { likes?: number, saves?: number, comments?: number }): PostDTO {
+export function mapToPostDTO(submission: any, counts?: { likes?: number, saves?: number, comments?: number }, avatarUrl?: string): PostDTO {
     return {
         id: submission.id,
         title: submission.title,
@@ -73,7 +73,7 @@ export function mapToPostDTO(submission: any, counts?: { likes?: number, saves?:
         likeCount: Number(counts?.likes ?? submission.like_count ?? 0),
         saveCount: Number(counts?.saves ?? 0),
         commentCount: Number(counts?.comments ?? 0),
-        avatarUrl: submission.avatar_url,
+        avatarUrl: avatarUrl || submission.avatar_url,
         location_lat: typeof submission.location_lat === 'number' ? submission.location_lat : undefined,
         location_lng: typeof submission.location_lng === 'number' ? submission.location_lng : undefined,
         location_name: submission.location_name,

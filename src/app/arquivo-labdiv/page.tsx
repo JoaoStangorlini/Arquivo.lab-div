@@ -1,4 +1,5 @@
 import { MainLayoutWrapper } from "@/components/layout/MainLayoutWrapper";
+import { LabDivCatalogExplorer } from "@/components/LabDivCatalogExplorer";
 import Link from "next/link";
 
 export default function ArquivoLabDivPage() {
@@ -10,16 +11,16 @@ export default function ArquivoLabDivPage() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center gap-8">
                         <div className="flex-1">
                             <h1 className="font-display font-bold text-4xl md:text-5xl tracking-tight mb-4 text-gray-900 dark:text-white">
-                                Acervo Oficial <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red via-brand-blue to-brand-yellow">Lab-Div</span>
+                                O que é o <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red via-brand-blue to-brand-yellow">Lab-Div</span>?
                             </h1>
                             <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl">
-                                O repositório central de todas as produções de comunicação científica apoiadas e certificadas pelas metodologias do Laboratório de Divulgação Científica do IFUSP.
+                                É um laboratório de divulgação científica que produz, reúne e ajuda a criar material de divulgação científica para ajudar a melhorar a divulgação científica do IF.
                             </p>
 
                             <div className="flex flex-wrap gap-4">
                                 <a href="https://labdiv.notion.site" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-brand-blue text-white rounded-2xl font-bold shadow-xl shadow-brand-blue/20 flex items-center gap-2 hover:-translate-y-1 transition-transform">
-                                    <span className="material-symbols-outlined text-[20px]">science</span>
-                                    Metodologia Completa
+                                    <span className="material-symbols-outlined text-[20px]">language</span>
+                                    Visite nosso Site
                                 </a>
                             </div>
                         </div>
@@ -71,17 +72,14 @@ export default function ArquivoLabDivPage() {
 
                 {/* Integration with existing archive */}
                 <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-100 dark:border-gray-800">
-                    <div className="flex flex-col items-center justify-center text-center p-12 bg-gray-50 dark:bg-card-dark rounded-3xl border border-gray-100 dark:border-gray-800">
-                        <span className="material-symbols-outlined text-5xl text-gray-400 mb-4">auto_awesome_mosaic</span>
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Catálogo Padrão Ouro</h2>
-                        <p className="text-gray-500 max-w-lg mb-8">
-                            Nós aplicamos filtros rigorosos nesta seção. Se você tiver as qualificações, submeta seu projeto científico validado para se integrar permanentemente ao acervo.
-                        </p>
-                        <Link href="/?tag=LabDiv2026" className="px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold rounded-xl flex items-center gap-2 hover:opacity-80 transition-opacity">
-                            <span className="material-symbols-outlined text-[18px]">search</span>
-                            Explorar Acervo Validado
-                        </Link>
+                    <div className="mb-12">
+                        <h2 className="text-3xl font-black uppercase tracking-tighter text-gray-900 dark:text-white mb-2">
+                            Catálogo de Material de <span className="text-brand-yellow">Divulgação Padrão Ouro</span>
+                        </h2>
+                        <div className="h-1.5 w-24 bg-brand-yellow rounded-full mb-8"></div>
                     </div>
+
+                    <LabDivCatalogExplorer />
                 </section>
             </main>
         </MainLayoutWrapper>

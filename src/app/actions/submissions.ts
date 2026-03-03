@@ -38,7 +38,7 @@ export async function fetchSubmissions({ page, limit, query, categories, mediaTy
     const supabaseServer = await createServerSupabase();
     let queryBuilder = supabaseServer
         .from('submissions')
-        .select('*, energy_reactions, atomic_excitation', { count: 'exact' })
+        .select('*, profiles(avatar_url), energy_reactions, atomic_excitation', { count: 'exact' })
         .eq('status', 'aprovado');
 
     if (featured) queryBuilder = queryBuilder.eq('is_featured', true);
@@ -73,7 +73,7 @@ export async function fetchSubmissions({ page, limit, query, categories, mediaTy
     if (!submissions) return { items: [], hasMore: false };
 
     const items = submissions.map(sub => ({
-        post: mapToPostDTO(sub)
+        post: mapToPostDTO(sub, undefined, (sub as any).profiles?.avatar_url)
     }));
 
     const hasMore = count ? from + submissions.length < count : false;
@@ -83,7 +83,7 @@ export async function fetchSubmissions({ page, limit, query, categories, mediaTy
 export async function fetchTrendingSubmissions(): Promise<{ post: PostDTO }[]> {
     const { data: submissions, error } = await supabase
         .from('submissions')
-        .select('*, like_count')
+        .select('*, profiles(avatar_url), like_count')
         .eq('status', 'aprovado')
         .order('views', { ascending: false })
         .limit(6);
@@ -98,7 +98,7 @@ export async function fetchTrendingSubmissions(): Promise<{ post: PostDTO }[]> {
 export async function getFeaturedSubmissions(limit: number = 10): Promise<{ post: PostDTO }[]> {
     const { data: submissions, error } = await supabase
         .from('submissions')
-        .select('*')
+        .select('*, profiles(avatar_url)')
         .eq('status', 'aprovado')
         .eq('is_featured', true)
         .order('created_at', { ascending: false })
@@ -398,7 +398,7 @@ export async function createSubmission(formData: z.infer<typeof SubmissionSchema
 export async function fetchUserSubmissions(userId: string): Promise<{ post: PostDTO }[]> {
     const { data: submissions, error } = await supabase
         .from('submissions')
-        .select('*, energy_reactions, atomic_excitation')
+        .select('*, profiles(avatar_url), energy_reactions, atomic_excitation')
         .eq('user_id', userId)
         .order('created_at', { ascending: false });
 

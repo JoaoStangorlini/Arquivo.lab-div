@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { m, AnimatePresence } from 'framer-motion';
 import { Search, ChevronRight, User } from 'lucide-react';
+import { Avatar } from '../ui/Avatar';
 import { searchProfiles, followUser, unfollowUser, checkIsFollowing } from '@/app/actions/submissions';
 import { toast } from 'react-hot-toast';
 
@@ -231,18 +232,12 @@ export const SidebarRight = ({ tags, authors: initialAuthors }: SidebarRightProp
                                 return (
                                     <div key={`${activeTab}-${user.id}`} className="flex items-center justify-between gap-3 animate-in fade-in duration-300">
                                         <div className="flex items-center gap-3 overflow-hidden">
-                                            {user.avatar ? (
-                                                <div className="size-10 rounded-full overflow-hidden border border-gray-200 dark:border-gray-800 shrink-0">
-                                                    <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
-                                                </div>
-                                            ) : (
-                                                <div className={`size-10 rounded-full flex items-center justify-center shrink-0 ${(user.name.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % 3 === 0 ? 'bg-brand-blue/10 text-brand-blue' :
-                                                    (user.name.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % 3 === 1 ? 'bg-brand-yellow/10 text-brand-yellow' :
-                                                        'bg-brand-red/10 text-brand-red'
-                                                    }`}>
-                                                    <User className="w-5 h-5" />
-                                                </div>
-                                            )}
+                                            <Avatar
+                                                src={user.avatar}
+                                                name={user.name}
+                                                size="md"
+                                                customSize="size-10"
+                                            />
                                             <div className="flex flex-col overflow-hidden">
                                                 <span className="text-xs font-bold text-gray-900 dark:text-white truncate max-w-[100px]" title={user.name}>{user.name}</span>
                                                 <span className="text-[10px] text-gray-500 truncate max-w-[100px]">{user.handle}</span>

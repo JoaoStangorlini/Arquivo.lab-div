@@ -4,6 +4,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   compress: true,
+  devIndicators: false,
   images: {
     formats: ['image/webp', 'image/avif'],
     remotePatterns: [

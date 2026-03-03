@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { AppRoutes } from '@/types/navigation';
 import { fetchRecentEntanglements } from '@/app/actions/submissions';
+import { Avatar } from '../ui/Avatar';
 import { supabase } from '@/lib/supabase';
 
 const mainLinks = [
@@ -127,16 +128,13 @@ export const SidebarLeft = ({ userId }: { userId?: string }) => {
                                 href={`/emaranhamento?userId=${profile.id}`}
                                 className={`flex items-center gap-3 p-2 rounded-2xl transition-all group relative border border-transparent hover:border-white/5 ${pathname === '/emaranhamento' && userId === profile.id ? 'bg-white/10' : 'hover:bg-gray-100 dark:hover:bg-white/5'}`}
                             >
-                                <div className="relative shrink-0">
-                                    {profile.avatar ? (
-                                        <img src={profile.avatar} alt={profile.name} className="w-10 h-10 rounded-full object-cover border border-white/10" />
-                                    ) : (
-                                        <div className="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue">
-                                            <span className="text-xs font-black uppercase">{profile.name[0]}</span>
-                                        </div>
-                                    )}
-                                    <div className="absolute -bottom-0.5 -right-0.5 size-3 bg-brand-blue border-2 border-white dark:border-[#121212] rounded-full" />
-                                </div>
+                                <Avatar
+                                    src={profile.avatar}
+                                    name={profile.name}
+                                    size="md"
+                                    className="border border-white/10"
+                                />
+                                <div className="absolute -bottom-0.5 -right-0.5 size-3 bg-brand-blue border-2 border-white dark:border-[#121212] rounded-full" />
                                 <div className="flex flex-col overflow-hidden min-w-0">
                                     <div className="flex items-center justify-between gap-2">
                                         <span className="text-xs font-bold text-gray-900 dark:text-white truncate">{profile.name}</span>

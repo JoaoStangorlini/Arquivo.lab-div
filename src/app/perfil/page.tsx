@@ -12,6 +12,7 @@ import { parseMediaUrl, getYoutubeThumbnail, getOptimizedUrl } from '@/lib/media
 
 import { PseudonymManager } from '@/components/profile/PseudonymManager';
 import { User, Grid, Medal, Lock, Image as ImageIcon, PlayCircle, FileText, Heart, MessageSquare, Info, Camera, ExternalLink, ShieldCheck, Play } from 'lucide-react';
+import { Avatar } from '@/components/ui/Avatar';
 import dynamic from 'next/dynamic';
 
 
@@ -83,11 +84,12 @@ function ProfileContent() {
                         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-8 sm:gap-12 max-w-3xl mx-auto">
                             <div className="relative shrink-0">
                                 <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full flex items-center justify-center overflow-hidden border-2 border-gray-200 dark:border-gray-800 shadow-md">
-                                    {user.user_metadata?.avatar_url ? (
-                                        <img src={getAvatarUrl(user.user_metadata.avatar_url)} alt="Profile" className="w-full h-full object-cover" />
-                                    ) : (
-                                        <User className="w-20 h-20 text-gray-400" />
-                                    )}
+                                    <Avatar
+                                        src={user.user_metadata?.avatar_url}
+                                        name={user.user_metadata?.full_name}
+                                        size="custom"
+                                        customSize="w-32 h-32 sm:w-40 sm:h-40"
+                                    />
                                 </div>
                             </div>
                             <div className="flex-1 text-center sm:text-left space-y-4 sm:pt-2">

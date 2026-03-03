@@ -51,7 +51,7 @@ export function SobreClient({ initialTestimonials }: SobreClientProps) {
                     <p className="text-gray-600 dark:text-gray-400 flex-1 leading-relaxed">
                         O coração do projeto é a construção de um grande Arquivo visual. Capturamos o cotidiano dos laboratórios, o maquinário e os bastidores das pesquisas de forma profissional. Nosso objetivo é ter um banco de imagens institucionais de alta qualidade, pronto para suprir demandas de jornalistas, designers e pesquisadores.
                     </p>
-                    <Link href="/" className="mt-6 text-brand-blue font-semibold hover:underline flex items-center gap-1">
+                    <Link href="/arquivo-labdiv" className="mt-6 text-brand-blue font-semibold hover:underline flex items-center gap-1">
                         Explore o acervo <ArrowRight className="w-4 h-4" />
                     </Link>
                 </div>
@@ -63,13 +63,48 @@ export function SobreClient({ initialTestimonials }: SobreClientProps) {
                     </div>
                     <h3 className="text-2xl font-bold mb-4">Envios da Comunidade</h3>
                     <p className="text-gray-600 dark:text-gray-400 flex-1 leading-relaxed">
-                        O Hub é colaborativo! Permitimos que qualquer aluno, técnico ou professor do Instituto possa enviar suas próprias fotos e vídeos do cotidiano do seu laboratório. Após uma rápida curadoria, o seu registro passa a integrar a galeria principal, ajudando a documentar a enorme produção do instituto em rede.
+                        O Hub é colaborativo! Estudantes, técnicos e docentes do IFUSP podem submeter registros visuais do cotidiano de seus laboratórios. Integramos o conhecimento de base em uma rede viva de registros autênticos.
                     </p>
                     <Link href="/enviar" className="mt-6 text-brand-yellow font-semibold hover:underline flex items-center gap-1">
                         Envie seu material <ArrowRight className="w-4 h-4" />
                     </Link>
                 </div>
 
+            </div>
+            {/* O Fluxo Section */}
+            <div className="bg-white dark:bg-card-dark rounded-[40px] p-8 md:p-12 shadow-xl border border-gray-100 dark:border-gray-800 relative overflow-hidden mb-20 group">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-brand-blue/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-blue/10 transition-colors"></div>
+                <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
+                    <div className="flex-1">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 text-brand-blue text-[10px] font-black uppercase tracking-widest mb-6">
+                            Motor de Engajamento
+                        </div>
+                        <h2 className="text-3xl md:text-4xl font-black uppercase italic tracking-tighter mb-6 leading-none">
+                            O Fluxo <span className="text-brand-blue text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-red">Interativo</span>
+                        </h2>
+                        <p className="text-lg text-gray-600 dark:text-gray-400 font-medium leading-relaxed mb-6">
+                            Não somos apenas uma vitrine; somos uma conversa viva. O **Fluxo** integra o material produzido pelo Lab-Div, a excelência das nossas mentorias e a espontaneidade da comunidade em uma timeline dinâmica.
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div className="p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-white/5 hover:border-brand-blue/20 transition-colors">
+                                <h4 className="text-brand-blue font-black uppercase tracking-widest text-[9px] mb-2">Padrão Ouro</h4>
+                                <p className="text-xs text-gray-500">Material oficial produzido com o rigor visual do Lab-Div.</p>
+                            </div>
+                            <div className="p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-white/5 hover:border-brand-red/20 transition-colors">
+                                <h4 className="text-brand-red font-black uppercase tracking-widest text-[9px] mb-2">Mentorados</h4>
+                                <p className="text-xs text-gray-500">Conteúdo potencializado por nossas diretrizes técnicas.</p>
+                            </div>
+                            <div className="p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-white/5 hover:border-brand-yellow/20 transition-colors">
+                                <h4 className="text-brand-yellow font-black uppercase tracking-widest text-[9px] mb-2">Comunidade</h4>
+                                <p className="text-xs text-gray-500">Os bastidores reais do IFUSP contados por quem os vive.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <Link href="/" className="shrink-0 w-full md:w-auto bg-brand-blue text-white px-10 py-6 rounded-3xl font-black uppercase italic tracking-tighter hover:scale-105 hover:shadow-2xl hover:shadow-brand-blue/20 transition-all flex items-center justify-center gap-3">
+                        Entrar no Fluxo
+                        <ArrowRight className="w-6 h-6" />
+                    </Link>
+                </div>
             </div>
 
             {/* Project Overview Card (Premium) */}
@@ -123,18 +158,67 @@ export function SobreClient({ initialTestimonials }: SobreClientProps) {
                             O Papel do <span className="text-brand-blue">Lab-Div</span>
                         </h2>
                         <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                            O Laboratório de Divulgação Científica do IFUSP trabalha para reduzir o abismo entre o que é produzido na academia e o que chega à sociedade.
+                            O Laboratório de Divulgação Científica do IFUSP atua como o motor técnico e curatorial desta plataforma. Nosso trabalho se estende da produção de conteúdo "Padrão Ouro" à moderação, suporte e mentoria contínua para garantir a qualidade da comunicação.
                         </p>
                         <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                            Este Hub é uma ferramenta desenhada para resolver um problema histórico: a falta de acessibilidade visual e narrativa sobre a pesquisa de base. Ao unificar criadores, arquivistas e a própria comunidade de pesquisadores em um só lugar, criamos um motor contínuo de difusão do conhecimento.
+                            Desenvolvemos o Hub para resolver a falta de acessibilidade visual sobre a pesquisa de base. Ao unificar criadores, arquivistas e pesquisadores, o Lab-Div garante que a ciência produzida no instituto não apenas exista, mas seja vista, compreendida e compartilhada.
                         </p>
-                        <a href="https://labdiv.notion.site" target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-brand-blue font-black hover:text-brand-blue/80 transition-colors mt-8 group uppercase text-xs tracking-widest">
-                            Conhecer mais <ArrowRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
-                        </a>
+                        <Link href="/arquivo-labdiv" className="inline-flex items-center text-brand-blue font-black hover:text-brand-blue/80 transition-colors mt-8 group uppercase text-xs tracking-widest">
+                            Conhecer o trabalho <ArrowRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
+                        </Link>
                     </div>
                     <div className="hidden md:flex w-48 h-48 rounded-2xl items-center justify-center flex-shrink-0 overflow-hidden bg-white/50 dark:bg-white/5 p-8">
                         <Image src="/labdiv-logo.png" alt="Logo do Lab-Div" width={192} height={192} className="object-contain" />
                     </div>
+                </div>
+            </div>
+
+            {/* Ecosystem Sections */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 px-4 md:px-0">
+
+                {/* Grande Colisor Explanation row */}
+                <div className="lg:col-span-3 mb-4">
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 mb-2">Ecossistema em Expansão</h3>
+                    <div className="h-px bg-gradient-to-r from-brand-blue/20 via-brand-red/20 to-transparent w-full mb-8"></div>
+                </div>
+
+                <div className="bg-white/5 dark:bg-card-dark rounded-3xl p-10 border border-gray-100 dark:border-gray-800 hover:border-brand-blue/20 transition-all group h-full flex flex-col shadow-sm hover:shadow-lg">
+                    <div className="size-12 rounded-2xl bg-brand-blue/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <Star className="text-brand-blue w-6 h-6" />
+                    </div>
+                    <h4 className="text-xl font-black uppercase italic tracking-tight mb-4">Grande Colisor</h4>
+                    <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-1">
+                        Muito mais que um site, uma rede. O Colisor integra iniciativas como o Parque CienTec, o Boletim Supernova e o DigitalLab, conectando espaços físicos e projetos de extensão do IFUSP e da USP em um só mapa de visibilidade.
+                    </p>
+                    <Link href="/colisor" className="text-[10px] font-black uppercase tracking-widest text-brand-blue flex items-center gap-2 group/link">
+                        Explorar Colisor <ArrowRight className="size-3 group-hover/link:translate-x-1 transition-transform" />
+                    </Link>
+                </div>
+
+                <div className="bg-white/5 dark:bg-card-dark rounded-3xl p-10 border border-gray-100 dark:border-gray-800 hover:border-brand-red/20 transition-all group h-full flex flex-col shadow-sm hover:shadow-lg">
+                    <div className="size-12 rounded-2xl bg-brand-red/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <ExternalLink className="text-brand-red w-6 h-6" />
+                    </div>
+                    <h4 className="text-xl font-black uppercase italic tracking-tight mb-4">Mapa de Mídia</h4>
+                    <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-1">
+                        A geolocalização da ciência. Através do Mapa, visualizamos o alcance das nossas produções e a localização dos laboratórios, transformando dados brutos em um panorama visual do impacto científico do Instituto.
+                    </p>
+                    <Link href="/mapa" className="text-[10px] font-black uppercase tracking-widest text-brand-red flex items-center gap-2 group/link">
+                        Ver Impacto no Mapa <ArrowRight className="size-3 group-hover/link:translate-x-1 transition-transform" />
+                    </Link>
+                </div>
+
+                <div className="bg-white/5 dark:bg-card-dark rounded-3xl p-10 border border-gray-100 dark:border-gray-800 hover:border-brand-yellow/20 transition-all group h-full flex flex-col shadow-sm hover:shadow-lg">
+                    <div className="size-12 rounded-2xl bg-brand-yellow/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <Megaphone className="text-brand-yellow w-6 h-6" />
+                    </div>
+                    <h4 className="text-xl font-black uppercase italic tracking-tight mb-4">Perguntas a um Cientista</h4>
+                    <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-1">
+                        Ponte direta entre a dúvida e a descoberta. Esta seção permite que a comunidade interaja diretamente com pesquisadores, humanizando o processo científico e quebrando barreiras através do diálogo aberto.
+                    </p>
+                    <Link href="/perguntas" className="text-[10px] font-black uppercase tracking-widest text-brand-yellow flex items-center gap-2 group/link">
+                        Fazer uma Pergunta <ArrowRight className="size-3 group-hover/link:translate-x-1 transition-transform" />
+                    </Link>
                 </div>
             </div>
 

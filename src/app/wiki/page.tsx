@@ -25,76 +25,29 @@ import { MainLayoutWrapper } from '@/components/layout/MainLayoutWrapper';
 
 // --- DATA STRUCTURE (O Síncrotron) ---
 const wikiCells = [
+    // --- Blue Group (Produção e Comunicação) ---
     {
         id: 'boas-praticas',
-        title: 'Manual do Operador',
-        subtitle: 'Ética, Integridade e Convivência.',
+        title: 'Guia de Boas Práticas',
+        subtitle: 'Produção, Créditos e Qualidade.',
         icon: <ShieldCheck className="w-8 h-8" />,
         color: 'brand-blue',
-        href: '/wiki/operador',
-        description: 'Baseado no Guia de Boas Práticas Científicas da USP (3ª Ed). Foco em integridade acadêmica e inclusão TEA.',
+        href: '/wiki/boas-praticas',
+        description: 'Diretrizes oficiais para produção de mídia: como fotografar, filmar e creditar colaboradores no Hub.',
         details: [
-            'Integridade acadêmica e prevenção ao plágio',
-            'Ética na publicação científica',
-            'Inclusão neurodivergente (Portaria PRIP 059/2024)'
+            'Co-autoria e Créditos: Como marcar sua equipe',
+            'Fotografia e Vídeo: Padrões de iluminação e enquadramento',
+            'Padrões Técnicos: Tamanhos de arquivos e categorias'
         ],
-        keywords: ['ética', 'plágio', 'conduta', 'tea', 'neurodiversidade', 'regras', 'integridade'],
-        cta: 'Ler Regras de Colisão'
-    },
-    {
-        id: 'calouro',
-        title: 'Iniciação de Partículas',
-        subtitle: 'Guia de Sobrevivência USP/IF.',
-        icon: <Zap className="w-8 h-8" />,
-        color: 'brand-yellow',
-        href: '/wiki/calouro',
-        description: 'Logística do campus, serviços essenciais e moradia estudantil para novos ingressantes.',
-        details: [
-            'Localização: Edifício Principal, Ala Central e Didática',
-            'Bandejão (SAS), Júpiter Web e e-mail institucional',
-            'Moradia: CRUSP (Blocos A a G) e Vida no Campus'
-        ],
-        keywords: ['bandejão', 'crusp', 'matão', 'sobrevivência', 'calouro', 'ajuda', 'logística', 'jupiter', 'sas'],
-        cta: 'Iniciar Trajetória'
-    },
-    {
-        id: 'ifusp',
-        title: 'Estrutura da Matéria',
-        subtitle: 'Cursos, PPPs e Departamentos.',
-        icon: <Atom className="w-8 h-8" />,
-        color: 'brand-red',
-        href: '/wiki/ifusp',
-        description: 'Guia acadêmico sobre os cursos, governança e estrutura curricular do instituto.',
-        details: [
-            'Bacharelado, Licenciatura e Física Médica (PPP 2025)',
-            'Governança: Papel da CG e CoCs',
-            'Grade: Optativas, Eletivas e ATPAs'
-        ],
-        keywords: ['ppp', 'bacharelado', 'licenciatura', 'física médica', 'grade', 'optativas', 'atpa', 'comissão', 'cg', 'coc'],
-        cta: 'Explorar Currículo'
-    },
-    {
-        id: 'bolsas',
-        title: 'Energia de Permanência',
-        subtitle: 'Auxílios e Retenção Estudantil.',
-        icon: <Coins className="w-8 h-8" />,
-        color: 'brand-blue',
-        href: '/wiki/bolsas',
-        description: 'Informações sobre programas de permanência, editais ativos e suporte estudantil.',
-        details: [
-            'PAPFE: Auxílio Permanência (PRIP)',
-            'Editais 2026: Monitoria, Pró-Aluno e IC',
-            'Inclusão: Apoio a grupos vulneráveis e PCDs'
-        ],
-        keywords: ['bolsas', 'papfe', 'permanência', 'monitoria', 'ic', 'iniciação científica', 'dinheiro', 'editais', 'auxílio', 'prip'],
-        cta: 'Ver Editais Ativos'
+        keywords: ['guia', 'boas práticas', 'manual', 'foto', 'vídeo', 'créditos', 'qualidade', 'padrões'],
+        cta: 'Ver Guia de Produção'
     },
     {
         id: 'divulgacao',
         title: 'Emissão de Luz',
         subtitle: 'Toolkit de Divulgação LabDiv.',
         icon: <Telescope className="w-8 h-8" />,
-        color: 'brand-yellow',
+        color: 'brand-blue',
         href: '/wiki/divulgacao',
         description: 'Metodologia e ferramentas para transformar dados técnicos em impacto visual.',
         details: [
@@ -104,23 +57,6 @@ const wikiCells = [
         ],
         keywords: ['divulgação', 'design', 'labdiv', '360', 'vr', 'poster', 'mídia', 'comunicação', 'impacto', 'toolkit'],
         cta: 'Gerar Impacto'
-    },
-    {
-        id: 'protecao',
-        title: 'Protocolos de Proteção',
-        subtitle: 'Inclusão, Saúde Mental e Apoio.',
-        icon: <HeartHandshake className="w-8 h-8" />,
-        color: 'brand-green',
-        href: '/wiki/protecao',
-        description: 'Políticas de permanência, suporte a neurodiversidade (TEA) e canais de acolhimento.',
-        details: [
-            'Neurodiversidade: Guia Portaria PRIP 059/2024 (TEA)',
-            'Apoio Psicológico: Rotas de acolhimento (IP-USP)',
-            'Canais de Escuta e Grupos de Afinidade IFUSP'
-        ],
-        keywords: ['proteção', 'saúde mental', 'tea', 'neurodiversidade', 'acolhimento', 'prip', 'suporte', 'ajuda', 'inclusão', 'bem-estar', 'pcd'],
-        cta: 'Solicitar Suporte',
-        glow: true
     },
     {
         id: 'extensao',
@@ -138,21 +74,39 @@ const wikiCells = [
         keywords: ['extensão', 'cultura', 'eventos', 'física para todos', 'grupos', 'projetos'],
         cta: 'Explorar Fronteiras'
     },
+
+    // --- Yellow Group (Vivência e Suporte) ---
     {
-        id: 'pesquisa',
-        title: 'Sistemas de Pesquisa',
-        subtitle: 'Iniciação Científica e Labs.',
-        icon: <Microscope className="w-8 h-8" />,
-        color: 'brand-blue',
-        href: '/wiki/pesquisa',
-        description: 'Guia de Iniciação Científica, Laboratórios do IFUSP e navegação no sistema Ateneu.',
+        id: 'calouro',
+        title: 'Iniciação de Partículas',
+        subtitle: 'Guia de Sobrevivência USP/IF.',
+        icon: <Zap className="w-8 h-8" />,
+        color: 'brand-yellow',
+        href: '/wiki/calouro',
+        description: 'Logística do campus, serviços essenciais e moradia estudantil para novos ingressantes.',
         details: [
-            'Como encontrar um orientador de IC',
-            'Laboratórios de Pesquisa e Infraestrutura',
-            'Sistema Ateneu: Cadastro e Relatórios'
+            'Localização: Edifício Principal, Ala Central e Didática',
+            'Bandejão (SAS), Júpiter Web e e-mail institucional',
+            'Moradia: CRUSP (Blocos A a G) e Vida no Campus'
         ],
-        keywords: ['pesquisa', 'ic', 'iniciação científica', 'laboratório', 'ateneu', 'orientador', 'ciência'],
-        cta: 'Descobrir Labs'
+        keywords: ['bandejão', 'crusp', 'matão', 'sobrevivência', 'calouro', 'ajuda', 'logística', 'jupiter', 'sas'],
+        cta: 'Iniciar Trajetória'
+    },
+    {
+        id: 'protecao',
+        title: 'Protocolos de Proteção',
+        subtitle: 'Inclusão, Saúde Mental e Apoio.',
+        icon: <HeartHandshake className="w-8 h-8" />,
+        color: 'brand-yellow',
+        href: '/wiki/protecao',
+        description: 'Políticas de permanência, suporte a neurodiversidade (TEA) e canais de acolhimento.',
+        details: [
+            'Neurodiversidade: Guia Portaria PRIP 059/2024 (TEA)',
+            'Apoio Psicológico: Rotas de acolhimento (IP-USP)',
+            'Canais de Escuta e Grupos de Afinidade IFUSP'
+        ],
+        keywords: ['proteção', 'saúde mental', 'tea', 'neurodiversidade', 'acolhimento', 'prip', 'suporte', 'ajuda', 'inclusão', 'bem-estar', 'pcd'],
+        cta: 'Solicitar Suporte'
     },
     {
         id: 'carreira',
@@ -169,6 +123,56 @@ const wikiCells = [
         ],
         keywords: ['carreira', 'futuro', 'trabalho', 'indústria', 'academia', 'pós-graduação', 'ensino', 'vagas'],
         cta: 'Mapear Futuro'
+    },
+
+    // --- Red Group (Institucional e Acadêmico) ---
+    {
+        id: 'pesquisa',
+        title: 'Sistemas de Pesquisa',
+        subtitle: 'Iniciação Científica e Labs.',
+        icon: <Microscope className="w-8 h-8" />,
+        color: 'brand-red',
+        href: '/wiki/pesquisa',
+        description: 'Guia de Iniciação Científica, Laboratórios do IFUSP e navegação no sistema Ateneu.',
+        details: [
+            'Como encontrar um orientador de IC',
+            'Laboratórios de Pesquisa e Infraestrutura',
+            'Sistema Ateneu: Cadastro e Relatórios'
+        ],
+        keywords: ['pesquisa', 'ic', 'iniciação científica', 'laboratório', 'ateneu', 'orientador', 'ciência'],
+        cta: 'Descobrir Labs'
+    },
+    {
+        id: 'bolsas',
+        title: 'Energia de Permanência',
+        subtitle: 'Auxílios e Retenção Estudantil.',
+        icon: <Coins className="w-8 h-8" />,
+        color: 'brand-red',
+        href: '/wiki/bolsas',
+        description: 'Informações sobre programas de permanência, editais ativos e suporte estudantil.',
+        details: [
+            'PAPFE: Auxílio Permanência (PRIP)',
+            'Editais 2026: Monitoria, Pró-Aluno e IC',
+            'Inclusão: Apoio a grupos vulneráveis e PCDs'
+        ],
+        keywords: ['bolsas', 'papfe', 'permanência', 'monitoria', 'ic', 'iniciação científica', 'dinheiro', 'editais', 'auxílio', 'prip'],
+        cta: 'Ver Editais Ativos'
+    },
+    {
+        id: 'ifusp',
+        title: 'Estrutura da Matéria',
+        subtitle: 'Cursos, PPPs e Departamentos.',
+        icon: <Atom className="w-8 h-8" />,
+        color: 'brand-red',
+        href: '/wiki/ifusp',
+        description: 'Guia acadêmico sobre os cursos, governança e estrutura curricular do instituto.',
+        details: [
+            'Bacharelado, Licenciatura e Física Médica (PPP 2025)',
+            'Governança: Papel da CG e CoCs',
+            'Grade: Optativas, Eletivas e ATPAs'
+        ],
+        keywords: ['ppp', 'bacharelado', 'licenciatura', 'física médica', 'grade', 'optativas', 'atpa', 'comissão', 'cg', 'coc'],
+        cta: 'Explorar Currículo'
     }
 ];
 
@@ -179,19 +183,19 @@ const quizCell = {
     icon: <Brain className="w-8 h-8" />,
     color: 'brand-red',
     href: '/wiki/quiz',
-    description: 'Desafie seus conhecimentos e gere Energia Atômica ao acertar os desafios.',
+    description: 'Desafie seus conhecimentos e exploda o contador Geiger ao acertar os desafios.',
     details: [
         'Curiosidades históricas do IFUSP',
         'Desafios de física e divulgação',
         'Ranking de colisão da comunidade'
     ],
-    keywords: ['quiz', 'teste', 'desafio', 'brincadeira', 'conhecimento', 'história', 'ranking', 'energia', 'atômica'],
+    keywords: ['quiz', 'teste', 'desafio', 'conhecimento', 'história', 'ranking', 'geiger'],
     cta: 'Iniciar Varredura'
 };
 
 // O Síncrotron Search - Slugs fixos para roteamento [slug]/page.tsx
 const slugToPageId: Record<string, string> = {
-    'operador': 'boas-praticas',
+    'boas-praticas': 'boas-praticas',
     'calouro': 'calouro',
     'ifusp': 'ifusp',
     'bolsas': 'bolsas',
@@ -305,7 +309,7 @@ export default function WikiPage() {
                                 >
                                     <Link
                                         href={cell.href}
-                                        className={`relative block h-full group bg-[#1E1E1E]/40 backdrop-blur-xl border border-white/5 rounded-[40px] p-8 hover:bg-[#1E1E1E] hover:border-brand-blue/30 transition-all shadow-2xl overflow-hidden ${cell.glow ? 'ring-1 ring-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.05)]' : ''}`}
+                                        className={`relative block h-full group bg-[#1E1E1E]/40 backdrop-blur-xl border border-white/5 rounded-[40px] p-8 hover:bg-[#1E1E1E] hover:border-${cell.color}/30 transition-all shadow-2xl overflow-hidden ${cell.glow ? 'ring-1 ring-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.05)]' : ''}`}
                                     >
                                         {/* Background Glow */}
                                         <div className={`absolute -right-20 -top-20 size-64 bg-${cell.color}/5 blur-[100px] group-hover:bg-${cell.color}/10 transition-colors`}></div>
@@ -350,7 +354,7 @@ export default function WikiPage() {
 
                                             {/* Footer Action */}
                                             <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
-                                                <span className="text-[10px] font-black text-brand-blue uppercase tracking-[0.2em]">{cell.cta}</span>
+                                                <span className={`text-[10px] font-black text-${cell.color} uppercase tracking-[0.2em]`}>{cell.cta}</span>
                                                 <div className={`size-8 rounded-full bg-${cell.color}/10 flex items-center justify-center text-${cell.color} group-hover:translate-x-1 transition-transform`}>
                                                     <ChevronRight className="w-4 h-4" />
                                                 </div>
@@ -398,7 +402,7 @@ export default function WikiPage() {
                                             <span className="hidden md:block px-3 py-1 bg-brand-red/20 border border-brand-red/30 text-brand-red text-[10px] font-black uppercase rounded-full">Gamificação</span>
                                         </div>
                                         <p className="text-gray-400 font-medium max-w-md">
-                                            {quizCell.description} <span className="text-brand-blue font-bold">Ganhe Energia Atômica.</span>
+                                            {quizCell.description} <span className="text-brand-blue font-bold">Exploda o contador Geiger.</span>
                                         </p>
                                     </div>
                                 </div>
@@ -442,7 +446,12 @@ export default function WikiPage() {
                 .text-brand-blue { color: #0096FF; }
                 .text-brand-yellow { color: #FFC107; }
                 .text-brand-red { color: #FF3B30; }
+                .border-brand-blue\/30 { border-color: rgba(0, 150, 255, 0.3); }
+                .border-brand-yellow\/30 { border-color: rgba(255, 193, 7, 0.3); }
+                .border-brand-red\/30 { border-color: rgba(255, 59, 48, 0.3); }
                 .border-brand-blue\/50 { border-color: rgba(0, 150, 255, 0.5); }
+                .border-brand-yellow\/50 { border-color: rgba(255, 193, 7, 0.5); }
+                .border-brand-red\/50 { border-color: rgba(255, 59, 48, 0.5); }
                 .ring-brand-blue\/20 { --tw-ring-color: rgba(0, 150, 255, 0.2); }
                 .ring-brand-yellow\/20 { --tw-ring-color: rgba(255, 193, 7, 0.2); }
                 .ring-brand-red\/20 { --tw-ring-color: rgba(255, 59, 48, 0.2); }

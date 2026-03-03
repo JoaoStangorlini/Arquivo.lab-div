@@ -25,6 +25,8 @@ const ScientificContent = dynamic(() => import('./ScientificContent'), {
     loading: () => <div className="h-20 w-full animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
 });
 
+import { Avatar } from './ui/Avatar';
+
 import { parseMediaUrl, getYoutubeThumbnail, getOptimizedUrl } from '@/lib/media-utils';
 import { ShareMenu } from './ShareMenu';
 import { m, AnimatePresence } from 'framer-motion';
@@ -172,13 +174,12 @@ export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = f
                 className="flex items-center justify-between p-4 md:p-6 border-b border-gray-100 dark:border-gray-800"
             >
                 <div className="flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden flex items-center justify-center text-[10px] font-bold text-[#0055ff] dark:text-blue-400 shrink-0">
-                        {post.avatarUrl ? (
-                            <img src={post.avatarUrl} alt={post.authors} className="h-full w-full object-cover" loading={post.priority ? "eager" : "lazy"} />
-                        ) : (
-                            <span className="uppercase">{post.authors.substring(0, 2)}</span>
-                        )}
-                    </div>
+                    <Avatar
+                        src={post.avatarUrl}
+                        name={post.authors}
+                        size="sm"
+                        className="border-2 border-white dark:border-[#1E1E1E] shadow-sm hover:scale-110 transition-transform duration-300"
+                    />
                     <Link
                         href={post.authors.startsWith('@') ? `/?collection=${encodeURIComponent(post.authors)}` : `/?autor=${encodeURIComponent(post.authors)}`}
                         onClick={(e) => {

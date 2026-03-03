@@ -35,32 +35,40 @@ import {
 
 // --- TECHNICAL DATA SHARD ---
 const pageContent: Record<string, any> = {
-    'operador': {
-        title: 'Manual do Operador',
-        subtitle: 'Ética e Integridade Científica',
+    'boas-praticas': {
+        title: 'Guia de Boas Práticas',
+        subtitle: 'Produção, Créditos e Qualidade Hub',
         icon: <ShieldCheck className="w-12 h-12" />,
         color: 'brand-blue',
         sections: [
             {
-                title: 'Código de Conduta Hub',
-                content: 'Regras de convivência e participação no Grande Colisor. Priorizamos o respeito mútuo, a inclusão de todos os estudantes e a integridade acadêmica em todas as discussões.'
+                title: 'Co-autoria e Créditos',
+                content: 'A ciência é um esforço coletivo. No Hub de Comunicação Científica, incentivamos que você marque todos os colaboradores que participaram da criação do material. Use o campo de co-autores para buscar perfis ou cite nomes diretamente no campo de autores para garantir os devidos créditos.'
             },
             {
-                title: 'Integridade USP (3ª Ed)',
-                content: 'Baseado no guia oficial de boas práticas da USP. Foco em prevenção ao plágio, fomento à autoria ética e transparência em publicações científicas.'
+                title: 'Fotografia no Laboratório',
+                content: 'Priorize luz natural suave. Evite o flash direto que gera reflexos indesejados em vidrarias ou metais. No enquadramento, mostre o experimento em contexto, mas capture "close-ups" dos detalhes técnicos que realmente importam para a explicação.'
             },
             {
-                title: 'Acessibilidade TEA',
-                content: 'Diretrizes conforme a Portaria PRIP 059/2024. O Hub é um ambiente neurodivergente acolhedor, com sinalizações claras e suporte a hipersensibilidade sensorial.'
+                title: 'Produção de Vídeo',
+                content: 'Estabilidade é a chave para uma boa divulgação: utilize tripés ou superfícies fixas. Garanta um áudio limpo, evitando ruídos de compressores ou ar-condicionado. Narre o processo para guiar o espectador através da colisão de ideias.'
+            },
+            {
+                title: 'Padrões Técnicos',
+                content: 'Imagens devem estar em PNG ou JPG de alta resolução (até 10MB). Para vídeos, utilize o formato MP4. Documentos técnicos e guias devem ser submetidos em PDF para garantir a integridade da formatação original.'
+            },
+            {
+                title: 'Categorias e Objetivos',
+                content: 'Cada categoria no Hub (Refração, Síncrotron, Colisor) possui objetivos distintos. Certifique-se de que sua submissão está alinhada com o propósito da seção para maximizar o impacto da sua comunicação científica.'
             }
         ],
         dates: [
-            { label: 'Última Revisão', value: 'Fev/2026' },
-            { label: 'Base Legal', value: 'PRIP 059/2024' }
+            { label: 'Versão', value: 'v4.2.0' },
+            { label: 'Revisão', value: 'Março/2026' }
         ],
         actions: [
-            { label: 'Baixar Guia Ética', icon: <Download className="w-4 h-4" />, href: '#' },
-            { label: 'Código Hub PDF', icon: <FileText className="w-4 h-4" />, href: '#' }
+            { label: 'Baixar Checklist', icon: <Download className="w-4 h-4" />, href: '#' },
+            { label: 'Ver Exemplos', icon: <Telescope className="w-4 h-4" />, href: '#' }
         ]
     },
     'calouro': {
@@ -123,7 +131,7 @@ const pageContent: Record<string, any> = {
         title: 'Energia de Permanência',
         subtitle: 'Editais e Auxílio Estudantil',
         icon: <Coins className="w-12 h-12" />,
-        color: 'brand-blue',
+        color: 'brand-red',
         sections: [
             {
                 title: 'PAPFE 2026',
@@ -151,7 +159,7 @@ const pageContent: Record<string, any> = {
         title: 'Emissão de Luz',
         subtitle: 'Toolkit de Impacto Visual Hub',
         icon: <Telescope className="w-12 h-12" />,
-        color: 'brand-yellow',
+        color: 'brand-blue',
         sections: [
             {
                 title: 'Visual LabDiv',
@@ -179,7 +187,7 @@ const pageContent: Record<string, any> = {
         title: 'Protocolos de Proteção',
         subtitle: 'Bem-estar e Pertencimento',
         icon: <HeartHandshake className="w-12 h-12" />,
-        color: 'brand-green',
+        color: 'brand-yellow',
         sections: [
             {
                 title: 'Guia Direitos TEA',
@@ -238,8 +246,8 @@ const pageContent: Record<string, any> = {
         color: 'brand-red',
         sections: [
             {
-                title: 'Energia Atômica',
-                content: 'Acerte as questões técnicas e históricas para gerar "Energia Atômica" no seu perfil do Hub. Quanto mais colidido seu conhecimento, maior seu ranking.'
+                title: 'Contador Geiger',
+                content: 'Acerte as questões técnicas e históricas para explodir o contador Geiger no seu perfil do Hub. Quanto mais colidido seu conhecimento, maior seu impacto na comunidade.'
             },
             {
                 title: 'Curiosidades IF',
@@ -252,7 +260,9 @@ const pageContent: Record<string, any> = {
         ],
         dates: [
             { label: 'Perguntas', value: '50+' },
-            { label: 'Dificuldade', value: 'Síncrotron' },
+            { label: 'Dificuldade', value: 'Síncrotron' }
+        ],
+        actions: [
             { label: 'Iniciar Quiz', icon: <Zap className="w-4 h-4" />, href: '#' },
             { label: 'Ver Ranking', icon: <Telescope className="w-4 h-4" />, href: '#' }
         ]
@@ -261,7 +271,7 @@ const pageContent: Record<string, any> = {
         title: 'Sistemas de Pesquisa',
         subtitle: 'IC e Ciência Experimental',
         icon: <Microscope className="w-12 h-12" />,
-        color: 'brand-blue',
+        color: 'brand-red',
         sections: [
             {
                 title: 'Iniciação Científica',
@@ -398,7 +408,7 @@ export default function WikiSubPage() {
                                 {/* Actions/ActionButtons */}
                                 <div className="space-y-4 pt-8 border-t border-white/5">
                                     <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600 mb-6">Ações Rápidas</h4>
-                                    {content.actions.map((action: any, idx: number) => (
+                                    {content.actions?.map((action: any, idx: number) => (
                                         <ActionButton key={idx} label={action.label} icon={action.icon} href={action.href} variant={idx === 0 ? 'primary' : 'secondary'} />
                                     ))}
                                 </div>
@@ -423,6 +433,8 @@ export default function WikiSubPage() {
                 .shadow-brand-green\/10 { --tw-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.1), 0 2px 4px -2px rgba(16, 185, 129, 0.1); }
                 .bg-brand-green\/10 { background-color: rgba(16, 185, 129, 0.1); }
                 .text-brand-green { color: #10b981; }
+                .bg-brand-blue\/10 { background-color: rgba(0, 150, 255, 0.1); }
+                .text-brand-blue { color: #0096FF; }
                 .bg-brand-red\/10 { background-color: rgba(255, 59, 48, 0.1); }
                 .shadow-brand-red\/10 { --tw-shadow: 0 4px 6px -1px rgba(255, 59, 48, 0.1), 0 2px 4px -2px rgba(255, 59, 48, 0.1); }
             `}</style>

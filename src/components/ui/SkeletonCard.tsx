@@ -6,9 +6,9 @@ import React from 'react';
  * V8.0 SkeletonCard - CLS Zero Edition
  * Perfectly mirrors MediaCard structure to prevent Layout Shift.
  */
-export const SkeletonCard = () => {
+export const SkeletonCard = ({ className }: { className?: string }) => {
     return (
-        <div className="flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-card-dark border border-gray-100 dark:border-gray-800 shadow-sm animate-pulse">
+        <div className={`flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-card-dark border border-gray-100 dark:border-gray-800 shadow-sm animate-pulse ${className || ''}`}>
             {/* Header Mirror */}
             <div className="flex items-center justify-between p-4 md:p-6 border-b border-gray-100 dark:border-gray-800">
                 <div className="flex items-center gap-2">

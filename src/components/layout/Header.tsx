@@ -12,6 +12,7 @@ import dynamic from 'next/dynamic';
 import { useTheme } from '@/hooks/useTheme';
 import { useSearch } from '@/providers/SearchProvider';
 import { useNavigationStore } from '@/store/useNavigationStore';
+import { Avatar } from '../ui/Avatar';
 import { UserMinimalDTO, SearchSuggestion } from '@/types/navigation';
 
 
@@ -206,13 +207,14 @@ export function Header() {
                                     <div className="relative" id="profile-menu-container">
                                         <button
                                             onClick={() => setProfileMenuOpen(!isProfileMenuOpen)}
-                                            className="w-10 h-10 rounded-full bg-brand-blue/10 flex items-center justify-center overflow-hidden border-2 border-brand-blue/20 hover:border-brand-blue/50 transition-colors"
+                                            className="w-10 h-10 rounded-full overflow-hidden border-2 border-brand-blue/20 hover:border-brand-blue/50 transition-colors"
                                         >
-                                            {user.avatar_url ? (
-                                                <img src={getAvatarUrl(user.avatar_url)} alt="Profile" className="w-full h-full object-cover" />
-                                            ) : (
-                                                <span className="material-symbols-outlined text-brand-blue">person</span>
-                                            )}
+                                            <Avatar
+                                                src={user.avatar_url}
+                                                name={user.full_name}
+                                                size="md"
+                                                customSize="w-10 h-10"
+                                            />
                                         </button>
 
                                         <AnimatePresence>
