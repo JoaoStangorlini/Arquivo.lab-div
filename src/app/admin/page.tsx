@@ -208,7 +208,7 @@ export default function AdminDashboardOverview() {
                         </h1>
                         <p className="text-gray-500 dark:text-gray-400 mt-1">Centro de comando do Hub Lab-Div v3.1.5</p>
                     </div>
-                    <div className="hidden sm:flex items-center gap-2 bg-white dark:bg-card-dark px-4 py-2 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+                    <div className="hidden sm:flex items-center gap-2 bg-white/5 dark:bg-card-dark/5 backdrop-blur-md px-4 py-2 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
                         <div className="w-2 h-2 rounded-full bg-[#0055ff] animate-pulse"></div>
                         <div className="w-2 h-2 rounded-full bg-brand-red animate-pulse delay-75"></div>
                         <div className="w-2 h-2 rounded-full bg-brand-yellow animate-pulse delay-150"></div>
@@ -218,7 +218,7 @@ export default function AdminDashboardOverview() {
             </div>
 
             {isLoading ? (
-                <div className="flex flex-col items-center justify-center py-20 text-gray-500 dark:text-gray-400 bg-white dark:bg-card-dark rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm">
+                <div className="flex flex-col items-center justify-center py-20 text-gray-500 dark:text-gray-400 bg-white/5 dark:bg-card-dark/5 backdrop-blur-md rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm">
                     <span className="material-symbols-outlined text-4xl animate-spin text-[#0055ff] mb-4">progress_activity</span>
                     <p className="font-medium animate-pulse">Carregando a Torre de Controle...</p>
                 </div>
@@ -226,7 +226,7 @@ export default function AdminDashboardOverview() {
                 <>
                     {/* ─── Submission Status Row ─── */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <Link href="/admin/pendentes" className="relative group bg-white dark:bg-card-dark rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-brand-yellow/30 transition-all overflow-hidden cursor-pointer">
+                        <Link href="/admin/pendentes" className="relative group bg-white/5 dark:bg-card-dark/5 backdrop-blur-md rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-brand-yellow/30 transition-all overflow-hidden cursor-pointer">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-brand-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-yellow/10 transition-colors"></div>
                             <div className="relative z-10 flex flex-col gap-4">
                                 <div className="flex items-center justify-between">
@@ -242,7 +242,7 @@ export default function AdminDashboardOverview() {
                             </div>
                         </Link>
 
-                        <div className="relative group bg-white dark:bg-card-dark rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-[#0055ff]/30 transition-all overflow-hidden">
+                        <div className="relative group bg-white/5 dark:bg-card-dark/5 backdrop-blur-md rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-[#0055ff]/30 transition-all overflow-hidden">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-[#0055ff]/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-[#0055ff]/10 transition-colors"></div>
                             <div className="relative z-10 flex flex-col gap-4">
                                 <div className="flex items-center justify-between">
@@ -258,7 +258,7 @@ export default function AdminDashboardOverview() {
                             </div>
                         </div>
 
-                        <div className="relative group bg-white dark:bg-card-dark rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-brand-red/30 transition-all overflow-hidden">
+                        <div className="relative group bg-white/5 dark:bg-card-dark/5 backdrop-blur-md rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-brand-red/30 transition-all overflow-hidden">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-brand-red/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-red/10 transition-colors"></div>
                             <div className="relative z-10 flex flex-col gap-4">
                                 <div className="flex items-center justify-between">
@@ -288,7 +288,7 @@ export default function AdminDashboardOverview() {
                                     <Link
                                         key={card.title}
                                         href={card.href}
-                                        className={`relative group bg-white dark:bg-card-dark rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl ${colors.border} transition-all overflow-hidden cursor-pointer`}
+                                        className={`relative group bg-white/5 dark:bg-card-dark/5 backdrop-blur-md rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl ${colors.border} transition-all overflow-hidden cursor-pointer`}
                                     >
                                         <div className={`absolute top-0 right-0 w-32 h-32 ${colors.glow} rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:opacity-100 opacity-50 transition-opacity`}></div>
                                         <div className="relative z-10 flex flex-col gap-4">
@@ -321,7 +321,7 @@ export default function AdminDashboardOverview() {
                             Pergunte a um Cientista
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <Link href="/admin/perguntas" className="relative group bg-white dark:bg-card-dark rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-brand-red/30 transition-all overflow-hidden cursor-pointer">
+                            <Link href="/admin/perguntas" className="relative group bg-white/5 dark:bg-card-dark/5 backdrop-blur-md rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-brand-red/30 transition-all overflow-hidden cursor-pointer">
                                 <div className="relative z-10 flex flex-col gap-4">
                                     <div className="flex items-center justify-between">
                                         <span className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Aguardando Resposta</span>
@@ -338,7 +338,7 @@ export default function AdminDashboardOverview() {
                                 </div>
                             </Link>
 
-                            <div className="relative group bg-white dark:bg-card-dark rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-[#0055ff]/30 transition-all overflow-hidden">
+                            <div className="relative group bg-white/5 dark:bg-card-dark/5 backdrop-blur-md rounded-3xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:border-[#0055ff]/30 transition-all overflow-hidden">
                                 <div className="relative z-10 flex flex-col gap-4">
                                     <div className="flex items-center justify-between">
                                         <span className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Respondidas</span>

@@ -70,7 +70,7 @@ export default function PapeisManagementPage() {
     );
 
     return (
-        <div className="p-8 max-w-6xl mx-auto h-[calc(100vh-2rem)] flex flex-col">
+        <div className="p-8 max-w-6xl mx-auto flex flex-col min-h-full">
             <header className="mb-8 shrink-0">
                 <h1 className="text-3xl font-display font-bold text-white tracking-tight">
                     Gerenciamento de <span className="text-brand-yellow">Papéis</span>
@@ -101,7 +101,7 @@ export default function PapeisManagementPage() {
                     <p className="text-gray-500 font-medium">Nenhum perfil encontrado no sistema.</p>
                 </div>
             ) : (
-                <div className="flex-1 overflow-auto rounded-3xl border border-white/10 bg-card-dark no-scrollbar">
+                <div className="flex-1 overflow-auto rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm no-scrollbar">
                     <table className="w-full text-left border-collapse">
                         <thead className="bg-white/5 sticky top-0 backdrop-blur-md z-10 border-b border-white/10">
                             <tr>

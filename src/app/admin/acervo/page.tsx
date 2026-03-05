@@ -204,7 +204,7 @@ export default function GerenciadorAcervoPage() {
             </div>
 
             {/* Filtros */}
-            <div className="bg-white dark:bg-card-dark p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col md:flex-row gap-4">
+            <div className="bg-white/5 dark:bg-card-dark/5 backdrop-blur-md p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col md:flex-row gap-4">
                 <div className="relative flex-1">
                     <UserSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <input
@@ -238,7 +238,7 @@ export default function GerenciadorAcervoPage() {
             </div>
 
             {/* Ações em Massa */}
-            <div className="flex flex-col md:flex-row items-center justify-between bg-white dark:bg-card-dark px-6 py-4 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm gap-4">
+            <div className="flex flex-col md:flex-row items-center justify-between bg-white/5 dark:bg-card-dark/5 backdrop-blur-md px-6 py-4 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm gap-4">
                 <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-start">
                     <button
                         onClick={toggleSelectAll}
@@ -273,12 +273,12 @@ export default function GerenciadorAcervoPage() {
 
             {/* Grid */}
             {isLoading ? (
-                <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-card-dark rounded-2xl border border-gray-100 dark:border-gray-800">
+                <div className="flex flex-col items-center justify-center py-20 bg-white/5 dark:bg-card-dark/5 backdrop-blur-md rounded-2xl border border-gray-100 dark:border-gray-800">
                     <Loader2 className="w-10 h-10 animate-spin text-brand-blue mb-4" />
                     <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Sincronizando Banco de Dados...</p>
                 </div>
             ) : filteredSubmissions.length === 0 ? (
-                <div className="text-center py-20 bg-white dark:bg-card-dark rounded-2xl border border-gray-100 dark:border-gray-800">
+                <div className="text-center py-20 bg-white/5 dark:bg-card-dark/5 backdrop-blur-md rounded-2xl border border-gray-100 dark:border-gray-800">
                     <XCircle className="w-10 h-10 text-gray-300 mx-auto mb-3" />
                     <p className="text-gray-500">Nada encontrado.</p>
                 </div>

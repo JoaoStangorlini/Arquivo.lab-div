@@ -11,6 +11,13 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
     const pathname = usePathname();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    // Apply admin-page class to body for special background styling
+    React.useEffect(() => {
+        document.body.classList.add('admin-page');
+        return () => document.body.classList.remove('admin-page');
+    }, []);
 
     const navLinks = [
         { name: 'Torre de Controle', href: '/admin', icon: 'security' },
@@ -28,10 +35,9 @@ export default function AdminLayout({
         { name: 'Oportunidades', href: '/admin/oportunidades', icon: 'event' },
     ];
 
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
-        <div className="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-sans antialiased min-h-screen flex flex-col md:flex-row overflow-hidden">
+        <div className="bg-transparent text-gray-900 dark:text-gray-100 font-sans antialiased min-h-screen flex flex-col md:flex-row overflow-hidden">
             {/* Mobile Header */}
             <div className="md:hidden bg-neutral-900 text-white p-4 flex items-center justify-between border-b border-gray-800 z-[60]">
                 <div className="font-bold text-lg flex items-center gap-2">
@@ -104,7 +110,7 @@ export default function AdminLayout({
                 </div>
             </aside>
 
-            <main className="flex-1 overflow-y-auto h-screen relative bg-background-light dark:bg-background-dark">
+            <main className="flex-1 overflow-y-auto h-screen relative bg-transparent">
                 {children}
             </main>
         </div>

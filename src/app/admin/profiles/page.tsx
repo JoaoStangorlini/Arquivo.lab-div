@@ -145,7 +145,7 @@ export default function ProfileApprovalPage() {
     };
 
     return (
-        <div className="p-8 max-w-6xl mx-auto">
+        <div className="p-8 max-w-6xl mx-auto min-h-screen bg-transparent">
             <header className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-black text-white uppercase tracking-tighter">
@@ -164,14 +164,14 @@ export default function ProfileApprovalPage() {
                     <Loader2 className="w-10 h-10 animate-spin text-brand-blue" />
                 </div>
             ) : profiles.length === 0 ? (
-                <div className="text-center py-20 bg-white/[0.02] border border-dashed border-white/10 rounded-[32px]">
+                <div className="text-center py-20 bg-white/5 dark:bg-card-dark/5 backdrop-blur-md border border-dashed border-white/10 rounded-[32px]">
                     <AlertCircle className="w-12 h-12 text-gray-600 mx-auto mb-4" />
                     <p className="text-gray-500 font-black uppercase tracking-widest text-xs">Nenhum perfil aguardando revisão</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 gap-6">
                     {profiles.map(profile => (
-                        <div key={profile.id} className="bg-[#1E1E1E] border border-white/5 rounded-[32px] overflow-hidden group hover:border-brand-blue/30 transition-all duration-300">
+                        <div key={profile.id} className="bg-white/5 dark:bg-card-dark/5 backdrop-blur-md border border-white/5 rounded-[32px] overflow-hidden group hover:border-brand-blue/30 transition-all duration-300">
                             <div className="p-8 flex flex-col lg:flex-row gap-8">
                                 <div className="flex-1 space-y-6">
                                     <div className="flex items-center gap-4">

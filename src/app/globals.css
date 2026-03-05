@@ -88,6 +88,12 @@ body::before {
   opacity: 0.3;
 }
 
+/* Admin Mode: Restore brand colors and vibrant opacity */
+.admin-page::before {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
 /* Performance: CSS-only animation replaces framer-motion in hero (no JS blocking) */
 @keyframes fade-in-up {
   from {

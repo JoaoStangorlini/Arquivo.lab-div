@@ -25,10 +25,10 @@ function CarouselSection({
             <h2 className="text-xl font-bold dark:text-white px-2 border-l-4 border-brand-blue">{title} ({items.length})</h2>
             <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar scroll-smooth">
                 {items.length === 0 ? (
-                    <p className="text-gray-500 text-sm px-4 py-8 bg-gray-50 dark:bg-card-dark rounded-xl w-full border border-dashed border-gray-200 dark:border-gray-800">Nenhum item encontrado nesta categoria.</p>
+                    <p className="text-gray-500 text-sm px-4 py-8 bg-white/5 dark:bg-card-dark/5 backdrop-blur-md rounded-xl w-full border border-dashed border-gray-200 dark:border-gray-800">Nenhum item encontrado nesta categoria.</p>
                 ) : (
                     items.map(item => (
-                        <div key={item.id} className="min-w-[300px] bg-white dark:bg-card-dark rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm p-4 space-y-3">
+                        <div key={item.id} className="min-w-[300px] bg-white/5 dark:bg-card-dark/5 backdrop-blur-md rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm p-4 space-y-3">
                             <MediaCard post={item} />
                             <div className="space-y-2">
                                 <label className="text-[10px] font-bold uppercase text-gray-400">Descrição para Narração</label>

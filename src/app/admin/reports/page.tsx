@@ -68,7 +68,7 @@ export default function AdminReportsPage() {
     });
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white p-8">
+        <div className="min-h-screen bg-transparent text-white p-8">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
@@ -82,7 +82,7 @@ export default function AdminReportsPage() {
                         <p className="text-gray-500 font-bold uppercase text-[10px] tracking-[0.2em]">Gestão de Feedback e Bugs Hub Lab-Div</p>
                     </div>
 
-                    <div className="flex gap-2 bg-[#1E1E1E] p-1.5 rounded-2xl border border-white/5">
+                    <div className="flex gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/5 backdrop-blur-md">
                         {['all', 'open', 'in_progress', 'closed'].map((f) => (
                             <button
                                 key={f}
@@ -103,10 +103,10 @@ export default function AdminReportsPage() {
                     <div className="lg:col-span-5 space-y-4 max-h-[calc(100vh-250px)] overflow-y-auto pr-2 no-scrollbar">
                         {loading ? (
                             Array(5).fill(0).map((_, i) => (
-                                <div key={i} className="h-32 bg-[#1E1E1E] animate-pulse rounded-3xl" />
+                                <div key={i} className="h-32 bg-white/5 animate-pulse rounded-3xl" />
                             ))
                         ) : filteredReports.length === 0 ? (
-                            <div className="text-center py-20 bg-[#1E1E1E] rounded-[40px] border border-dashed border-white/10">
+                            <div className="text-center py-20 bg-white/5 rounded-[40px] border border-dashed border-white/10 backdrop-blur-sm">
                                 <CheckCircle2 className="size-12 text-gray-700 mx-auto mb-4 opacity-20" />
                                 <p className="text-gray-500 font-black uppercase tracking-widest text-xs">Sem anomalias detectadas</p>
                             </div>
@@ -118,7 +118,7 @@ export default function AdminReportsPage() {
                                     onClick={() => setSelectedReport(report)}
                                     className={`p-6 rounded-[32px] border transition-all cursor-pointer group ${selectedReport?.id === report.id
                                         ? 'bg-brand-red/10 border-brand-red/30'
-                                        : 'bg-[#1E1E1E] border-white/5 hover:border-white/20'
+                                        : 'bg-white/5 border-white/5 hover:border-white/20 hover:bg-white/10'
                                         }`}
                                 >
                                     <div className="flex justify-between items-start mb-4">
@@ -156,7 +156,7 @@ export default function AdminReportsPage() {
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
-                                    className="bg-[#1E1E1E] border border-white/10 rounded-[40px] p-10 h-full overflow-y-auto no-scrollbar"
+                                    className="bg-white/5 border border-white/10 backdrop-blur-md rounded-[40px] p-10 h-full overflow-y-auto no-scrollbar"
                                 >
                                     <div className="flex items-center justify-between mb-10">
                                         <div>
@@ -236,7 +236,7 @@ export default function AdminReportsPage() {
                                     </div>
                                 </m.div>
                             ) : (
-                                <div className="h-full flex flex-col items-center justify-center bg-[#1E1E1E] rounded-[40px] border border-dashed border-white/5 opacity-40">
+                                <div className="h-full flex flex-col items-center justify-center bg-white/5 rounded-[40px] border border-dashed border-white/5 opacity-40">
                                     <AlertCircle size={48} className="text-gray-700 mb-6" />
                                     <p className="text-xs font-black uppercase tracking-widest text-gray-500">Selecione uma anomalia para analisar</p>
                                 </div>
