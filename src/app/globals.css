@@ -64,17 +64,28 @@ body {
   scroll-behavior: smooth;
 }
 
-/* Scientific background pattern - static, zero animations */
-body {
+/* Scientific background pattern - moved to pseudo-element for visibility control */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   background-image: url('/bg-science.svg');
   background-size: 1200px 1200px;
   background-repeat: repeat;
-  background-attachment: scroll;
+  background-attachment: fixed;
+  pointer-events: none;
 }
 
-/* Optional: Subtle adjustment for light mode if needed, but removing the wash-out gradient */
-:root:not(.dark) body {
-  /* Symbols are already subtle in the SVG, no extra overlay needed */
+/* Light mode: Increase visibility with filters and full opacity */
+:root:not(.dark) body::before {
+  opacity: 0.8;
+  filter: contrast(1.2) brightness(0.6);
+}
+
+/* Dark mode: Keep it subtle */
+.dark body::before {
+  opacity: 0.3;
 }
 
 /* Performance: CSS-only animation replaces framer-motion in hero (no JS blocking) */
