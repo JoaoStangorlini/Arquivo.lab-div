@@ -289,7 +289,7 @@ export default function WikiPage() {
                                     placeholder="Acesse o conhecimento... (ex: 'Bandejão', 'Plágio', 'Física Médica')"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full h-16 bg-white/40 dark:bg-[#1E1E1E]/40 backdrop-blur-xl border border-gray-200 dark:border-white/5 focus:border-brand-blue/50 rounded-[22px] pl-16 pr-6 text-lg font-medium text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 outline-none transition-all shadow-2xl"
+                                    className="w-full h-16 bg-white dark:bg-[#1E1E1E] border border-gray-200 dark:border-white/5 focus:border-brand-blue/50 rounded-[22px] pl-16 pr-6 text-lg font-medium text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 outline-none transition-all shadow-2xl"
                                 />
                             </div>
                         </motion.div>
@@ -309,7 +309,7 @@ export default function WikiPage() {
                                 >
                                     <Link
                                         href={cell.href}
-                                        className={`relative block h-full group bg-white/40 dark:bg-card-dark/40 backdrop-blur-xl border border-gray-200 dark:border-white/5 rounded-[40px] p-8 hover:bg-white dark:hover:bg-card-dark hover:border-${cell.color}/30 transition-all shadow-2xl overflow-hidden ${cell.glow ? 'ring-1 ring-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.05)]' : ''}`}
+                                        className={`relative block h-full group bg-white dark:bg-card-dark border border-gray-200 dark:border-white/5 rounded-[40px] p-8 hover:border-${cell.color}/30 transition-all shadow-2xl overflow-hidden ${cell.glow ? 'ring-1 ring-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.05)]' : ''}`}
                                     >
                                         {/* Background Glow */}
                                         <div className={`absolute -right-20 -top-20 size-64 bg-${cell.color}/5 blur-[100px] group-hover:bg-${cell.color}/10 transition-colors`}></div>
@@ -421,7 +421,7 @@ export default function WikiPage() {
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="text-center py-24 bg-white/20 dark:bg-card-dark/20 rounded-[40px] border border-dashed border-gray-200 dark:border-white/10"
+                            className="text-center py-24 bg-white dark:bg-card-dark rounded-[40px] border border-dashed border-gray-200 dark:border-white/10"
                         >
                             <Info className="size-16 text-gray-400 dark:text-gray-700 mx-auto mb-6" />
                             <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2 uppercase italic tracking-tighter">Colisão sem resultados</h3>

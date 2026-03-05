@@ -232,7 +232,7 @@ export const HomeClientView = ({
 
 
             {/* FILTROS (Restaurados) */}
-            <section className="z-40 bg-white/40 dark:bg-background-dark/40 backdrop-blur-md py-4 -mx-4 px-4 border-b border-gray-100 dark:border-gray-800/50 mb-8 sticky top-16">
+            <section className="z-40 bg-transparent py-4 -mx-4 px-4 border-b border-gray-100 dark:border-gray-800/50 mb-8 sticky top-16">
                 <div className="flex flex-col gap-6">
                     {/* Formato */}
                     <div className="flex items-center gap-4">
@@ -335,7 +335,7 @@ export const HomeClientView = ({
 
             {/* EM ÓRBITA NO IFUSP (Trending Horizontal - Mover abaixo dos filtros) */}
             {!debouncedQuery && selectedCategories.includes('Todos') && trendingItems.length > 0 && (
-                <section className="w-full py-8 bg-white/40 dark:bg-card-dark/40 backdrop-blur-md rounded-[40px] border border-gray-100 dark:border-gray-800/50 shadow-sm mb-12">
+                <section className="w-full py-8 bg-white dark:bg-card-dark rounded-[40px] border border-gray-100 dark:border-gray-800/50 shadow-sm mb-12">
                     <div className="px-8">
                         <div className="flex items-center justify-between mb-8">
                             <div className="flex flex-col">

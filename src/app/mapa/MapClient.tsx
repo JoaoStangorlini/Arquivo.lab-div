@@ -31,7 +31,7 @@ export default function MapClient({ initialItems }: { initialItems: MediaCardPro
                     <CampusMap items={items} />
                 </div>
 
-                <div className="mt-12 p-6 rounded-2xl bg-white/40 dark:bg-card-dark/40 backdrop-blur-md border border-gray-200 dark:border-gray-800 shadow-xl">
+                <div className="mt-12 p-6 rounded-2xl bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-800 shadow-xl">
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
                         <HelpCircle className="w-5 h-5 text-brand-yellow" />
                         Como funciona?
