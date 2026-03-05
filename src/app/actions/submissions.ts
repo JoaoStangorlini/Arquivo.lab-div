@@ -81,36 +81,44 @@ export async function fetchSubmissions({ page, limit, query, categories, mediaTy
     return { items, hasMore };
 }
 
-export async function fetchTrendingSubmissions(): Promise<{ post: PostDTO }[]> {
-    const { data: submissions, error } = await supabase
-        .from('submissions')
-        .select('*, profiles(avatar_url, xp, level), like_count')
-        .eq('status', 'aprovado')
-        .order('views', { ascending: false })
-        .limit(6);
+export const fetchTrendingSubmissions = unstable_cache(
+    async (): Promise<{ post: PostDTO }[]> => {
+        const { data: submissions, error } = await supabase
+            .from('submissions')
+            .select('*, profiles(avatar_url, xp, level), like_count')
+            .eq('status', 'aprovado')
+            .order('views', { ascending: false })
+            .limit(6);
 
-    if (error || !submissions) return [];
+        if (error || !submissions) return [];
 
-    return submissions.map(sub => ({
-        post: mapToPostDTO(sub)
-    }));
-}
+        return submissions.map(sub => ({
+            post: mapToPostDTO(sub)
+        }));
+    },
+    ['trending-submissions-v1'],
+    { revalidate: 60 }
+);
 
-export async function getFeaturedSubmissions(limit: number = 10): Promise<{ post: PostDTO }[]> {
-    const { data: submissions, error } = await supabase
-        .from('submissions')
-        .select('*, profiles(avatar_url, xp, level)')
-        .eq('status', 'aprovado')
-        .eq('is_featured', true)
-        .order('created_at', { ascending: false })
-        .limit(limit);
+export const getFeaturedSubmissions = unstable_cache(
+    async (limit: number = 10): Promise<{ post: PostDTO }[]> => {
+        const { data: submissions, error } = await supabase
+            .from('submissions')
+            .select('*, profiles(avatar_url, xp, level)')
+            .eq('status', 'aprovado')
+            .eq('is_featured', true)
+            .order('created_at', { ascending: false })
+            .limit(limit);
 
-    if (error || !submissions) return [];
+        if (error || !submissions) return [];
 
-    return submissions.map(sub => ({
-        post: mapToPostDTO(sub)
-    }));
-}
+        return submissions.map(sub => ({
+            post: mapToPostDTO(sub)
+        }));
+    },
+    ['featured-submissions-v1'],
+    { revalidate: 60 }
+);
 
 export async function getUserPseudonyms() {
     const serverSupabase = await createServerSupabase();
@@ -193,31 +201,39 @@ export const getTrendingTags = unstable_cache(
     { revalidate: 3600 }
 );
 
-export async function getSidebarTags() {
-    const { data } = await supabase.from('submissions').select('tags').eq('status', 'aprovado').limit(100);
-    const tagCounts: Record<string, number> = {};
-    data?.forEach(sub => sub.tags?.forEach((tag: string) => {
-        const t = tag.trim();
-        if (t) tagCounts[t] = (tagCounts[t] || 0) + 1;
-    }));
-    return Object.entries(tagCounts).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([name, count]) => ({ name, count }));
-}
+export const getSidebarTags = unstable_cache(
+    async () => {
+        const { data } = await supabase.from('submissions').select('tags').eq('status', 'aprovado').limit(100);
+        const tagCounts: Record<string, number> = {};
+        data?.forEach(sub => sub.tags?.forEach((tag: string) => {
+            const t = tag.trim();
+            if (t) tagCounts[t] = (tagCounts[t] || 0) + 1;
+        }));
+        return Object.entries(tagCounts).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([name, count]) => ({ name, count }));
+    },
+    ['sidebar-tags-v1'],
+    { revalidate: 60 }
+);
 
-export async function getUsersInOrbit(limit = 5) {
-    const { data: profiles } = await supabase
-        .from('profiles')
-        .select('id, full_name, email, avatar_url, xp, level')
-        .limit(limit);
+export const getUsersInOrbit = unstable_cache(
+    async (limit = 5) => {
+        const { data: profiles } = await supabase
+            .from('profiles')
+            .select('id, full_name, email, avatar_url, xp, level')
+            .limit(limit);
 
-    return profiles?.map(p => ({
-        id: p.id,
-        name: p.full_name || 'Usuário',
-        handle: p.email ? `@${p.email.split('@')[0]}` : '@usuario',
-        avatar: p.avatar_url,
-        xp: p.xp,
-        level: p.level
-    })) || [];
-}
+        return profiles?.map(p => ({
+            id: p.id,
+            name: p.full_name || 'Usuário',
+            handle: p.email ? `@${p.email.split('@')[0]}` : '@usuario',
+            avatar: p.avatar_url,
+            xp: p.xp,
+            level: p.level
+        })) || [];
+    },
+    ['users-in-orbit-v1'],
+    { revalidate: 60 }
+);
 
 export async function searchProfiles(query: string) {
     if (!query || query.length < 2) return [];

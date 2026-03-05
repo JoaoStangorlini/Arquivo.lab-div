@@ -55,7 +55,14 @@ export function stripMarkdownAndLatex(text: string | null | undefined): string {
 export function getAvatarUrl(url: string | null | undefined): string {
     if (!url) return '';
     if (url.startsWith('/') || url.startsWith('data:')) return url;
-    return `/api/avatar?url=${encodeURIComponent(url)}`;
+
+    let processedUrl = url;
+    // Optimize Google avatars (they default to s96-c, we want smaller for UI)
+    if (processedUrl.includes('googleusercontent.com') && processedUrl.includes('=s96-c')) {
+        processedUrl = processedUrl.replace('=s96-c', '=s48-c');
+    }
+
+    return `/api/avatar?url=${encodeURIComponent(processedUrl)}`;
 }
 
 /**

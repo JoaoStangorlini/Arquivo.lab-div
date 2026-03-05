@@ -7,9 +7,10 @@ import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface FeaturedCarouselProps {
     items: MediaCardProps[];
+    highlightQuery?: string;
 }
 
-export function FeaturedCarousel({ items }: FeaturedCarouselProps) {
+export function FeaturedCarousel({ items, highlightQuery = '' }: FeaturedCarouselProps) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
@@ -64,6 +65,7 @@ export function FeaturedCarousel({ items }: FeaturedCarouselProps) {
                 <div className="flex gap-2">
                     <button
                         onClick={() => scroll('left')}
+                        aria-label="Rolar para a esquerda"
                         disabled={!canScrollLeft}
                         className="p-2 rounded-full bg-white dark:bg-card-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md hover:border-brand-blue transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-gray-100 dark:disabled:hover:border-gray-800"
                     >
@@ -71,6 +73,7 @@ export function FeaturedCarousel({ items }: FeaturedCarouselProps) {
                     </button>
                     <button
                         onClick={() => scroll('right')}
+                        aria-label="Rolar para a direita"
                         disabled={!canScrollRight}
                         className="p-2 rounded-full bg-white dark:bg-card-dark border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md hover:border-brand-blue transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-gray-100 dark:disabled:hover:border-gray-800"
                     >
@@ -85,15 +88,12 @@ export function FeaturedCarousel({ items }: FeaturedCarouselProps) {
                 className="flex gap-6 overflow-x-auto pb-6 px-2 no-scrollbar snap-x snap-mandatory scroll-smooth"
             >
                 {items.map((item, index) => (
-                    <m.div
+                    <div
                         key={item.post.id}
-                        initial={index === 0 ? false : { opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index === 0 ? 0 : index * 0.1 }}
                         className="min-w-[300px] md:min-w-[380px] snap-start"
                     >
-                        <MediaCard post={item.post} priority={index < 2} />
-                    </m.div>
+                        <MediaCard post={item.post} priority={index < 2} highlightQuery={highlightQuery} />
+                    </div>
                 ))}
             </div>
         </div>

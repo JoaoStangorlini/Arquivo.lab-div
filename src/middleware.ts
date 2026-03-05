@@ -32,8 +32,19 @@ export async function middleware(request: NextRequest) {
         }
     );
 
-    // This call triggers the token refresh if needed
-    await supabase.auth.getUser();
+    // Performance: Only refresh auth token on routes that need it
+    // Public routes skip getUser() to save ~100-200ms TTFB
+    const isPublicRoute = pathname === '/' ||
+        pathname.startsWith('/wiki') ||
+        pathname.startsWith('/arquivo') ||
+        pathname.startsWith('/sobre') ||
+        pathname.startsWith('/fluxo') ||
+        pathname.startsWith('/api/og');
+
+    if (!isPublicRoute) {
+        // This call triggers the token refresh if needed
+        await supabase.auth.getUser();
+    }
 
     // --- Admin Auth Check (Hardened) ---
     if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {

@@ -3,7 +3,6 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { m, AnimatePresence } from 'framer-motion';
 import { useNavigationStore } from '@/store/useNavigationStore';
 import { NavItem, AppRoutes } from '@/types/navigation';
 import FocusLock from 'react-focus-lock';
@@ -117,9 +116,8 @@ export const BottomNavBar = () => {
                                     {item.name}
                                 </span>
                                 {isActive && (
-                                    <m.div
-                                        layoutId="bottom-nav-indicator"
-                                        className={`absolute -bottom-1 w-1 h-1 rounded-full bg-${activeColor}`}
+                                    <div
+                                        className={`absolute -bottom-1 w-1 h-1 rounded-full bg-${activeColor} animate-fade-in`}
                                     />
                                 )}
                             </Link>
@@ -128,82 +126,75 @@ export const BottomNavBar = () => {
                 </nav>
             </div>
 
-            {/* "Mais" Drawer Hardened V8.0 */}
-            <AnimatePresence>
-                {isDrawerOpen && (
-                    <>
-                        <m.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
+            {/* "Mais" Drawer Hardened V8.0 - CSS Transition Version */}
+            <div
+                className={`fixed inset-0 z-[110] xl:hidden transition-all duration-300 ${isDrawerOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+            >
+                {/* Backdrop */}
+                <div
+                    onClick={() => setDrawerOpen(false)}
+                    className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                />
+
+                <div
+                    ref={drawerRef}
+                    className={`absolute bottom-0 left-0 right-0 bg-white dark:bg-gray-900 rounded-t-[40px] p-8 shadow-[0_-20px_50px_rgba(0,0,0,0.3)] max-h-[90vh] overflow-y-auto transition-transform duration-300 ease-out ${isDrawerOpen ? 'translate-y-0' : 'translate-y-full'}`}
+                >
+                    <FocusLock disabled={!isDrawerOpen}>
+                        <div className="w-12 h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full mx-auto mb-8" />
+
+                        <div className="grid grid-cols-1 gap-2">
+                            {/* Primary: Laboratório */}
+                            {drawerLinks?.filter(l => l.isPrimary).map(link => {
+                                const activeColor = link.color || 'brand-blue';
+                                return (
+                                    <Link
+                                        key={link.href}
+                                        href={link.href}
+                                        onClick={() => setDrawerOpen(false)}
+                                        className={`flex items-center gap-4 p-4 bg-${activeColor} rounded-3xl text-white mb-4 shadow-lg shadow-${activeColor}/20`}
+                                    >
+                                        <div className="size-12 rounded-full bg-white/20 flex items-center justify-center">
+                                            <span className="material-symbols-outlined">{link.icon}</span>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="font-bold">{link.name}</span>
+                                            <span className="text-xs opacity-80">Editar dados e currículo técnico</span>
+                                        </div>
+                                        <span className="material-symbols-outlined ml-auto">chevron_right</span>
+                                    </Link>
+                                );
+                            })}
+
+                            {/* Grid of other links */}
+                            <div className="grid grid-cols-2 gap-3">
+                                {drawerLinks?.filter(l => !l.isPrimary).map((link) => {
+                                    const activeColor = link.color || 'brand-blue';
+                                    const isActive = pathname === link.href;
+                                    return (
+                                        <Link
+                                            key={link.href}
+                                            href={link.href}
+                                            onClick={() => setDrawerOpen(false)}
+                                            className={`flex flex-col gap-3 p-5 rounded-3xl border transition-all active:scale-95 ${isActive ? `bg-${activeColor}/10 border-${activeColor}/30 text-${activeColor}` : 'bg-gray-50 dark:bg-white/5 border-gray-100 dark:border-white/10 hover:border-brand-blue/30 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'}`}
+                                        >
+                                            <span className={`material-symbols-outlined text-2xl ${isActive ? 'filled text-' + activeColor : 'text-' + activeColor}`}>{link.icon}</span>
+                                            <span className={`text-sm font-bold ${isActive ? 'text-gray-900 dark:text-white' : 'text-gray-500'}`}>{link.name}</span>
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        <button
                             onClick={() => setDrawerOpen(false)}
-                            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[110] xl:hidden"
-                        />
-                        <FocusLock>
-                            <m.div
-                                ref={drawerRef}
-                                initial={{ y: '100%' }}
-                                animate={{ y: 0 }}
-                                exit={{ y: '100%' }}
-                                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                                className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 rounded-t-[40px] z-[120] p-8 xl:hidden shadow-[0_-20px_50px_rgba(0,0,0,0.3)] max-h-[90vh] overflow-y-auto"
-                            >
-                                <div className="w-12 h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full mx-auto mb-8" />
-
-                                <div className="grid grid-cols-1 gap-2">
-                                    {/* Primary: Laboratório */}
-                                    {drawerLinks?.filter(l => l.isPrimary).map(link => {
-                                        const activeColor = link.color || 'brand-blue';
-                                        return (
-                                            <Link
-                                                key={link.href}
-                                                href={link.href}
-                                                onClick={() => setDrawerOpen(false)}
-                                                className={`flex items-center gap-4 p-4 bg-${activeColor} rounded-3xl text-white mb-4 shadow-lg shadow-${activeColor}/20`}
-                                            >
-                                                <div className="size-12 rounded-full bg-white/20 flex items-center justify-center">
-                                                    <span className="material-symbols-outlined">{link.icon}</span>
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <span className="font-bold">{link.name}</span>
-                                                    <span className="text-xs opacity-80">Editar dados e currículo técnico</span>
-                                                </div>
-                                                <span className="material-symbols-outlined ml-auto">chevron_right</span>
-                                            </Link>
-                                        );
-                                    })}
-
-                                    {/* Grid of other links */}
-                                    <div className="grid grid-cols-2 gap-3">
-                                        {drawerLinks?.filter(l => !l.isPrimary).map((link) => {
-                                            const activeColor = link.color || 'brand-blue';
-                                            const isActive = pathname === link.href;
-                                            return (
-                                                <Link
-                                                    key={link.href}
-                                                    href={link.href}
-                                                    onClick={() => setDrawerOpen(false)}
-                                                    className={`flex flex-col gap-3 p-5 rounded-3xl border transition-all active:scale-95 ${isActive ? `bg-${activeColor}/10 border-${activeColor}/30 text-${activeColor}` : 'bg-gray-50 dark:bg-white/5 border-gray-100 dark:border-white/5 hover:border-brand-blue/30 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'}`}
-                                                >
-                                                    <span className={`material-symbols-outlined text-2xl ${isActive ? 'filled text-' + activeColor : 'text-' + activeColor}`}>{link.icon}</span>
-                                                    <span className={`text-sm font-bold ${isActive ? 'text-gray-900 dark:text-white' : 'text-gray-500'}`}>{link.name}</span>
-                                                </Link>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-
-                                <button
-                                    onClick={() => setDrawerOpen(false)}
-                                    className="w-full mt-8 py-4 bg-gray-100 dark:bg-gray-800 text-gray-500 font-bold rounded-2xl active:scale-[0.98] transition-all"
-                                >
-                                    Fechar
-                                </button>
-                            </m.div>
-                        </FocusLock>
-                    </>
-                )}
-            </AnimatePresence>
+                            className="w-full mt-8 py-4 bg-gray-100 dark:bg-gray-800 text-gray-500 font-bold rounded-2xl active:scale-[0.98] transition-all"
+                        >
+                            Fechar
+                        </button>
+                    </FocusLock>
+                </div>
+            </div>
         </>
     );
 };

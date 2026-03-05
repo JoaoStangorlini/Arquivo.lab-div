@@ -35,7 +35,7 @@ export function CardPresenceBadge({ submissionId }: { submissionId: string }) {
             })
             .subscribe();
 
-        return () => { channel.unsubscribe(); };
+        return () => { supabase.removeChannel(channel); };
     }, [submissionId, isVisible]);
 
     return (

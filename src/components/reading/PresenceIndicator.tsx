@@ -37,7 +37,7 @@ export function PresenceIndicator({ submissionId }: { submissionId: string }) {
             });
 
         return () => {
-            channel.unsubscribe();
+            supabase.removeChannel(channel);
         };
     }, [submissionId]);
 

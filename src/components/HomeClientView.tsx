@@ -1,18 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { MediaCard, MediaCardProps } from './MediaCard';
 import { SkeletonCard } from './ui/SkeletonCard';
 import { fetchSubmissions } from '@/app/actions/submissions';
-import { checkUserLikes } from '@/app/actions/media';
-import { m, AnimatePresence } from 'framer-motion';
-import dynamic from 'next/dynamic';
-
-const FeaturedCarousel = dynamic(() => import('./FeaturedCarousel').then(mod => mod.FeaturedCarousel), {
-    loading: () => <div className="h-64 sm:h-[400px] w-full animate-pulse bg-gray-200 dark:bg-gray-800 rounded-[40px]" />
-});
-
+import { FeaturedCarousel } from './FeaturedCarousel';
 import {
     Sparkles,
     ChevronLeft,
@@ -54,7 +47,6 @@ export const HomeClientView = ({
     trendingTags = [],
     initialLikedIds = []
 }: HomeClientViewProps) => {
-    const searchParams = useSearchParams();
     const router = useRouter();
     const { query: searchQuery, setQuery: setSearchQuery } = useSearch();
 
@@ -102,18 +94,8 @@ export const HomeClientView = ({
         };
     }, [trendingItems]);
 
-    // Fetch user liked IDs whenever items change
-    useEffect(() => {
-        const ids = [
-            ...items.map(i => i.post.id),
-            ...trendingItems.map(i => i.post.id),
-            ...featuredItems.map(i => i.post.id)
-        ];
-        const unique = [...new Set(ids)];
-        if (unique.length > 0) {
-            checkUserLikes(unique).then(liked => setLikedIds(new Set(liked)));
-        }
-    }, [items, trendingItems, featuredItems]);
+    // checkUserLikes: using SSR data from initialLikedIds (server-side fetch in page.tsx)
+    // Removed duplicate client-side useEffect for performance
 
     const scrollTrending = (direction: 'left' | 'right') => {
         if (trendingScrollRef.current) {
@@ -216,40 +198,34 @@ export const HomeClientView = ({
                 </div>
 
                 <div className="max-w-4xl mx-auto px-4 relative z-10 text-center">
-                    <m.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-[10px] font-black uppercase tracking-widest mb-6"
+                    <div
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-[10px] font-black uppercase tracking-widest mb-6 animate-fade-in-up"
                     >
                         <span className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
                         Excelência Científica
-                    </m.div>
+                    </div>
 
-                    <m.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="font-display font-black text-4xl md:text-6xl tracking-tighter mb-6 text-gray-900 dark:text-white leading-[0.9] uppercase italic"
+                    <h1
+                        className="font-display font-black text-4xl md:text-6xl tracking-tighter mb-6 text-gray-900 dark:text-white leading-[0.9] uppercase italic animate-fade-in-up"
+                        style={{ animationDelay: '0.1s' }}
                     >
                         Hub de Comunicação Científica <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-yellow to-brand-red">Lab-Div</span>
-                    </m.h1>
+                    </h1>
 
-                    <m.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed font-medium"
+                    <p
+                        className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed font-medium animate-fade-in-up"
+                        style={{ animationDelay: '0.2s' }}
                     >
                         Hub de Comunicação Científica do Lab-Div - Um projeto para melhorar a comunicação do IF-USP e reunir em um FLUXO interativo o arquivo de material de divulgação do Lab-Div e de toda a comunidade — de dentro e fora do instituto.
-                    </m.p>
+                    </p>
                 </div>
             </header>
 
             {/* DESTAQUES (V8.0 optimized) */}
             {featuredItems.length > 0 && !debouncedQuery && selectedCategories.includes('Todos') && (
                 <section className="mb-8">
-                    <FeaturedCarousel items={featuredItems} />
+                    <FeaturedCarousel items={featuredItems} highlightQuery={searchQuery} />
                 </section>
             )}
 
@@ -409,15 +385,12 @@ export const HomeClientView = ({
                             className="flex gap-4 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth"
                         >
                             {trendingItems.map((item, index) => (
-                                <m.div
+                                <div
                                     key={item.post.id}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.05 }}
                                     className="min-w-[280px] md:min-w-[320px] snap-start"
                                 >
-                                    <MediaCard post={item.post} priority={index < 2} isLikedByUser={likedIds.has(item.post.id)} />
-                                </m.div>
+                                    <MediaCard post={item.post} priority={false} isLikedByUser={likedIds.has(item.post.id)} highlightQuery={searchQuery} />
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -427,23 +400,37 @@ export const HomeClientView = ({
             {/* FEED PRINCIPAL */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 min-h-[600px]">
                 {items.length > 0 ? (
-                    items.map((item, index) => (
-                        <m.div
-                            key={item.post.id}
-                            initial={index < 4 ? false : { opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{
-                                duration: 0.5,
-                                delay: index < 4 ? 0 : (index % 6) * 0.1
-                            }}
-                        >
-                            <MediaCard
-                                post={item.post}
-                                priority={index < 4}
-                                isLikedByUser={likedIds.has(item.post.id)}
-                            />
-                        </m.div>
-                    ))
+                    items.map((item, index) => {
+                        const isAboveFold = index < 2;
+
+                        if (isAboveFold) {
+                            return (
+                                <div key={item.post.id}>
+                                    <MediaCard
+                                        post={item.post}
+                                        priority={true}
+                                        isLikedByUser={likedIds.has(item.post.id)}
+                                        highlightQuery={searchQuery}
+                                    />
+                                </div>
+                            );
+                        }
+
+                        return (
+                            <div
+                                key={item.post.id}
+                                className="animate-fade-in-up"
+                                style={{ animationDelay: `${(index % 6) * 0.1}s` }}
+                            >
+                                <MediaCard
+                                    post={item.post}
+                                    priority={false}
+                                    isLikedByUser={likedIds.has(item.post.id)}
+                                    highlightQuery={searchQuery}
+                                />
+                            </div>
+                        );
+                    })
                 ) : !isLoading ? (
                     <div className="col-span-full py-20 flex flex-col items-center justify-center text-center">
                         <SearchX className="w-16 h-16 text-gray-300 mb-4" />

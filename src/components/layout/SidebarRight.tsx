@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { m, AnimatePresence } from 'framer-motion';
 import { Search, ChevronRight, User } from 'lucide-react';
 import { Avatar } from '../ui/Avatar';
-import { searchProfiles, followUser, unfollowUser, checkIsFollowing } from '@/app/actions/submissions';
+import { searchProfiles, followUser, unfollowUser, checkIsFollowing, getSidebarTags, getUsersInOrbit } from '@/app/actions/submissions';
 import { toast } from 'react-hot-toast';
 
 interface SidebarTag {
@@ -23,11 +23,23 @@ interface SidebarAuthor {
 }
 
 interface SidebarRightProps {
-    tags: SidebarTag[];
-    authors: SidebarAuthor[];
+    tags?: SidebarTag[];
+    authors?: SidebarAuthor[];
 }
 
-export const SidebarRight = ({ tags, authors: initialAuthors }: SidebarRightProps) => {
+export const SidebarRight = ({ tags: propTags, authors: propAuthors }: SidebarRightProps) => {
+    const [tags, setTags] = React.useState<SidebarTag[]>(propTags || []);
+    const [initialAuthors, setInitialAuthors] = React.useState<SidebarAuthor[]>(propAuthors || []);
+
+    // Fetch data client-side if not provided via props
+    React.useEffect(() => {
+        if (!propTags) {
+            getSidebarTags().then(data => setTags(data));
+        }
+        if (!propAuthors) {
+            getUsersInOrbit(5).then(data => setInitialAuthors(data));
+        }
+    }, [propTags, propAuthors]);
     const [page, setPage] = React.useState(0);
     const [activeTab, setActiveTab] = React.useState<'trending' | 'search'>('trending');
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -134,7 +146,7 @@ export const SidebarRight = ({ tags, authors: initialAuthors }: SidebarRightProp
             {/* ISÓTOPOS EM ÓRBITA */}
             <div className="bg-gray-50 dark:bg-card-dark rounded-3xl p-5 border border-gray-100 dark:border-gray-800">
                 <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-black uppercase tracking-widest text-brand-blue">Isótopos em Órbita</h3>
+                    <h2 className="text-sm font-black uppercase tracking-widest text-brand-blue">Isótopos em Órbita</h2>
                     <div className="flex gap-1">
                         {Array.from({ length: totalPages }).map((_, i) => (
                             <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all ${page === i ? 'bg-brand-blue w-4 shadow-[0_0_8px_rgba(59,130,246,0.5)]' : 'bg-gray-300 dark:bg-gray-700'}`} />
@@ -173,7 +185,7 @@ export const SidebarRight = ({ tags, authors: initialAuthors }: SidebarRightProp
 
                 <button
                     onClick={handleNextPage}
-                    className="mt-4 text-xs font-bold text-brand-yellow hover:underline flex items-center gap-1 group"
+                    className="mt-4 text-xs font-bold text-yellow-700 dark:text-brand-yellow hover:underline flex items-center gap-1 group"
                 >
                     Explorar mais isótopos
                     <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
@@ -198,7 +210,7 @@ export const SidebarRight = ({ tags, authors: initialAuthors }: SidebarRightProp
                 </div>
 
                 <div className="p-5">
-                    <h3 className="text-xs font-black uppercase tracking-widest text-gray-900 dark:text-white mb-4">Usuários em Órbita</h3>
+                    <h2 className="text-xs font-black uppercase tracking-widest text-gray-900 dark:text-white mb-4">Usuários em Órbita</h2>
 
                     {activeTab === 'search' && (
                         <div className="relative mb-4 animate-in fade-in slide-in-from-top-2 duration-300">

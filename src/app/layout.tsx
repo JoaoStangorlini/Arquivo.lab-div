@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import { cookies } from "next/headers";
 import "./globals.css";
 import { Toaster } from 'react-hot-toast';
@@ -16,12 +17,20 @@ const spaceGrotesk = Space_Grotesk({
   display: 'swap',
 });
 
-import { LazyMotion, domMax } from "framer-motion";
+const materialSymbols = localFont({
+  src: '../../node_modules/material-symbols/material-symbols-outlined.woff2',
+  variable: '--font-material-symbols',
+  display: 'swap',
+  weight: '100 700',
+  style: 'normal',
+});
+
+import { LazyMotion, domAnimation } from "framer-motion";
 
 import { ReadingProgressBar } from "@/components/reading/ReadingProgressBar";
 import { ReadingExperienceProvider } from "@/components/reading/ReadingExperienceProvider";
 import { SearchProvider } from "@/providers/SearchProvider";
-import { PwaManager } from "@/components/pwa/PwaManager";
+import { ClientPwaManager } from "@/components/pwa/ClientPwaManager";
 import { SkipLink } from "@/components/ui/SkipLink";
 import { AuthProvider } from "@/providers/AuthProvider";
 
@@ -48,7 +57,6 @@ export const metadata: Metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
   viewportFit: 'cover',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
@@ -107,10 +115,10 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} font-sans selection:bg-brand-yellow selection:text-brand-blue bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 transition-colors duration-200 antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${materialSymbols.variable} font-sans selection:bg-brand-yellow selection:text-brand-blue bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 transition-colors duration-200 antialiased`}
         suppressHydrationWarning
       >
-        <LazyMotion features={domMax}>
+        <LazyMotion features={domAnimation}>
           <AuthProvider>
             <ReadingExperienceProvider>
               <SearchProvider>
@@ -123,7 +131,7 @@ export default async function RootLayout({
                     borderRadius: '16px',
                   }
                 }} />
-                <PwaManager />
+                <ClientPwaManager />
                 <ReadingProgressBar />
                 <SkipLink />
 

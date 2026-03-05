@@ -331,7 +331,7 @@ export default function WikiPage() {
                                             </div>
 
                                             {/* Titles */}
-                                            <h3 className="text-2xl font-black text-white mb-1 group-hover:text-brand-blue transition-colors italic uppercase tracking-tighter">
+                                            <h3 className={`text-2xl font-black text-white mb-1 group-hover:text-${cell.color} transition-colors italic uppercase tracking-tighter`}>
                                                 {cell.title}
                                             </h3>
                                             <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">

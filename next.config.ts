@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'bqszadfunqgtfpaorwvx.supabase.co', pathname: '/**' },
     ],
   },
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion', 'recharts'],
+  },
   transpilePackages: ['recharts'],
   async redirects() {
     return [

@@ -90,11 +90,15 @@ export const getOptimizedUrl = (url: string, width = 800, quality = 70, category
 
     // Cloudinary Optimization
     if (url.includes('cloudinary.com') && url.includes('/upload/')) {
+        // Regra Master de Performance: SEMPRE forçar a leitura do CDN via res.cloudinary.com
+        // Retirar requisições sobreétricas originadas da API.
+        let cdnUrl = url.replace('api.cloudinary.com', 'res.cloudinary.com');
+
         // Regra Sênior: Se já existem transformações (w_, q_, f_), não aplicar novamente para evitar bugs de LCP/Otimização
-        if (url.includes('/upload/w_') || url.includes('/upload/q_') || url.includes('/upload/f_')) {
-            return url;
+        if (cdnUrl.includes('/upload/w_') || cdnUrl.includes('/upload/q_') || cdnUrl.includes('/upload/f_')) {
+            return cdnUrl;
         }
-        return url.replace('/upload/', `/upload/w_${width},q_${finalQuality},f_auto/`);
+        return cdnUrl.replace('/upload/', `/upload/w_${width},q_${finalQuality},f_auto/`);
     }
 
     // Supabase Storage - Default to no transformation to avoid 400s unless using render endpoint

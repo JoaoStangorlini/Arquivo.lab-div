@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
     Eye,
     ExternalLink,
@@ -22,21 +22,20 @@ import {
 import dynamic from 'next/dynamic';
 
 const ScientificContent = dynamic(() => import('./ScientificContent'), {
-    ssr: false,
     loading: () => <div className="h-20 w-full animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
 });
 
 import { Avatar } from './ui/Avatar';
 
 import { parseMediaUrl, getYoutubeThumbnail, getOptimizedUrl } from '@/lib/media-utils';
-import { ShareMenu } from './ShareMenu';
+const ShareMenu = dynamic(() => import('./ShareMenu').then(mod => mod.ShareMenu));
 import { m, AnimatePresence } from 'framer-motion';
 import { stripMarkdownAndLatex, highlightMatch } from '@/lib/utils';
 import { useInView } from 'react-intersection-observer';
 import { CardPresenceBadge } from './CardPresenceBadge';
 import { supabase } from '@/lib/supabase';
-import { CollectionManager } from './engagement/CollectionManager';
-import { DownloadModal } from './DownloadModal';
+const CollectionManager = dynamic(() => import('./engagement/CollectionManager').then(mod => mod.CollectionManager));
+const DownloadModal = dynamic(() => import('./DownloadModal').then(mod => mod.DownloadModal));
 import { MediaReaction } from './engagement/MediaReaction';
 import { PostDTO } from '@/dtos/media';
 import { useMediaInteraction } from '@/hooks/useMediaInteraction';
@@ -47,6 +46,7 @@ export interface MediaCardProps {
     post: PostDTO;
     priority?: boolean;
     isLikedByUser?: boolean;
+    highlightQuery?: string;
 }
 
 import { CATEGORY_STYLES, DEFAULT_STYLE } from '@/lib/constants';
@@ -55,7 +55,7 @@ import { CATEGORY_STYLES, DEFAULT_STYLE } from '@/lib/constants';
  * V8.0 MediaCard - Hardened & Refactored
  * Implements DTO Enforcement and hook-based logic.
  */
-export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = false }: MediaCardProps) => {
+export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = false, highlightQuery = '' }: MediaCardProps) => {
     const { user } = useAuth();
     const userId = user?.id;
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -67,8 +67,7 @@ export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = f
 
     const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const query = searchParams.get('q') || searchParams.get('tag') || '';
+    const query = highlightQuery;
     const { ref: contentRef, inView } = useInView({
         triggerOnce: true,
         rootMargin: '200px 0px',
@@ -232,11 +231,11 @@ export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = f
                         src={urls.length > 0 ? getYoutubeThumbnail(urls[0]) : "https://images.unsplash.com/photo-1616423640778-28d1b53229bd?auto=format&fit=crop&q=80&w=800"}
                         alt={post.title || "Video Thumbnail"}
                         fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        sizes="(max-width: 640px) 100vw, 50vw"
                         className="object-cover opacity-80"
                         priority={priority}
                         fetchPriority={priority ? "high" : "auto"}
-                        unoptimized
+                        loading={priority ? "eager" : "lazy"}
                     />
                 ) : post.mediaType === 'text' || post.mediaType === 'zip' || post.mediaType === 'sdocx' ? (
                     <div className="h-full w-full flex flex-col items-center justify-center p-8 text-center bg-slate-100 dark:bg-slate-800">
@@ -260,10 +259,11 @@ export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = f
                                 src={optimizedDisplayUrl}
                                 alt={`${post.title} - image ${currentImageIndex + 1}`}
                                 fill
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                                priority={priority}
+                                sizes="(max-width: 640px) 100vw, 50vw"
+                                className="object-cover object-center"
+                                priority={true}
                                 fetchPriority="high"
+                                loading="eager"
                             />
                         </div>
                     ) : (
@@ -275,7 +275,7 @@ export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = f
                                 src={optimizedDisplayUrl}
                                 alt={`${post.title} - image ${currentImageIndex + 1}`}
                                 fill
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                sizes="(max-width: 640px) 100vw, 50vw"
                                 className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                                 priority={priority}
                                 fetchPriority="auto"
@@ -292,14 +292,14 @@ export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = f
                     <>
                         {/* Simplified hover effect - removed blur for better performance */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                        <button onClick={handlePrevImage} className="absolute left-2 top-1/2 -translate-y-1/2 size-8 bg-black/60 hover:bg-black/90 text-white rounded-full flex items-center justify-center z-10 hover:scale-110"><ChevronLeft className="w-5 h-5" /></button>
-                        <button onClick={handleNextImage} className="absolute right-2 top-1/2 -translate-y-1/2 size-8 bg-black/60 hover:bg-black/90 text-white rounded-full flex items-center justify-center z-10 hover:scale-110"><ChevronRight className="w-5 h-5" /></button>
+                        <button onClick={handlePrevImage} aria-label="Imagem Anterior" className="absolute left-2 top-1/2 -translate-y-1/2 size-8 bg-black/60 hover:bg-black/90 text-white rounded-full flex items-center justify-center z-10 hover:scale-110"><ChevronLeft className="w-5 h-5" /></button>
+                        <button onClick={handleNextImage} aria-label="Próxima Imagem" className="absolute right-2 top-1/2 -translate-y-1/2 size-8 bg-black/60 hover:bg-black/90 text-white rounded-full flex items-center justify-center z-10 hover:scale-110"><ChevronRight className="w-5 h-5" /></button>
                         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10 px-2 py-1 rounded-full bg-black/40">
                             {urls.map((_, idx) => (
                                 <div key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentImageIndex ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`} />
                             ))}
                         </div>
-                        <div className="absolute top-3 left-3 flex items-center gap-1 px-2 py-1 bg-primary text-white text-[10px] font-extrabold uppercase tracking-wider rounded shadow-lg"><Layers className="w-3 h-3" /> Galeria</div>
+                        <div className="absolute top-3 left-3 flex items-center gap-1 px-2 py-1 bg-blue-700 text-white text-[10px] font-black uppercase tracking-wider rounded shadow-lg"><Layers className="w-3 h-3" /> Galeria</div>
                     </>
                 )}
 
@@ -329,11 +329,11 @@ export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = f
                             <Pencil className="w-5 h-5" />
                             <span className="text-[11px] font-black tabular-nums">{post.commentCount || 0}</span>
                         </Link>
-                        <button onClick={(e) => { e.stopPropagation(); setShowShareMenu(true); }} className="text-gray-700 dark:text-gray-200 hover:text-brand-blue"><Rocket className="w-6 h-6" /></button>
+                        <button onClick={(e) => { e.stopPropagation(); setShowShareMenu(true); }} aria-label="Compartilhar" className="text-gray-700 dark:text-gray-200 hover:text-brand-blue"><Rocket className="w-6 h-6" /></button>
 
-                        {displayUrl && <button onClick={(e) => { e.stopPropagation(); setShowDownloadModal(true); }} className="text-gray-700 dark:text-gray-200 hover:text-brand-yellow"><Download className="w-6 h-6" /></button>}
+                        {displayUrl && <button onClick={(e) => { e.stopPropagation(); setShowDownloadModal(true); }} aria-label="Baixar Arquivo" className="text-gray-700 dark:text-gray-200 hover:text-brand-yellow"><Download className="w-6 h-6" /></button>}
                     </div>
-                    <button onClick={(e) => { e.stopPropagation(); handleSave(); }} className="flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-brand-yellow">
+                    <button onClick={(e) => { e.stopPropagation(); handleSave(); }} aria-label={saved ? "Remover Favorito" : "Adicionar aos Favoritos"} className="flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:text-brand-yellow">
                         <Star className={`w-6 h-6 ${saved ? 'fill-current text-brand-yellow' : ''}`} />
                         <span className="text-xs font-bold tabular-nums">{saves}</span>
                     </button>
@@ -392,11 +392,11 @@ export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = f
                             </React.Fragment>
                         );
                     })}
-                    <span className="flex items-center gap-1 px-2 py-0.5 bg-brand-yellow/10 text-brand-yellow text-[10px] font-bold rounded-md uppercase tracking-wide border border-brand-yellow/20">
+                    <span className="flex items-center gap-1 px-2 py-0.5 bg-brand-yellow/10 text-yellow-700 dark:text-brand-yellow text-[10px] font-black rounded-md uppercase tracking-wide border border-brand-yellow/20">
                         <Clock className="w-3 h-3" /> {Math.max(1, post.readingTime || 1)} min
                     </span>
                     {post.views != null && (
-                        <span className="flex items-center gap-1 px-2 py-0.5 bg-brand-blue/10 text-brand-blue text-[10px] font-bold rounded-md uppercase tracking-wide border border-brand-blue/20">
+                        <span className="flex items-center gap-1 px-2 py-0.5 bg-brand-blue/10 text-blue-700 dark:text-brand-blue text-[10px] font-black rounded-md uppercase tracking-wide border border-brand-blue/20">
                             <Eye className="w-3 h-3" /> {post.views}
                         </span>
                     )}

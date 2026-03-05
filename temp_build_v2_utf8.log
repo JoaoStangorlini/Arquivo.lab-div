@@ -1,0 +1,139 @@
+﻿
+> if-usp-ciencia@0.1.0 prebuild
+> npm run step-zero
+
+
+> if-usp-ciencia@0.1.0 step-zero
+> node scripts/generate-id.js
+
+Γ£à [V3.6] sw.js gerado a partir do template com ID: 1772673740394
+Γ£à [V3.6] BUILD_ID '1772673740394' injetado em .env.production.local.
+
+> if-usp-ciencia@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env.production.local, .env.local
+
+node.exe : ΓÜá The 
+"middleware" file 
+convention is deprecated. 
+Please use "proxy" instead. 
+Learn more: https://nextjs.o
+rg/docs/messages/middleware-
+to-proxy
+No linha:1 caractere:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
+    + CategoryInfo          
+    : NotSpecified: (ΓÜá T  
+  he "middle...leware-to-   
+ proxy:String) [], Remot    
+eException
+    + FullyQualifiedErrorId 
+    : NativeCommandError
+ 
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 11.8s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+ΓÜá Using edge runtime on a 
+page currently disables 
+static generation for that 
+page
+  Generating static pages using 11 workers (0/34) ...
+  Generating static pages using 11 workers (8/34) 
+  Generating static pages using 11 workers (16/34) 
+  Generating static pages using 11 workers (25/34) 
+Γ£ô Generating static pages using 11 workers (34/34) in 1252.4ms
+  Finalizing page optimization ...
+
+Route (app)
+Γöî ╞Æ /
+Γö£ ╞Æ /_not-found
+Γö£ ╞Æ /admin
+Γö£ ╞Æ /admin/acervo
+Γö£ ╞Æ /admin/comentarios
+Γö£ ╞Æ /admin/correcoes
+Γö£ ╞Æ /admin/login
+Γö£ ╞Æ /admin/narracao
+Γö£ ╞Æ /admin/oportunidades
+Γö£ ╞Æ /admin/papeis
+Γö£ ╞Æ /admin/pendentes
+Γö£ ╞Æ /admin/perguntas
+Γö£ ╞Æ /admin/profiles
+Γö£ ╞Æ /admin/ranking
+Γö£ ╞Æ /admin/reports
+Γö£ ╞Æ /admin/trilhas
+Γö£ ╞Æ /api/avatar
+Γö£ ╞Æ /api/notify
+Γö£ ╞Æ /api/og
+Γö£ ╞Æ /arquivo-labdiv
+Γö£ ╞Æ /arquivo/[id]
+Γö£ ╞Æ /auth/callback
+Γö£ ╞Æ /autor/[nome]
+Γö£ ╞Æ /colisor
+Γö£ ╞Æ /emaranhamento
+Γö£ ╞Æ /enviar
+Γö£ ╞Æ /fluxo
+Γö£ Γùï /icon.svg
+Γö£ ╞Æ /lab
+Γö£ ╞Æ /leaderboard
+Γö£ ╞Æ /login
+Γö£ ╞Æ /mapa
+Γö£ ╞Æ /offline
+Γö£ ╞Æ /perguntas
+Γö£ Γùï /robots.txt
+Γö£ Γùï /sitemap.xml
+Γö£ ╞Æ /sobre
+Γö£ ╞Æ /trilhas
+Γö£ ╞Æ /wiki
+Γö£ ╞Æ /wiki/[slug]
+Γöö ╞Æ /wiki/quiz
+
+
+╞Æ Proxy (Middleware)
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+
+
+> if-usp-ciencia@0.1.0 postbuild
+> npm run audit-logs && node scripts/clean.js
+
+
+> if-usp-ciencia@0.1.0 audit-logs
+> node scripts/audit.js
+
+≡ƒöì [V3.9] Iniciando Auditoria de Integridade...
+Γ£à [V3.9] Integridade de Artefatos OK (ID: 1772673740394)
+≡ƒöì [V3.9] Scan de Logs em andamento...
+≡ƒÜ⌐ LOG DETECTADO: C:\Users
+\Stangorlini\.gemini\antigra
+vity\scratch\if-usp-ciencia\
+src\app\actions\submissions.
+ts:348
+≡ƒÜ⌐ LOG DETECTADO: C:\Users
+\Stangorlini\.gemini\antigra
+vity\scratch\if-usp-ciencia\
+src\app\auth\callback\route.
+ts:42
+≡ƒÜ⌐ LOG DETECTADO: C:\Users
+\Stangorlini\.gemini\antigra
+vity\scratch\if-usp-ciencia\
+src\app\login\page.tsx:64
+≡ƒÜ⌐ LOG DETECTADO: C:\Users
+\Stangorlini\.gemini\antigra
+vity\scratch\if-usp-ciencia\
+src\lib\cloudinary-admin.ts:
+16
+ΓÜá∩╕Å Alerta: Existem 
+console.logs no c├│digo. 
+Recomenda-se a remo├º├úo 
+antes do Master.
+Γ£à [V3.0] Limpo: .env.production.local

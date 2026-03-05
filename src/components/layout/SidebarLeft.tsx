@@ -110,7 +110,7 @@ export const SidebarLeft = ({ userId }: { userId?: string }) => {
                     )}
                 </Link>
 
-                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-4 ml-1">Partículas Emaranhadas</h3>
+                <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-4 ml-1">Partículas Emaranhadas</h2>
                 <div className="space-y-3">
                     {isLoading && recentEntanglements.length === 0 ? (
                         <div className="flex items-center gap-3 p-2 animate-pulse">
@@ -167,7 +167,7 @@ export const SidebarLeft = ({ userId }: { userId?: string }) => {
 
             {/* Suporte e Dúvidas */}
             <div className="px-4 mt-auto mb-2">
-                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2 ml-1">Suporte do hub</h3>
+                <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2 ml-1">Suporte do hub</h2>
                 <div className="space-y-1">
                     <a href="https://wa.me/5511968401823" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-gray-500 hover:bg-green-500/10 hover:text-green-600 dark:hover:text-green-400 transition-colors group">
                         <MessageCircle className="w-4 h-4 opacity-60 group-hover:opacity-100" />
@@ -175,7 +175,7 @@ export const SidebarLeft = ({ userId }: { userId?: string }) => {
                     </a>
                     <a href="mailto:joaopaulostangorlini@usp.br" className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-gray-500 hover:bg-brand-red/10 hover:text-brand-red transition-colors group">
                         <Mail className="w-4 h-4 opacity-60 group-hover:opacity-100" />
-                        <span className="font-bold">Enviar E-mail</span>
+                        <span className="font-bold">Enviar e-mail</span>
                     </a>
                 </div>
             </div>

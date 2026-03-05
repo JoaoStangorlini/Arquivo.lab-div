@@ -86,7 +86,7 @@ export default function RadiationQuizPage() {
                             animate={{ scale: 1, opacity: 1 }}
                             className="bg-card-dark border border-white/5 p-12 rounded-[48px] shadow-2xl relative overflow-hidden"
                         >
-                            <div className="absolute inset-0 bg-gradient-to-br from-brand-red/10 to-transparent pointer-none" />
+                            <div className="absolute inset-0 bg-gradient-to-br from-brand-red/10 to-transparent pointer-events-none" />
 
                             <Sparkles className="w-16 h-16 text-brand-red mx-auto mb-6" />
                             <h1 className="text-4xl font-black text-white italic uppercase tracking-tighter mb-4">
@@ -107,12 +107,20 @@ export default function RadiationQuizPage() {
                                 </div>
                             </div>
 
-                            <Link
-                                href="/lab"
-                                className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-brand-red hover:text-white transition-all shadow-xl shadow-brand-red/10"
-                            >
-                                Ver no Perfil <Zap className="w-4 h-4" />
-                            </Link>
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <Link
+                                    href="/wiki"
+                                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white/5 border border-white/10 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-white/10 transition-all font-display"
+                                >
+                                    Voltar à Wiki
+                                </Link>
+                                <Link
+                                    href="/lab?tab=radiacao"
+                                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-brand-red text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-brand-red/80 transition-all shadow-xl shadow-brand-red/20 font-display"
+                                >
+                                    Ver no Perfil <Zap className="w-4 h-4" />
+                                </Link>
+                            </div>
                         </motion.div>
                     </div>
                 </div>
