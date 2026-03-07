@@ -123,10 +123,16 @@ export default function TrilhasClient({
             }
             return { ...t, effectiveCategory };
         }).filter(t => {
-            const axisMatch = !axisFilter || t.axis === axisFilter;
+            const axisMatch = !axisFilter || t.axis === axisFilter || t.axis === 'comum';
             const categoryMatch = !categoryFilter || t.effectiveCategory === categoryFilter;
             const semesterMatch = !semesterFilter || t.excitation_level === semesterFilter;
-            const searchMatch = !query || t.title.toLowerCase().includes(query.toLowerCase()) || (t.course_code && t.course_code.toLowerCase().includes(query.toLowerCase()));
+
+            // Search Match: Priority to common subjects and exact code matches
+            const queryNorm = query.toLowerCase().trim();
+            const searchMatch = !query ||
+                t.title.toLowerCase().includes(queryNorm) ||
+                (t.course_code && t.course_code.toLowerCase().includes(queryNorm));
+
             return axisMatch && categoryMatch && semesterMatch && searchMatch;
         });
     }, [initialTrails, axisFilter, categoryFilter, semesterFilter, userProfile, query]);
