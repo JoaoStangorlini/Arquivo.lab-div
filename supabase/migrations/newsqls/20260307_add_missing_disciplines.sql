@@ -22,7 +22,7 @@ INSERT INTO learning_trails (
     'livre', 
     '{"bacharelado": "livre", "licenciatura": "livre", "fisica_medica": "livre"}'::jsonb,
     'comum',
-    'aprovado'
+    'estavel'
 ),
 (
     'IEE0004', 
@@ -33,7 +33,7 @@ INSERT INTO learning_trails (
     'livre', 
     '{"bacharelado": "livre", "licenciatura": "livre", "fisica_medica": "livre"}'::jsonb,
     'comum',
-    'aprovado'
+    'estavel'
 ),
 -- MAC
 (
@@ -45,7 +45,7 @@ INSERT INTO learning_trails (
     'obrigatoria', 
     '{"bacharelado": "obrigatoria", "licenciatura": "obrigatoria", "fisica_medica": "obrigatoria"}'::jsonb,
     'comum',
-    'aprovado'
+    'estavel'
 ),
 -- Astronomia
 (
@@ -57,7 +57,7 @@ INSERT INTO learning_trails (
     'eletiva', 
     '{"bacharelado": "eletiva", "licenciatura": "eletiva", "fisica_medica": "eletiva"}'::jsonb,
     'comum',
-    'aprovado'
+    'estavel'
 ),
 -- Física (Processos Criativos)
 (
@@ -69,7 +69,7 @@ INSERT INTO learning_trails (
     'eletiva', 
     '{"bacharelado": "eletiva", "licenciatura": "eletiva", "fisica_medica": "eletiva"}'::jsonb,
     'comum',
-    'aprovado'
+    'estavel'
 ),
 -- Educação (Licenciatura Focus mas disponíveis Eletivas FEUSP)
 (
@@ -81,7 +81,7 @@ INSERT INTO learning_trails (
     'eletiva', 
     '{"bacharelado": "livre", "licenciatura": "obrigatoria", "fisica_medica": "livre"}'::jsonb,
     'lic',
-    'aprovado'
+    'estavel'
 ),
 (
     'EDF0287', 
@@ -92,7 +92,7 @@ INSERT INTO learning_trails (
     'eletiva', 
     '{"bacharelado": "livre", "licenciatura": "obrigatoria", "fisica_medica": "livre"}'::jsonb,
     'lic',
-    'aprovado'
+    'estavel'
 ),
 (
     'EDF0289', 
@@ -103,7 +103,7 @@ INSERT INTO learning_trails (
     'eletiva', 
     '{"bacharelado": "livre", "licenciatura": "obrigatoria", "fisica_medica": "livre"}'::jsonb,
     'lic',
-    'aprovado'
+    'estavel'
 )
 ON CONFLICT (course_code) 
 DO UPDATE SET 
