@@ -1,0 +1,1883 @@
+[
+  {
+    "course_code": "4300151",
+    "title": "Fundame ntos de Mecânica",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300152",
+    "title": "Introdução às Medidas em  Física",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300153",
+    "title": "Mecânica",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300156",
+    "title": "Gravitação",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300157",
+    "title": "Ciência, Educação e Linguagem",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300159",
+    "title": "Física do Calor",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300160",
+    "title": "Ótica",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300163",
+    "title": "Praticas de Atividades Física I",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300164",
+    "title": "Práticas de Atividades Física II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300206",
+    "title": "Tópicos Atuais em  Física",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300207",
+    "title": "Integração de Conceitos Básicos de Matemá tica e Física",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4300208",
+    "title": "Introdução à Termo dinâmi ca",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4300218",
+    "title": "Introdução à Física Comp utacional",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "eletiva",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4300220",
+    "title": "Processos Criativos em  Ciências: da Ima ginação à Divulgação Científica",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300223",
+    "title": "Probabilidade",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300225",
+    "title": "Métodos da Fisica Teórica",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300227",
+    "title": "A Física do Sp in",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300228",
+    "title": "Tratame nto Estatístico de dados em  Física Experimental",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4300231",
+    "title": "Introdução à Epistemo logia das Ciências",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300234",
+    "title": "Física no Ensino Fundame ntal",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300254",
+    "title": "Laboratório de Mecânica",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300255",
+    "title": "Mecânica dos Corpos Rígidos e dos Fluidos",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300259",
+    "title": "Termo -estatística",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300266",
+    "title": "Partículas - a Dança da Matéria e dos Camp os",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300270",
+    "title": "Eletricidade e Magnetismo  I",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300271",
+    "title": "Eletricidade e Magnetismo  II",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300308",
+    "title": "Termo dinâmi ca",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300315",
+    "title": "Introdução à Física Atômi ca e Molecular",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4300318",
+    "title": "Introdução à Física Comp utacional II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300320",
+    "title": "Introdução ao Caos",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300323",
+    "title": "Ciência e Tecnologia do Vá cuo",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300324",
+    "title": "Mecânica dos Fluidos",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300325",
+    "title": "Física do Corpo Huma no",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "eletiva",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4300326",
+    "title": "Introdução à Física de Plasma s e Fusão Nuclear",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300331",
+    "title": "Métodos comp utacionais em  Física",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300337",
+    "title": "Introdução à Relatividade",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300345",
+    "title": "Introdução à Física Atmo sférica",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300346",
+    "title": "Física da Poluição do Ar",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300351",
+    "title": "Física do Meio Amb iente",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300353",
+    "title": "Tópicos de História da Física Clássica",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300356",
+    "title": "Eleme ntos e Estratégia para o Ensino de Física e Ciências",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300357",
+    "title": "Oscilações e Ondas",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300358",
+    "title": "Propostas e Projetos para o Ensino de Física e Ciências",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300360",
+    "title": "Técnicas Experime ntais em  Física de Partículas Elementares",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300371",
+    "title": "Introdução à Mecânica Quântica Ondulatória",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300372",
+    "title": "Eletroma gnetismo",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300373",
+    "title": "Laboratório de Eletroma gnetismo",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300374",
+    "title": "Relatividade",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300377",
+    "title": "Evidências Experime ntais da Natureza Quântica da Radiação e da Matéria",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300378",
+    "title": "Introdução à Física Nuclear e de Partículas Eleme ntares - Física Moderna IIA",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300379",
+    "title": "Introdução à Física do Estado Só lido - Física Moderna IIB",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300380",
+    "title": "Ciência e Cultura",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300390",
+    "title": "Práticas em  Ensino de Física e Ciências",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300402",
+    "title": "Introdução à Física do Estado Só lido",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300405",
+    "title": "Evolução dos Conceitos da Física",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300406",
+    "title": "Introdução à Física Nuclear",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4300407",
+    "title": "Simu lação Comp utacional dos Materiais",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300409",
+    "title": "Grupos e Tensores Ap licados à Ciência dos Materiais",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300410",
+    "title": "Métodos Experime ntais Avançados em  Física da Matéria Condensada",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300414",
+    "title": "Ap rendendo física enfrentando problema s em  aberto",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300415",
+    "title": "Projetos - ATPA",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300422",
+    "title": "Introdução à Física de Partículas Eleme ntares",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300427",
+    "title": "Dinâmi ca Estocástica",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300429",
+    "title": "Grupos e Tensores",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300430",
+    "title": "Cosmo logia Física",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300436",
+    "title": "Efeitos Biológicos das Radiações Ionizantes e Não Ionizantes",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "eletiva",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4300437",
+    "title": "Física das Radiações I",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4300438",
+    "title": "Física das Radiações II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300439",
+    "title": "Laboratório de Dosime tria das Radiações",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4300441",
+    "title": "Detectores de Radiação",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "eletiva",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4300454",
+    "title": "Tópicos de História da Física Moderna",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300456",
+    "title": "Produção de Material Didático",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300458",
+    "title": "Comp leme ntos de Mecânica Clássica",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300459",
+    "title": "Tecnologias da Informa ção e Comu nicação no Ensino de Física",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300461",
+    "title": "Tecnologia de Ensino de Física I",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300462",
+    "title": "Tecnologia de Ensino de Física II",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300463",
+    "title": "Física Ap licada",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300464",
+    "title": "Trabalho de Conclusão de Curso",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4300490",
+    "title": "Monografia para Licenciatura em  Física",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300491",
+    "title": "Introdução à Pesquisa em  Ensino de Física",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300502",
+    "title": "Física dos Materiais",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4300503",
+    "title": "Perspectivas sobre diversidade em  Física Médica: participação de mulheres e outros grupos sub-representados",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4302111",
+    "title": "Física I",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302112",
+    "title": "Física II",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302113",
+    "title": "Física Experime ntal I",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302114",
+    "title": "Física Experime ntal II",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302204",
+    "title": "Física Matemá tica I",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "eletiva",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302211",
+    "title": "Física III",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302212",
+    "title": "Física IV",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302213",
+    "title": "Física Experime ntal III",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302214",
+    "title": "Física Experime ntal IV",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "eletiva",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302303",
+    "title": "Eletroma gnetismo  I",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "eletiva",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302304",
+    "title": "Eletroma gnetismo  II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4302305",
+    "title": "Mecânica I",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "eletiva",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302306",
+    "title": "Mecânica II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4302307",
+    "title": "Física Matemá tica II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4302308",
+    "title": "Termo dinâmi ca",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4302311",
+    "title": "Física Quântica",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302313",
+    "title": "Física Experime ntal V",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4302314",
+    "title": "Física Experime ntal VI",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4302322",
+    "title": "Física Matemá tica III",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4302360",
+    "title": "Aceleradores de Partículas: Fundame ntos e Ap licações",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4302401",
+    "title": "Mecânica Estatística",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4302403",
+    "title": "Mecânica Quântica I",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "eletiva",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "4302404",
+    "title": "Mecânica Quântica II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4302504",
+    "title": "Técnicas de Caracterização de Materiais",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305001",
+    "title": "Mecânica Quântica Avançada I",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305002",
+    "title": "Mecânica Quântica Avançada II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305003",
+    "title": "Eletrodinâmi ca I",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305004",
+    "title": "Eletrodinâmi ca II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305005",
+    "title": "Mecânica Clássica",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305006",
+    "title": "Mecânica Estatística II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305103",
+    "title": "Tópicos avançados em  tratame nto estatístico de dados em física experimental",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305106",
+    "title": "Física de Partículas Eleme ntares",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305107",
+    "title": "Introdução à Teoria Quântica de Camp os I",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305110",
+    "title": "Física do Estado Só lido I",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305205",
+    "title": "Microscopia de Força Atômi ca e Tunelame nto",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305216",
+    "title": "Simu lação Comp utacional de Líquidos Moleculares e So luções",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305275",
+    "title": "Introdução à Teoria Quântica da Luz",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305292",
+    "title": "Cosmo logia Física I",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305295",
+    "title": "Teoria Quântica de Muitos Corpos em  Matéria Condensada",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305299",
+    "title": "Cosmo logia Física II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305300",
+    "title": "Introdução à física de hádrons",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305324",
+    "title": "Fenome nologia de Colisões de Íons Pesados Relativísticos",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305326",
+    "title": "Sistema s Dinâmi cos não Lineares",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305343",
+    "title": "Informa ção Quântica e Ruídos Quânticos",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305358",
+    "title": "Fenôme nos Eme rgentes em  Matéria Quântica Correlacionada",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305359",
+    "title": "Matéria Quântica Topológica e seu desafio na física",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305360",
+    "title": "Teoria do Funcional da Densidade: Moléculas e Só lidos",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305374",
+    "title": "Processame nto de dispositivos em  sala limp a",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305376",
+    "title": "Termo eletricidade e ma teriais quânticos",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "4305512",
+    "title": "Ap rendizado de má quina e inteligência artificial em física",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "4305828",
+    "title": "Introdução à Teoria Quântica de Camp os II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "MAT0112",
+    "title": "Vetores e Geome tria",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MAT2453",
+    "title": "Cálculo Diferencial e Integral I",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MAT2454",
+    "title": "Cálculo Diferencial e Integral II",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MAT0122",
+    "title": "Álgebra Linear I",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "eletiva",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MAT0216",
+    "title": "Cálculo Diferencial e Integral III",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MAT0220",
+    "title": "Cálculo Diferencial e Integral IV",
+    "category_map": {
+      "bacharelado": "obrigatoria",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "GMG0630",
+    "title": "Eleme ntos de Mineralogia e Petrologia",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "IOF0201",
+    "title": "Fundame ntos de Oceanografia Fisica",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "IOF0210",
+    "title": "Introdução à Dinâmi ca da Atmo sfera e dos Oceanos",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ0102",
+    "title": "Bioquími ca e Biologia Molecular",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ0104",
+    "title": "Bioquími ca e Biologia Molecular",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ0106",
+    "title": "Bioquími ca",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ0116",
+    "title": "Bioquími ca: Estrutura de Biomo léculas e Metabolismo",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ0204",
+    "title": "Bioquími ca: Estrutura de Biomo léculas e Metabolismo",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ0313",
+    "title": "Bioquími ca",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "QBQ0317",
+    "title": "Biologia Molecular",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ2500",
+    "title": "Bioquími ca e Biologia Molecular: Realizações e Perspectivas",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ2505",
+    "title": "Biologia Estrutural",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ0230",
+    "title": "Bioquími ca: Estrutura de Biomo léculas e Metabolismo",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ0250",
+    "title": "Bioquími ca: Estrutura de Biomo léculas e Metabolismo",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ0314",
+    "title": "Bioquími ca da Nutrição",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ1252",
+    "title": "Bioquími ca Metabólica",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ2457",
+    "title": "Tecnologia do Dna Recomb inante",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "MAT0222",
+    "title": "Álgebra Linear II",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ1354",
+    "title": "Biologia Molecular",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ2502",
+    "title": "Enzimo logia",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ2503",
+    "title": "Expressão Gênica",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ2507",
+    "title": "Biologia Molecular Comp utacional",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ2508",
+    "title": "Transporte e Sinalização Celular",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QBQ2509",
+    "title": "Bioquími ca Redox",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QFL0606",
+    "title": "Fundame ntos de Quími ca para Física",
+    "category_map": {
+      "bacharelado": "eletiva",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "MAT0105",
+    "title": "Geome tria An alítica",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "MAT1351",
+    "title": "Cálculo para Funções de Uma  Variável Real I",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDM0402",
+    "title": "Didática",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "MAT1352",
+    "title": "Cálculo para Funções de Uma  Variável Real II",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "MAT2351",
+    "title": "Cálculo para Funções de Vá rias Variáveis I",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "MAT2352",
+    "title": "Cálculo para Funções de Vá rias Variáveis II",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDM0425",
+    "title": "Metodologia do Ensino de Física I",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "MFT0964",
+    "title": "Língua de Sinais para Profissionais da Sa úde",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDM0426",
+    "title": "Metodologia do Ensino de Física II",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "obrigatoria",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDF0285",
+    "title": "Introdução aos Estudos da Educação: Enfoque Filosófico",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDF0287",
+    "title": "Introdução aos Estudos da Educação: Enfoque Histórico",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDF0289",
+    "title": "Introdução aos Estudos da Educação: Enfoque So ciológico",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "0440620",
+    "title": "Geologia Geral",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDF0290",
+    "title": "Teorias do desenvolvime nto, Práticas Escolares e Processos de Su bjetivação",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDF0292",
+    "title": "Psicologia Histórico-Cultural e Educação",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDF0294",
+    "title": "Psicologia da educação: constituição do sujeito, desenvolvimento e aprendizagem na escola,cultura e sociedade",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDF0296",
+    "title": "Psicologia da Educação : Uma  Ab ordagem  Psicossocial do Cotidiano Escolar",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDF0298",
+    "title": "Psicologia da Educação, Desenvolvime nto e Práticas Escolares",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "EDM0698",
+    "title": "Currículo e Avaliação",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "QFL0605",
+    "title": "Quími ca Geral",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "FLF0487",
+    "title": "Tópicos de Filosofia da Física",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "FLF0472",
+    "title": "Filosofia da Física",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "MAT0341",
+    "title": "História da Matemá tica I",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "IEE0003",
+    "title": "Ap licações da Energia So lar Térmi ca",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "IEE0004",
+    "title": "Ap licações da Energia So lar Fotovoltaica",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "eletiva",
+      "fisica_medica": "nao_se_aplica"
+    }
+  },
+  {
+    "course_code": "MDR0632",
+    "title": "Introdução à Física Médica",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0633",
+    "title": "Eleme ntos de An atomi a e Fisiologia Huma na",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0635",
+    "title": "Estatística Médica I",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0634",
+    "title": "Informá tica Médica e Sa úde Digital",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0637",
+    "title": "Diagnóstico por Ima gens Médicas",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0639",
+    "title": "Física do Diagnóstico por ima gens I",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0636",
+    "title": "Equipame ntos Médico-Hospitalares I",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0640",
+    "title": "Proteção Radiológica I",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0641",
+    "title": "Medicina Nuclear",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0642",
+    "title": "Radioterapia",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0643",
+    "title": "Física do Diagnóstico por Ima gens II",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0644",
+    "title": "Introdução ao Amb iente Hospitalar",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0645",
+    "title": "Introdução à Sa úde Ocupacional, Medicina Legal e Ética da Física Médica",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0646",
+    "title": "Tópicos Avançados de Matemá tica e Física em  Medicina",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0647",
+    "title": "Estágio Hospitalar Geral",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0660",
+    "title": "Prática Profissional em  Ima gens Médicas",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "MDR0661",
+    "title": "Prática Profissional em  Radioterapia",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "obrigatoria"
+    }
+  },
+  {
+    "course_code": "BMB0255",
+    "title": "Fisiologia I",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "BMB0269",
+    "title": "Biofísica de Memb ranas Básica",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  },
+  {
+    "course_code": "QBQ1151",
+    "title": "Introdução à Bioquími ca",
+    "category_map": {
+      "bacharelado": "nao_se_aplica",
+      "licenciatura": "nao_se_aplica",
+      "fisica_medica": "eletiva"
+    }
+  }
+]

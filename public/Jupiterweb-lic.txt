@@ -1,0 +1,382 @@
+ 
+ 
+Grade Curricular
+  Preparar para impressão 
+Instituto de Física
+Curso:
+ 
+Física - Licenciatura
+Observ ações:
+Informa ções Básicas do Currículo
+Data de Início: 01/01/2026             Duração Ideal   8 seme stres
+Mínima   6 seme stres
+Máxima  12 seme stres
+Carga Horária                                                                 Aula         Trabalho Subtotal
+Obrigatória                                                       1770           720    2490
+Optativa Livre                                                        0             0       0
+Optativa Eletiva                                                       600           240     840
+Total de carga horária em  disciplinas da grade                                  2370           960    3330(Estágio: 400)
+ 
+Subtotal (*Total de carga horária em disciplinas da grade +  AAC):                                             3330
+Total geral de carga horária exigida em extensão:                                                      333 (10%)
+ 
+Total Geral (*Total de carga horária em disciplinas da grade +  AAC +  AEX Apolo +  Extensão exigida em optativas):    3330
+ 
+* A carga horária de estágio e a carga horária de atividades de extensão incluídas nas disciplinas obrigatórias já estão somadas no Total de carga horária em disciplinas.
+Informa ções Específicas
+ 
+O (a) estudante deve cursar, obrigatoriamente, uma das disciplinas que
+compõe o bloco de Psicologia da Educação (EDF0292 ou EDF0294
+ou EDF0296 ou EDF0298) oferecidas pela FEUSP   .
+O estudante dev e cursar, obrigatoriamente, uma entre as disciplinas
+4300378 Introdução à Física Nuclear e de P artículas Elementares - Física
+Moderna IIA e 4300379 Introdução à Física do Estado Sólido - Física Moderna
+IIB.
+Grade Curricular
+Legenda: CH=Carga horária Total; CE=Carga horária de Estágio; CP=Carga horária de Práticas como Componentes Curriculares;
+              ATPA= Carga horária em Atividades Teórico-Práticas de Ap rofundamento; EXT=Carga horária em Atividades Extensionistas
+Disciplinas Obrigatórias
+1º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300151                 Fundame ntos de Mecânica                                                                                4            0         60
+4300157                 Ciência, Educação e Linguagem                                                                             2            1         60                30
+4300160                 Ótica                                                                                              2            1         60                30
+MAT0105                 Geome tria An alítica                                                                                     4            0         60
+MAT1351                 Cálculo para Funções de Uma  Variável Real I                                                                    6            0         90
+Su btotal:          18            2        330                60
+                                                                                                                                                                                                                                                       
+2º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300152                 Introdução às Medidas em  Física                                                                            4            0         60
+4300153                 Mecânica                                                                                            4            1         90                30
+      4300151 - Fundame ntos de Mecânica                                                                                                             Requisito fraco
+4300156                 Gravitação                                                                                           2            0         30
+EDM0402                 Didática                                                                                            4            1         90       30       20
+MAT1352                 Cálculo para Funções de Uma  Variável Real II                                                                   6            0         90
+      MAT1351 - Cálculo para Funções de Uma  Variável Real I                                                                                                 Requisito
+Su btotal:          20            2        360       30       50
+                                                                                                                                                                                                                                                       
+3º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300159                 Física do Calor                                                                                        4            0         60
+      4300151 - Fundame ntos de Mecânica                                                                                                             Requisito
+4300254                 Laboratório de Mecânica                                                                                  2            0         30
+      4300152 - Introdução às Medidas em  Física                                                                                                         Requisito fraco
+      4300153 - Mecânica                                                                                                                         Requisito fraco
+4300255                 Mecânica dos Corpos Rígidos e dos Fluidos                                                                     4            1         90        0       30
+      MAT1351 - Cálculo para Funções de Uma  Variável Real I                                                                                                 Requisito
+      4300153 - Mecânica                                                                                                                         Requisito
+MAT2351                 Cálculo para Funções de Vá rias Variáveis I                                                                     4            0         60
+      MAT1352 - Cálculo para Funções de Uma  Variável Real II                                                                                                Requisito
+Su btotal:          14            1        240                30
+                                                                                                                                                                                                                                                       
+4º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300259                 Termo -estatística                                                                                      4            1         90                30
+      4300159 - Física do Calor                                                                                                                     Requisito
+      MAT1352 - Cálculo para Funções de Uma  Variável Real II                                                                                                Requisito
+4300270                 Eletricidade e Magnetismo  I                                                                               4            0         60
+      MAT1351 - Cálculo para Funções de Uma  Variável Real I                                                                                                 Requisito
+4300356                 Eleme ntos e Estratégia para o Ensino de Física e Ciências                                                           4            1         90                30
+      4300156 - Gravitação                                                                                                                        Requisito
+      4300157 - Ciência, Educação e Linguagem                                                                                                           Requisito
+EDA0 463                 Política e Organização da Educação Básica no Brasil                                                               4            2        120       60       20
+MAT2352                 Cálculo para Funções de Vá rias Variáveis II                                                                     4            0         60
+      MAT2351 - Cálculo para Funções de Vá rias Variáveis I                                                                                                  Requisito
+Su btotal:          20            4        420       60       80
+                                                                                                                                                                                                                                                       
+5º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300271                 Eletricidade e Magnetismo  II                                                                              4            1         90        0       30
+      4300270 - Eletricidade e Magnetismo  I                                                                                                            Requisito
+4300357                 Oscilações e Ondas                                                                                     2            0         30
+      4300255 - Mecânica dos Corpos Rígidos e dos Fluidos                                                                                                  Requisito
+4300358                 Propostas e Projetos para o Ensino de Física e Ciências                                                             4            1         90                30
+      4300356 - Eleme ntos e Estratégia para o Ensino de Física e Ciências                                                                                         Requisito
+4300373                 Laboratório de Eletroma gnetismo                                                                             4            0         60
+      4300152 - Introdução às Medidas em  Física                                                                                                         Requisito fraco
+      4300270 - Eletricidade e Magnetismo  I                                                                                                            Requisito fraco
+4300390                 Práticas em  Ensino de Física e Ciências                                                                        2            3        120      100
+      4300356 - Eleme ntos e Estratégia para o Ensino de Física e Ciências                                                                                         Requisito
+Su btotal:          16            5        390      100       60
+                                                                                                                                                                                                                                                       
+6º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300372                 Eletroma gnetismo                                                                                       4            0         60
+      4300271 - Eletricidade e Magnetismo  II                                                                                                            Requisito
+      MAT2351 - Cálculo para Funções de Vá rias Variáveis I                                                                                                  Requisito
+      4300160 - Ótica                                                                                                                            Requisito
+      MAT0105 - Geome tria An alítica                                                                                                                  Requisito
+4300374                 Relatividade                                                                                          2            1         60                30
+      4300153 - Mecânica                                                                                                                         Requisito
+      4300156 - Gravitação                                                                                                                        Requisito
+4300377                 Evidências Experime ntais da Natureza Quântica da Radiação e da Matéria                                                4            0         60
+      4300373 - Laboratório de Eletroma gnetismo                                                                                                          Requisito
+      4300271 - Eletricidade e Magnetismo  II                                                                                                            Requisito
+Su btotal:          10            1        180                30
+                                                                                                                                                                                                                                                       
+7º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300371                 Introdução à Mecânica Quântica Ondulatória                                                                    4            1         90                30
+      4300377 - Evidências Experime ntais da Natureza Quântica da Radiação e da Matéria                                                                              Requisito
+4300415                 Projetos - ATPA                                                                                        0            0         0                        200
+4300458                 Comp leme ntos de Mecânica Clássica                                                                         4            0         60
+      4300357 - Oscilações e Ondas                                                                                                                  Requisito
+      MAT2352 - Cálculo para Funções de Vá rias Variáveis II                                                                                                  Requisito
+EDM0425                 Metodologia do Ensino de Física I                                                                           4            3        150       90                        30
+MFT0964                 Língua de Sinais para Profissionais da Sa úde                                                                    4            2        120
+      4300390 - Práticas em  Ensino de Física e Ciências                                                                                                     Requisito
+Su btotal:          16            6        420       90       30      200       30
+                                                                                                                                                                                                                                                       
+8º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+EDM0426                 Metodologia do Ensino de Física II                                                                           4            3        150       90                        30
+      EDM0425 - Metodologia do Ensino de Física I                                                                                                        Requisito
+Su btotal:           4            3        150       90                        30
+                                                                                                                                                                                                                                                       
+Disciplinas Optativas Eletivas
+1º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300231                 Introdução à Epistemo logia das Ciências                                                                       2            0         30
+AC A0 115                 Introdução às Ciências Atmo sféricas                                                                         4            2        120
+AG A0 106                 Astronomi a de Posição                                                                                   4            0         60
+MAC 0115                 Introdução à Comp utação para Ciências Exatas e Tecnologia                                           4         0      60
+                                                                                                                                                                                                                                                                                                                                          
+2º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300218                 Introdução à Física Comp utacional                                                                          4            2        120        0                         0
+      4300151 - Fundame ntos de Mecânica                                                                                                           Requisito
+      MAT1351 - Cálculo para Funções de Uma  Variável Real I                                                                                               Requisito
+4300220                 Processos Criativos em  Ciências: da Ima ginação à Divulgação Científica                                                  4            0         60
+EDF0285                 Introdução aos Estudos da Educação: Enfoque Filosófico                                                            4            0         60                20
+EDF0287                 Introdução aos Estudos da Educação: Enfoque Histórico                                                            4            0         60        0       20
+EDF0289                 Introdução aos Estudos da Educação: Enfoque So ciológico                                                           4            0         60                20
+MAE 0116                 Noções de Estatística                                                                                    4            0         60
+MAT0122                 Álgebra Linear I                                                                                       4            0         60
+      MAT0105 - Geome tria An alítica                                                                                                                Requisito
+                                                                                                                                                                                                                                                                                                                                          
+3º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+0440620                 Geologia Geral                                                                                        4            0         60
+4300234                 Física no Ensino Fundame ntal                                                                              2            0         30
+4300318                 Introdução à Física Comp utacional II                                                                         2            2         90
+      MAT1352 - Cálculo para Funções de Uma  Variável Real II                                                                                              Requisito
+      4300153 - Mecânica                                                                                                                       Requisito
+      4300218 - Introdução à Física Comp utacional                                                                                                      Requisito
+AG A0 215                 Fundame ntos de Astronomi a                                                                               4            0         60
+EDF0290                 Teorias do desenvolvime nto, Práticas Escolares e Processos de Su bjetivação                                               4            1         90       30       20
+EDF0292                 Psicologia Histórico-Cultural e Educação                                                                       4            1         90       30       20
+EDF0294                 Psicologia da educação: constituição do sujeito, desenvolvimento e aprendizagem na escola,cultura e sociedade                       4            1         90       30       20
+EDF0296                 Psicologia da Educação : Uma  Ab ordagem  Psicossocial do Cotidiano Escolar                                               4            1         90       30       20
+EDF0298                 Psicologia da Educação, Desenvolvime nto e Práticas Escolares                                                        4            1         90       30       20
+                                                                                                                                                                                                                                                                                                                                          
+4º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300225                 Métodos da Fisica Teórica                                                                                 4            0         60        0
+      MAT1352 - Cálculo para Funções de Uma  Variável Real II                                                                                              Requisito
+4300266                 Partículas - a Dança da Matéria e dos Camp os                                                                   4            0         60
+      4300255 - Mecânica dos Corpos Rígidos e dos Fluidos                                                                                                Requisito
+AG A0 317                 Experime ntos de Astronomi a                                                                               2            2         90
+      AG A0 215 - Fundame ntos de Astronomi a                                                                                                          Requisito
+AG A0 502                 Planetas e Sistema s Planetários                                                                            4            0         60
+      MAT1352 - Cálculo para Funções de Uma  Variável Real II                                                                                              Requisito
+      4300153 - Mecânica                                                                                                                       Requisito
+EDA0 644                 Educação especial, inclusão escolar e políticas de atendimento a alunos com deficiência, transtornos globais do
+desenvolvime nto e altas habilidades/superdotação
+4            0         60        0
+EDM0698                 Currículo e Avaliação                                                                                    4            0         60
+                                                                                                                                                                                                                                                                                                                                          
+5º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300351                 Física do Meio Amb iente                                                                                  2            0         30
+QFL0605                 Quími ca Geral                                                                                        6            0         90
+                                                                                                                                                                                                                                                                                                                                          
+6º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300436                 Efeitos Biológicos das Radiações Ionizantes e Não Ionizantes                                                         4            0         60
+      4300357 - Oscilações e Ondas                                                                                                                Requisito
+      4300271 - Eletricidade e Magnetismo  II                                                                                                          Requisito
+4300491                 Introdução à Pesquisa em  Ensino de Física                                                                     2            0         30
+      4300356 - Eleme ntos e Estratégia para o Ensino de Física e Ciências                                                                                       Requisito
+4302204                 Física Matemá tica I                                                                                     4            0         60
+      MAT2352 - Cálculo para Funções de Vá rias Variáveis II                                                                                                Requisito
+4302360                 Aceleradores de Partículas: Fundame ntos e Ap licações                                                             4            0         60
+      4300271 - Eletricidade e Magnetismo  II                                                                                                          Requisito
+4302401                 Mecânica Estatística                                                                                    4            0         60        0                         0
+      4300259 - Termo -estatística                                                                                                                  Requisito
+      MAT2352 - Cálculo para Funções de Vá rias Variáveis II                                                                                                Requisito
+AG A0 309                 Mecânica Celeste                                                                                      4            0         60
+      MAT2352 - Cálculo para Funções de Vá rias Variáveis II                                                                                                Requisito
+                                                                                                                                                                                                                                                                                                                                          
+7º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300308                 Termo dinâmi ca                                                                                        4            0         60
+      4300259 - Termo -estatística                                                                                                                  Requisito
+      MAT2352 - Cálculo para Funções de Vá rias Variáveis II                                                                                                Requisito
+4300325                 Física do Corpo Huma no                                                                                  4            0         60
+      4300159 - Física do Calor                                                                                                                   Requisito
+      4300270 - Eletricidade e Magnetismo  I                                                                                                          Requisito
+      4300357 - Oscilações e Ondas                                                                                                                Requisito
+      MAT1352 - Cálculo para Funções de Uma  Variável Real II                                                                                              Requisito
+4300346                 Física da Poluição do Ar                                                                                   4            0         60
+      4300271 - Eletricidade e Magnetismo  II                                                                                                          Requisito
+4300441                 Detectores de Radiação                                                                                  4            1         90
+      4300271 - Eletricidade e Magnetismo  II                                                                                                          Requisito
+4300456                 Produção de Material Didático                                                                              4            0         60                60
+      4300356 - Eleme ntos e Estratégia para o Ensino de Física e Ciências                                                                                       Requisito
+4300459                 Tecnologias da Informa ção e Comu nicação no Ensino de Física                                                        4            0         60                60
+      4300356 - Eleme ntos e Estratégia para o Ensino de Física e Ciências                                                                                       Requisito
+4300461                 Tecnologia de Ensino de Física I                                                                            4            0         60                60
+      4300372 - Eletroma gnetismo                                                                                                                  Requisito
+4300490                 Monografia para Licenciatura em  Física                                                                        0            6        180
+      4300491 - Introdução à Pesquisa em  Ensino de Física                                                                                                 Requisito
+4302305                 Mecânica I                                                                                           4            0         60        0                         0
+      4300357 - Oscilações e Ondas                                                                                                                Requisito
+FLF0487                 Tópicos de Filosofia da Física                                                                               2            0         30
+MAP 0214                 Cálculo Numé rico com  Ap licações em  Física                                                                     4            0         60
+      MAT1352 - Cálculo para Funções de Uma  Variável Real II                                                                                              Requisito
+      MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                    Requisito
+                                                                                                                                                                                                                                                                                                                                          
+8º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300320                 Introdução ao Caos                                                                                     4            0         60
+      4300372 - Eletroma gnetismo                                                                                                                  Requisito
+      MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                    Requisito
+      4300357 - Oscilações e Ondas                                                                                                                Requisito
+4300353                 Tópicos de História da Física Clássica                                                                         2            0         30
+      4300372 - Eletroma gnetismo                                                                                                                  Requisito
+4300378                 Introdução à Física Nuclear e de Partículas Eleme ntares - Física Moderna IIA                                               4            1         90                30
+      4300371 - Introdução à Mecânica Quântica Ondulatória                                                                                               Requisito
+4300379                 Introdução à Física do Estado Só lido - Física Moderna IIB                                                            4            1         90                30
+      4300371 - Introdução à Mecânica Quântica Ondulatória                                                                                               Requisito
+4300380                 Ciência e Cultura                                                                                      2            0         30
+4300430                 Cosmo logia Física                                                                                      4            0         60
+      4300374 - Relatividade                                                                                                                     Requisito
+4300462                 Tecnologia de Ensino de Física II                                                                            4            0         60
+      4300461 - Tecnologia de Ensino de Física I                                                                                                        Requisito
+4300463                 Física Ap licada                                                                                        4            0         60
+      4300371 - Introdução à Mecânica Quântica Ondulatória                                                                                               Requisito
+4302214                 Física Experime ntal IV                                                                                   4            2        120        0                         0
+      4300373 - Laboratório de Eletroma gnetismo                                                                                                        Requisito
+4302303                 Eletroma gnetismo  I                                                                                    4            0         60        0                         0
+      4300372 - Eletroma gnetismo                                                                                                                  Requisito
+4302403                 Mecânica Quântica I                                                                                    4            0         60        0                         0
+      4300371 - Introdução à Mecânica Quântica Ondulatória                                                                                               Requisito
+AG A0 315                 Astrofísica de Altas Energias                                                                               4            0         60
+      4300371 - Introdução à Mecânica Quântica Ondulatória                                                                                               Requisito
+      AG A0 215 - Fundame ntos de Astronomi a                                                                                                          Requisito
+AG A0 416                 Introdução à Cosmo logia                                                                                 4            0         60
+      AG A0 215 - Fundame ntos de Astronomi a                                                                                                          Requisito
+      4300371 - Introdução à Mecânica Quântica Ondulatória                                                                                               Requisito
+FLF0472                 Filosofia da Física                                                                                      4            0         60        0
+      4300270 - Eletricidade e Magnetismo  I                                                                                                          Requisito
+MAT0341                 História da Matemá tica I                                                                                 4            0         60
+      MAT2352 - Cálculo para Funções de Vá rias Variáveis II                                                                                                Requisito
+                                                                                                                                                                                                                                                                                                                                          
+9º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+4300405                 Evolução dos Conceitos da Física                                                                            2            0         30
+      4300156 - Gravitação                                                                                                                      Requisito
+4300454                 Tópicos de História da Física Moderna                                                                         2            0         30
+      4300371 - Introdução à Mecânica Quântica Ondulatória                                                                                               Requisito
+                                                                                                                                                                                                                                                                                 
+Disciplinas Optativas Livres
+3º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+IEE0003                  Ap licações da Energia So lar Térmi ca                                                                          2            1         60
+                                                                                                                                                                                                                                                                                 
+4º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH       CE      CP     ATPA     EXT
+IEE0004                  Ap licações da Energia So lar Fotovoltaica                                                                       2            1         60
+ 
+ 
+ 
+Créditos | Fale conosco
+© 1999 - 2026 - Superintendência de                Tecnologia da Informação/USP
+Público
+Calendário Escolar
+Cursos de ingresso
+Disciplina
+Editais
+FAQ
+Acesso Restrito
+Entrar
+Esqueci a Senha
+Primeiro Acesso
+----------------Page (0) Break----------------

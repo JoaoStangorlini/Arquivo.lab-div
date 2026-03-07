@@ -3,6 +3,16 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'react-hot-toast';
+import {
+    deleteProfile,
+    impersonateUser,
+    toggleProfileVisibility,
+    toggleLabdivMember,
+    updateProfileAsAdmin
+} from '@/app/actions/profiles';
+import Link from 'next/link';
+import { DeleteUserModal } from '@/components/admin/DeleteUserModal';
+import { EditProfileModal } from '@/components/profile/EditProfileModal';
 
 interface Profile {
     id: string;
@@ -10,14 +20,14 @@ interface Profile {
     email: string;
     role: string;
     is_usp_member: boolean;
+    is_labdiv: boolean;
+    is_visible: boolean;
     created_at: string;
 }
 
 const ROLES = [
     { value: 'user', label: 'Usuário Padrão', color: 'gray-500' },
-    { value: 'labdiv', label: 'Membro Lab-Div', color: 'brand-blue' },
     { value: 'moderador', label: 'Moderador', color: 'brand-yellow' },
-    { value: 'labdiv adm', label: 'Diretor Lab-Div', color: 'brand-red' },
     { value: 'admin', label: 'Administrador Geral', color: 'brand-red' }
 ];
 
@@ -25,6 +35,18 @@ export default function PapeisManagementPage() {
     const [profiles, setProfiles] = useState<Profile[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+
+    // UI Modals State
+    const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; id: string; name: string }>({
+        isOpen: false,
+        id: '',
+        name: ''
+    });
+
+    const [editModal, setEditModal] = useState<{ isOpen: boolean; profile: Profile | null }>({
+        isOpen: false,
+        profile: null
+    });
 
     const fetchProfiles = async () => {
         setIsLoading(true);
@@ -46,22 +68,63 @@ export default function PapeisManagementPage() {
     }, []);
 
     const handleRoleChange = async (id: string, newRole: string) => {
-        const updateRole = async () => {
-            const { error } = await supabase
-                .from('profiles')
-                .update({ role: newRole })
-                .eq('id', id);
-            if (error) throw error;
-        };
+        const { error } = await updateProfileAsAdmin(id, { role: newRole });
+        if (error) {
+            toast.error(error);
+        } else {
+            setProfiles(prev => prev.map(p => p.id === id ? { ...p, role: newRole } : p));
+            toast.success('Papel atualizado!');
+        }
+    };
 
-        toast.promise(updateRole(), {
-            loading: 'Atualizando papel...',
-            success: () => {
-                setProfiles(prev => prev.map(p => p.id === id ? { ...p, role: newRole } : p));
-                return 'Papel atualizado com sucesso!';
-            },
-            error: 'Erro ao atualizar papel.'
-        });
+    const handleToggleLabdiv = async (id: string, current: boolean) => {
+        const { error } = await toggleLabdivMember(id, !current);
+        if (error) {
+            toast.error(error);
+        } else {
+            setProfiles(prev => prev.map(p => p.id === id ? { ...p, is_labdiv: !current } : p));
+            toast.success(current ? 'Removido do Lab-Div' : 'Adicionado ao Lab-Div');
+        }
+    };
+
+    const handleToggleVisibility = async (id: string, current: boolean) => {
+        const { error } = await toggleProfileVisibility(id, !current);
+        if (error) {
+            toast.error(error);
+        } else {
+            setProfiles(prev => prev.map(p => p.id === id ? { ...p, is_visible: !current } : p));
+            toast.success(current ? 'Perfil oculto' : 'Perfil visível');
+        }
+    };
+
+    const handleImpersonate = async (id: string, name: string) => {
+        toast.loading(`Assumindo identidade de ${name}...`);
+        const { error } = await impersonateUser(id);
+        if (error) {
+            toast.dismiss();
+            toast.error(error);
+        } else {
+            window.location.href = '/lab';
+        }
+    };
+
+    const handleDelete = (id: string, name: string) => {
+        setDeleteModal({ isOpen: true, id, name });
+    };
+
+    const handleDeleteConfirm = async () => {
+        const { id } = deleteModal;
+        toast.loading('Deletando usuário...');
+        const { error } = await deleteProfile(id);
+        toast.dismiss();
+        setDeleteModal({ ...deleteModal, isOpen: false });
+
+        if (error) {
+            toast.error(error);
+        } else {
+            setProfiles(prev => prev.filter(p => p.id !== id));
+            toast.success('Usuário removido permanentemente.');
+        }
     };
 
     const filteredProfiles = profiles.filter(p =>
@@ -131,17 +194,55 @@ export default function PapeisManagementPage() {
                                         </span>
                                     </td>
                                     <td className="p-4">
-                                        <select
-                                            value={profile.role || 'user'}
-                                            onChange={(e) => handleRoleChange(profile.id, e.target.value)}
-                                            className="bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 dark:text-white focus:outline-none focus:border-brand-yellow/50 transition-colors w-40 cursor-pointer"
-                                        >
-                                            {ROLES.map(role => (
-                                                <option key={role.value} value={role.value} className="bg-neutral-900">
-                                                    {role.label}
-                                                </option>
-                                            ))}
-                                        </select>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex items-center gap-2">
+                                                <select
+                                                    value={profile.role || 'user'}
+                                                    onChange={(e) => handleRoleChange(profile.id, e.target.value)}
+                                                    className="bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 dark:text-white focus:outline-none focus:border-brand-yellow/50 transition-colors w-full cursor-pointer"
+                                                >
+                                                    {ROLES.map(role => (
+                                                        <option key={role.value} value={role.value} className="bg-neutral-900">
+                                                            {role.label}
+                                                        </option>
+                                                    ))}
+                                                </select>
+
+                                                <button
+                                                    onClick={() => handleToggleLabdiv(profile.id, profile.is_labdiv)}
+                                                    title={profile.is_labdiv ? "Remover do Lab-Div" : "Marcar como Membro Lab-Div"}
+                                                    className={`p-2 rounded-xl border transition-all ${profile.is_labdiv ? 'bg-brand-blue/20 border-brand-blue/50 text-brand-blue' : 'bg-white/5 border-white/10 text-gray-500 hover:text-brand-blue'}`}
+                                                >
+                                                    <span className="material-symbols-outlined text-sm">verified_user</span>
+                                                </button>
+                                            </div>
+
+                                            <div className="flex items-center gap-1">
+                                                <button
+                                                    onClick={() => handleImpersonate(profile.id, profile.full_name)}
+                                                    className="flex-1 py-1 px-2 rounded-lg bg-brand-yellow/10 text-brand-yellow hover:bg-brand-yellow hover:text-black text-[9px] font-black uppercase tracking-tighter transition-all flex items-center justify-center gap-1"
+                                                >
+                                                    <span className="material-symbols-outlined text-xs">login</span>
+                                                    Entrar como
+                                                </button>
+
+                                                <button
+                                                    onClick={() => setEditModal({ isOpen: true, profile })}
+                                                    title="Editar como Administrador"
+                                                    className="p-1.5 rounded-lg border border-white/10 text-gray-400 hover:text-brand-blue transition-all"
+                                                >
+                                                    <span className="material-symbols-outlined text-xs">edit</span>
+                                                </button>
+
+                                                <button
+                                                    onClick={() => setDeleteModal({ isOpen: true, id: profile.id, name: profile.full_name })}
+                                                    className="p-1.5 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white transition-all"
+                                                    title="Deletar Permanentemente"
+                                                >
+                                                    <span className="material-symbols-outlined text-xs">delete</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
@@ -149,6 +250,23 @@ export default function PapeisManagementPage() {
                     </table>
                 </div>
             )}
+
+            <DeleteUserModal
+                isOpen={deleteModal.isOpen}
+                onClose={() => setDeleteModal({ ...deleteModal, isOpen: false })}
+                onConfirm={handleDeleteConfirm}
+                userName={deleteModal.name}
+            />
+
+            <EditProfileModal
+                isOpen={editModal.isOpen}
+                onClose={() => setEditModal({ isOpen: false, profile: null })}
+                // @ts-ignore
+                adminMode={true}
+                // @ts-ignore
+                adminUserId={editModal.profile?.id}
+                onSuccess={fetchProfiles}
+            />
         </div>
     );
 }

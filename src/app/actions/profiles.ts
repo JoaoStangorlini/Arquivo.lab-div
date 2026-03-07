@@ -1,8 +1,24 @@
 'use server';
 
 import { createServerSupabase } from '@/lib/supabase/server';
+import { createAdminSupabase } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 import { Profile, Freshman } from '@/types';
+
+async function checkIsAdmin() {
+    const supabase = await createServerSupabase();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return false;
+
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
+
+    return profile?.role === 'admin';
+}
 
 export async function updateProfile(updates: Partial<Profile>) {
     const supabase = await createServerSupabase();
@@ -137,6 +153,108 @@ export async function getProfileWithPseudonyms() {
         profile: profileWithEdits as Profile,
         pseudonyms: pseudonyms || []
     };
+}
+
+/**
+ * PHASE 3: GOVERNANCE & ADMIN ACTIONS
+ */
+
+export async function deleteProfile(profileId: string) {
+    if (!await checkIsAdmin()) return { error: 'Não autorizado' };
+
+    const adminClient = createAdminSupabase();
+
+    // Physical deletion from auth.users (cascades to public.profiles)
+    const { error } = await adminClient.auth.admin.deleteUser(profileId);
+
+    if (error) {
+        console.error('Error deleting user:', error);
+        return { error: error.message };
+    }
+
+    revalidatePath('/admin/papeis');
+    return { success: true };
+}
+
+export async function impersonateUser(userId: string) {
+    if (!await checkIsAdmin()) return { error: 'Não autorizado' };
+
+    const cookieStore = await cookies();
+
+    // Set an HttpOnly cookie for impersonation
+    cookieStore.set('admin_impersonating_id', userId, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 2, // 2 hours
+        path: '/',
+    });
+
+    revalidatePath('/');
+    return { success: true };
+}
+
+export async function stopImpersonation() {
+    const cookieStore = await cookies();
+    cookieStore.delete('admin_impersonating_id');
+
+    revalidatePath('/');
+    return { success: true };
+}
+
+export async function toggleProfileVisibility(profileId: string, isVisible: boolean) {
+    if (!await checkIsAdmin()) return { error: 'Não autorizado' };
+
+    const adminClient = createAdminSupabase();
+    const { error } = await adminClient
+        .from('profiles')
+        .update({ is_visible: isVisible })
+        .eq('id', profileId);
+
+    if (error) return { error: error.message };
+
+    revalidatePath('/admin/papeis');
+    revalidatePath(`/autor/${profileId}`);
+    return { success: true };
+}
+
+export async function toggleLabdivMember(profileId: string, isLabdiv: boolean) {
+    if (!await checkIsAdmin()) return { error: 'Não autorizado' };
+
+    const adminClient = createAdminSupabase();
+    const { error } = await adminClient
+        .from('profiles')
+        .update({ is_labdiv: isLabdiv })
+        .eq('id', profileId);
+
+    if (error) return { error: error.message };
+
+    revalidatePath('/admin/papeis');
+    return { success: true };
+}
+
+export async function updateProfileAsAdmin(profileId: string, updates: Partial<Profile>) {
+    if (!await checkIsAdmin()) return { error: 'Não autorizado' };
+
+    const adminClient = createAdminSupabase();
+    const { error } = await adminClient
+        .from('profiles')
+        .update({
+            full_name: updates.full_name,
+            username: updates.username,
+            bio: updates.bio,
+            institute: updates.institute,
+            role: updates.role,
+            is_labdiv: updates.is_labdiv,
+            is_visible: updates.is_visible
+        })
+        .eq('id', profileId);
+
+    if (error) return { error: error.message };
+
+    revalidatePath('/admin/papeis');
+    revalidatePath('/lab');
+    return { success: true };
 }
 
 export async function uploadEnrollmentProof(formData: FormData) {

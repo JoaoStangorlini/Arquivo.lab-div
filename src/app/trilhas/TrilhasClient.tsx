@@ -28,7 +28,9 @@ interface Trail {
     description: string | null;
     axis: string;
     category: 'obrigatoria' | 'eletiva' | 'livre';
+    category_map?: Record<string, 'obrigatoria' | 'eletiva' | 'nao_se_aplica'>;
     course_code: string | null;
+    effectiveCategory?: 'obrigatoria' | 'eletiva' | 'livre';
     excitation_level: number | null;
     status: 'em_orbita' | 'estavel';
     credits_aula: number;
@@ -59,7 +61,7 @@ export default function TrilhasClient({
     const [cursandoIds, setCursandoIds] = useState<string[]>(cursandoTrails.map(t => t.id));
     const [isUpdating, setIsUpdating] = useState<string | null>(null);
     const [isSyncing, setIsSyncing] = useState(false);
-    const [dashboardTab, setDashboardTab] = useState<'faltam' | 'concluidas'>('faltam');
+    const [dashboardTab, setDashboardTab] = useState<'faltam' | 'concluidas' | 'cursando'>('faltam');
     const [isDashboardCollapsed, setIsDashboardCollapsed] = useState(false);
     const router = useRouter();
 
@@ -79,31 +81,87 @@ export default function TrilhasClient({
 
     // Filter Logic
     const filteredTrails = useMemo(() => {
-        return initialTrails.filter(t => {
+        return initialTrails.map(t => {
+            let effectiveCategory = t.category;
+
+            // Relatividade de Categoria
+            if (t.category_map) {
+                const contextAxisMap: Record<string, string> = {
+                    'bach': 'bacharelado',
+                    'lic': 'licenciatura',
+                    'med': 'fisica_medica'
+                };
+                let contextAxis = axisFilter ? contextAxisMap[axisFilter] : null;
+                if (!contextAxis && userProfile?.course) {
+                    const courseStr = userProfile.course.toLowerCase();
+                    contextAxis = courseStr.includes('licenciatura') ? 'licenciatura' :
+                        courseStr.includes('médica') || courseStr.includes('medica') ? 'fisica_medica' :
+                            courseStr.includes('bacharelado') ? 'bacharelado' : null;
+                }
+                if (contextAxis && t.category_map[contextAxis] && t.category_map[contextAxis] !== 'nao_se_aplica') {
+                    effectiveCategory = t.category_map[contextAxis] as any;
+                }
+            }
+            return { ...t, effectiveCategory };
+        }).filter(t => {
             const axisMatch = !axisFilter || t.axis === axisFilter;
-            const categoryMatch = !categoryFilter || t.category === categoryFilter;
+            const categoryMatch = !categoryFilter || t.effectiveCategory === categoryFilter;
             const semesterMatch = !semesterFilter || t.excitation_level === semesterFilter;
             return axisMatch && categoryMatch && semesterMatch;
         });
-    }, [initialTrails, axisFilter, categoryFilter, semesterFilter]);
+    }, [initialTrails, axisFilter, categoryFilter, semesterFilter, userProfile]);
 
     // Dashboard Stats Logic
     const stats = useMemo(() => {
         if (!userProfile) return null;
 
-        const userAxis = userProfile.course === 'Licenciatura' ? 'lic' :
-            userProfile.course === 'Física Médica' ? 'med' :
-                userProfile.course === 'Bacharelado' ? 'bach' : null;
+        // Fallback e Verificação Estrita: Apenas IF-USP e com curso definido
+        const isIfUsp = userProfile.institute?.toUpperCase() === 'IFUSP' || userProfile.institute?.toUpperCase() === 'IF-USP';
+        if (!isIfUsp || !userProfile.course) return {
+            percentage: 0,
+            totalMandatory: 0,
+            completedMandatoryCount: 0,
+            missingMandatory: [],
+            completedTotal: [],
+            cursandoMandatory: [],
+            isInvalid: true
+        };
 
-        const mandatoryTrails = initialTrails.filter(t =>
-            t.category === 'obrigatoria' && (t.axis === 'comum' || (userAxis && t.axis === userAxis))
-        );
+        const courseStr = userProfile.course?.toLowerCase() || '';
+        const userAxisKey = courseStr.includes('licenciatura') ? 'licenciatura' :
+            courseStr.includes('médica') || courseStr.includes('medica') ? 'fisica_medica' :
+                courseStr.includes('bacharelado') ? 'bacharelado' : null;
+
+        const userAxisFallback = courseStr.includes('licenciatura') ? 'lic' :
+            courseStr.includes('médica') || courseStr.includes('medica') ? 'med' :
+                courseStr.includes('bacharelado') ? 'bach' : null;
+
+        // Filtro Estrito: Apenas obrigatórias do eixo ESPECÍFICO do usuário (exclui Ciclo Básico 'comum')
+        const mandatoryTrails = initialTrails.filter(t => {
+            if (!userAxisKey || !userAxisFallback) return false;
+
+            // Requisito: Apenas matérias do eixo específico (ignorar CIC)
+            if (t.axis !== userAxisFallback) return false;
+
+            // Prioriza category_map
+            if (t.category_map && t.category_map[userAxisKey]) {
+                if (t.category_map[userAxisKey] === 'obrigatoria') return true;
+                if (t.category_map[userAxisKey] !== 'nao_se_aplica') return false;
+            }
+
+            // Fallback (apenas se nao tiver mapa)
+            return t.category === 'obrigatoria';
+        });
 
         const completedMandatory = mandatoryTrails.filter(t => completedIds.includes(t.id));
         const missingMandatory = mandatoryTrails.filter(t => !completedIds.includes(t.id))
             .sort((a, b) => (a.excitation_level || 99) - (b.excitation_level || 99));
 
-        const completedTotal = initialTrails.filter(t => completedIds.includes(t.id));
+        const completedTotal = initialTrails.filter(t => completedIds.includes(t.id))
+            .sort((a, b) => (a.excitation_level || 99) - (b.excitation_level || 99));
+
+        const cursandoMandatory = initialTrails.filter(t => cursandoIds.includes(t.id))
+            .sort((a, b) => (a.excitation_level || 99) - (b.excitation_level || 99));
 
         const percentage = mandatoryTrails.length > 0
             ? Math.round((completedMandatory.length / mandatoryTrails.length) * 100)
@@ -114,9 +172,11 @@ export default function TrilhasClient({
             totalMandatory: mandatoryTrails.length,
             completedMandatoryCount: completedMandatory.length,
             missingMandatory,
-            completedTotal
+            completedTotal,
+            cursandoMandatory,
+            isInvalid: false
         };
-    }, [initialTrails, completedIds, userProfile]);
+    }, [initialTrails, completedIds, cursandoIds, userProfile]);
 
     const toggleCompletion = async (e: React.MouseEvent, trailId: string) => {
         e.preventDefault();
@@ -266,7 +326,7 @@ export default function TrilhasClient({
                                     </button>
                                 </div>
 
-                                {!isDashboardCollapsed && (
+                                {!(stats as any).isInvalid ? (
                                     <div className="px-8 pb-8 space-y-6">
                                         {/* Progress Detail Bar */}
                                         <div className="h-2 bg-gray-900 rounded-full overflow-hidden flex">
@@ -284,20 +344,27 @@ export default function TrilhasClient({
                                                 onClick={() => setDashboardTab('faltam')}
                                                 className={`pb-4 text-[10px] font-mono font-black uppercase tracking-widest transition-all relative ${dashboardTab === 'faltam' ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
                                             >
-                                                O que falta fazer ({stats.missingMandatory.length})
+                                                A Fazer ({stats.missingMandatory.length})
                                                 {dashboardTab === 'faltam' && <motion.div layoutId="dashTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#00A3FF]" />}
+                                            </button>
+                                            <button
+                                                onClick={() => setDashboardTab('cursando')}
+                                                className={`pb-4 text-[10px] font-mono font-black uppercase tracking-widest transition-all relative ${dashboardTab === 'cursando' ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                            >
+                                                Cursando ({stats.cursandoMandatory.length})
+                                                {dashboardTab === 'cursando' && <motion.div layoutId="dashTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF4B4B]" />}
                                             </button>
                                             <button
                                                 onClick={() => setDashboardTab('concluidas')}
                                                 className={`pb-4 text-[10px] font-mono font-black uppercase tracking-widest transition-all relative ${dashboardTab === 'concluidas' ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
                                             >
                                                 Concluídas ({stats.completedTotal.length})
-                                                {dashboardTab === 'concluidas' && <motion.div layoutId="dashTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#00A3FF]" />}
+                                                {dashboardTab === 'concluidas' && <motion.div layoutId="dashTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-500" />}
                                             </button>
                                         </div>
 
-                                        {/* Scrollable List Container */}
-                                        <div className="max-h-[350px] overflow-y-auto pr-4 custom-scrollbar">
+                                        {/* Scrollable List Container (Strictly Mandatory) */}
+                                        <div className="max-h-[400px] overflow-y-auto pr-4 custom-scrollbar">
                                             <AnimatePresence mode="wait">
                                                 {dashboardTab === 'faltam' ? (
                                                     <motion.div
@@ -307,14 +374,28 @@ export default function TrilhasClient({
                                                         exit={{ opacity: 0, y: -10 }}
                                                         className="grid grid-cols-1 md:grid-cols-2 gap-3"
                                                     >
-                                                        {stats.missingMandatory.length > 0 ? stats.missingMandatory.slice(0, visibleCountDash).map(trail => (
+                                                        {stats.missingMandatory.length > 0 ? stats.missingMandatory.map(trail => (
                                                             <div key={trail.id} className="flex items-center gap-4 dark:bg-white/5 bg-gray-100 p-4 rounded-2xl border dark:border-white/5 border-gray-200 group">
                                                                 <div className="w-10 h-10 rounded-xl bg-black/40 flex items-center justify-center font-mono font-black text-xs text-gray-500 border border-gray-800">
                                                                     {trail.excitation_level}º
                                                                 </div>
                                                                 <div className="flex-1 min-w-0">
-                                                                    <div className="text-[9px] font-mono text-gray-500 uppercase">{trail.course_code}</div>
-                                                                    <div className="text-xs font-bold text-gray-200 truncate">{trail.title}</div>
+                                                                    <div className="flex items-center gap-2 mb-1">
+                                                                        <span className="text-[8px] font-mono px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-gray-500 uppercase tracking-tighter">
+                                                                            {trail.course_code}
+                                                                        </span>
+                                                                        <span
+                                                                            className="text-[8px] font-mono px-1.5 py-0.5 rounded-md border uppercase tracking-tighter"
+                                                                            style={{
+                                                                                backgroundColor: `${AXIS_CONFIG[trail.axis]?.color}15`,
+                                                                                borderColor: `${AXIS_CONFIG[trail.axis]?.color}30`,
+                                                                                color: AXIS_CONFIG[trail.axis]?.color
+                                                                            }}
+                                                                        >
+                                                                            {AXIS_CONFIG[trail.axis]?.label.substring(0, 3)}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="text-xs font-bold text-gray-200 truncate group-hover:text-white transition-colors">{trail.title}</div>
                                                                 </div>
                                                                 <button
                                                                     onClick={(e) => toggleCompletion(e, trail.id)}
@@ -329,14 +410,49 @@ export default function TrilhasClient({
                                                                 ✨ Toda a matéria obrigatória foi capturada!
                                                             </div>
                                                         )}
-                                                        {stats.missingMandatory.length > visibleCountDash && (
-                                                            <div className="col-span-full py-4 flex justify-center">
+                                                    </motion.div>
+                                                ) : dashboardTab === 'cursando' ? (
+                                                    <motion.div
+                                                        key="cursando"
+                                                        initial={{ opacity: 0, y: 10 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        className="grid grid-cols-1 md:grid-cols-2 gap-3"
+                                                    >
+                                                        {stats.cursandoMandatory.length > 0 ? stats.cursandoMandatory.map(trail => (
+                                                            <div key={trail.id} className="flex items-center gap-4 dark:bg-[#FF4B4B]/5 bg-gray-100 p-4 rounded-2xl border dark:border-[#FF4B4B]/20 border-gray-200 group">
+                                                                <div className="w-10 h-10 rounded-xl bg-black/40 flex items-center justify-center font-mono font-black text-xs text-[#FF4B4B] border border-[#FF4B4B]/30 animate-pulse">
+                                                                    {trail.excitation_level}º
+                                                                </div>
+                                                                <div className="flex-1 min-w-0 text-left">
+                                                                    <div className="flex items-center gap-2 mb-1">
+                                                                        <span className="text-[8px] font-mono px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-gray-500 uppercase tracking-tighter">
+                                                                            {trail.course_code}
+                                                                        </span>
+                                                                        <span
+                                                                            className="text-[8px] font-mono px-1.5 py-0.5 rounded-md border uppercase tracking-tighter"
+                                                                            style={{
+                                                                                backgroundColor: `${AXIS_CONFIG[trail.axis]?.color}15`,
+                                                                                borderColor: `${AXIS_CONFIG[trail.axis]?.color}30`,
+                                                                                color: AXIS_CONFIG[trail.axis]?.color
+                                                                            }}
+                                                                        >
+                                                                            {AXIS_CONFIG[trail.axis]?.label.substring(0, 3)}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="text-xs font-bold text-gray-200 truncate group-hover:text-white transition-colors">{trail.title}</div>
+                                                                </div>
                                                                 <button
-                                                                    onClick={() => setVisibleCountDash(prev => prev + 6)}
-                                                                    className="px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-mono text-[10px] text-gray-400 uppercase tracking-widest transition-all"
+                                                                    onClick={(e) => toggleCompletion(e, trail.id)}
+                                                                    disabled={isUpdating === trail.id}
+                                                                    className="p-2 rounded-lg bg-green-500/10 text-green-500 hover:bg-green-500 hover:text-white transition-all disabled:opacity-50"
+                                                                    title="Marcar como concluída"
                                                                 >
-                                                                    Carregar Mais Disciplinas
+                                                                    <CheckCircle2 size={14} />
                                                                 </button>
+                                                            </div>
+                                                        )) : (
+                                                            <div className="col-span-full py-8 text-center text-gray-500 font-mono text-xs uppercase tracking-widest">
+                                                                📡 Nenhum radar ativo no momento.
                                                             </div>
                                                         )}
                                                     </motion.div>
@@ -352,6 +468,11 @@ export default function TrilhasClient({
                                                             <div key={trail.id} className="flex items-center gap-3 dark:bg-green-500/5 bg-green-50 p-3 rounded-xl border border-green-500/10">
                                                                 <CheckCircle2 className="text-green-500 shrink-0" size={14} />
                                                                 <div className="min-w-0">
+                                                                    <div className="flex items-center gap-2 mb-0.5">
+                                                                        <span className="text-[6px] font-mono px-1 rounded bg-white/5 border border-white/5 text-gray-500 uppercase">
+                                                                            {trail.course_code}
+                                                                        </span>
+                                                                    </div>
                                                                     <div className="text-[10px] font-bold text-gray-200 truncate">{trail.title}</div>
                                                                 </div>
                                                             </div>
@@ -365,68 +486,18 @@ export default function TrilhasClient({
                                             </AnimatePresence>
                                         </div>
                                     </div>
+                                ) : (
+                                    <div className="px-8 pb-8">
+                                        <div className="p-6 dark:bg-brand-yellow/5 bg-brand-yellow/10 border border-brand-yellow/20 rounded-3xl text-center space-y-2">
+                                            <AlertTriangle className="mx-auto text-brand-yellow" size={24} />
+                                            <p className="text-[10px] font-mono font-black uppercase text-brand-yellow tracking-[0.2em]">Fluxo Incompleto detectado</p>
+                                            <p className="text-xs text-gray-400 font-medium">Configure seu <span className="text-white">Curso</span> e <span className="text-white">Instituto (IFUSP)</span> nas configurações de perfil para habilitar o rastreamento dinâmico de disciplinas obrigatórias.</p>
+                                            <Link href="/lab" className="inline-block mt-4 px-6 py-2 bg-brand-yellow/10 hover:bg-brand-yellow/20 text-brand-yellow text-[10px] font-black uppercase tracking-widest rounded-xl transition-all border border-brand-yellow/30">
+                                                Configurar Perfil
+                                            </Link>
+                                        </div>
+                                    </div>
                                 )}
-                            </div>
-                        )}
-
-                        {/* Cursando Agora - Horizontal Feed */}
-                        {(cursandoIds.length > 0) && (
-                            <div className="space-y-4">
-                                <div className="flex items-center justify-between px-1">
-                                    <h3 className="font-mono text-[10px] font-bold dark:text-[#00A3FF] text-[#0070FF] uppercase tracking-[0.3em] flex items-center gap-2">
-                                        <Play size={10} fill="currentColor" /> [RADAR_ATIVO: CURSANDO_AGORA]
-                                    </h3>
-                                    <span className="font-mono text-[8px] text-gray-500 uppercase">{cursandoIds.length} partículas em movimento</span>
-                                </div>
-
-                                <div className="flex gap-4 overflow-x-auto pb-6 scrollbar-hide px-1">
-                                    <AnimatePresence mode="popLayout">
-                                        {initialTrails.filter(t => cursandoIds.includes(t.id)).map((trail) => {
-                                            const tCfg = AXIS_CONFIG[trail.axis] || AXIS_CONFIG.comum;
-                                            return (
-                                                <motion.div
-                                                    key={trail.id}
-                                                    initial={{ opacity: 0, scale: 0.9, x: 20 }}
-                                                    animate={{ opacity: 1, scale: 1, x: 0 }}
-                                                    exit={{ opacity: 0, scale: 0.9, x: -20 }}
-                                                    className="flex-shrink-0"
-                                                >
-                                                    <Link href={`/trilhas/${trail.id}`}>
-                                                        <div className="w-64 h-24 dark:bg-[#1E1E1E] bg-white rounded-xl border border-gray-800 p-4 relative group transition-all hover:border-[#00A3FF]/50 hover:shadow-[0_0_20px_rgba(0,163,255,0.1)] overflow-hidden">
-                                                            {/* Background pulse */}
-                                                            <div className="absolute inset-0 bg-[#00A3FF]/5 opacity-0 group-hover:opacity-100 transition-opacity animate-pulse" />
-
-                                                            <div className="relative z-10 flex flex-col justify-between h-full">
-                                                                <div className="flex justify-between items-start">
-                                                                    <div className="flex flex-col">
-                                                                        <span className="font-mono text-[8px] text-gray-500 uppercase tracking-tighter">{trail.course_code}</span>
-                                                                        <h4 className="text-[12px] font-bold text-gray-200 group-hover:text-white transition-colors truncate w-40">{trail.title}</h4>
-                                                                    </div>
-                                                                    <div className="p-1.5 rounded-lg bg-[#121212] border border-gray-800 group-hover:border-[#00A3FF]/30">
-                                                                        <tCfg.icon size={12} style={{ color: tCfg.color }} />
-                                                                    </div>
-                                                                </div>
-
-                                                                <div className="flex items-center gap-3">
-                                                                    <div className="flex-1 h-1 bg-gray-800 rounded-full overflow-hidden">
-                                                                        <motion.div
-                                                                            initial={{ width: 0 }}
-                                                                            animate={{ width: completedIds.includes(trail.id) ? '100%' : '40%' }}
-                                                                            className={`h-full ${completedIds.includes(trail.id) ? 'bg-green-500' : 'bg-[#00A3FF]'}`}
-                                                                        />
-                                                                    </div>
-                                                                    <span className={`font-mono text-[8px] ${completedIds.includes(trail.id) ? 'text-green-500' : 'text-[#00A3FF]'}`}>
-                                                                        {completedIds.includes(trail.id) ? 'CONCLUÍDA' : 'ATIVA'}
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                </motion.div>
-                                            );
-                                        })}
-                                    </AnimatePresence>
-                                </div>
                             </div>
                         )}
 
@@ -541,7 +612,7 @@ export default function TrilhasClient({
                         <AnimatePresence mode='popLayout'>
                             {slicedTrails.map((trail) => {
                                 const axisCfg = AXIS_CONFIG[trail.axis] || { label: 'Outro', color: '#888888', icon: LayoutGrid };
-                                const catCfg = CATEGORY_CONFIG[trail.category];
+                                const catCfg = CATEGORY_CONFIG[trail.effectiveCategory || trail.category] || CATEGORY_CONFIG.eletiva;
                                 const Icon = axisCfg.icon;
                                 const hasEquiv = !!trail.equivalence_group;
                                 const hasPrereqs = trail.prerequisites && trail.prerequisites.length > 0;

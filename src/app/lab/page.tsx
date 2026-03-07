@@ -307,11 +307,19 @@ function LabContent() {
                                     {viewedProfile?.artistic_interests && viewedProfile.artistic_interests.length > 0 && (
                                         <div className="mt-4 flex flex-wrap gap-2 border-t border-gray-100 dark:border-gray-800 pt-4">
                                             <span className="text-[9px] font-black uppercase text-gray-400 block w-full mb-1">Lado Artístico / Hobbies</span>
-                                            {viewedProfile.artistic_interests.map((art: string) => (
-                                                <span key={art} className="px-2 py-0.5 bg-brand-red/5 text-brand-red text-[9px] font-black rounded-full border border-brand-red/10 uppercase tracking-tighter">
-                                                    {art}
-                                                </span>
-                                            ))}
+                                            {viewedProfile.artistic_interests.map((art: string, index: number) => {
+                                                const colors = [
+                                                    { text: 'text-brand-blue', bg: 'bg-brand-blue/5', border: 'border-brand-blue/10' },
+                                                    { text: 'text-brand-yellow', bg: 'bg-brand-yellow/5', border: 'border-brand-yellow/10' },
+                                                    { text: 'text-brand-red', bg: 'bg-brand-red/5', border: 'border-brand-red/10' }
+                                                ];
+                                                const color = colors[index % colors.length];
+                                                return (
+                                                    <span key={art} className={`px-2 py-0.5 ${color.bg} ${color.text} text-[9px] font-black rounded-full border ${color.border} uppercase tracking-tighter transition-all hover:scale-105`}>
+                                                        {art}
+                                                    </span>
+                                                );
+                                            })}
                                         </div>
                                     )}
                                 </div>

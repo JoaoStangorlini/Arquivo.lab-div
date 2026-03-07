@@ -17,7 +17,7 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 export async function createServerSupabase() {
     const cookieStore = await cookies();
 
-    return createServerClient(supabaseUrl, supabaseAnonKey, {
+    const client = createServerClient(supabaseUrl, supabaseAnonKey, {
         cookies: {
             getAll() {
                 return cookieStore.getAll();
@@ -29,10 +29,45 @@ export async function createServerSupabase() {
                     );
                 } catch {
                     // setAll may fail in Server Components (read-only context).
-                    // This is safe to ignore — cookies will still be set in
-                    // Route Handlers and Server Actions where it matters.
                 }
             },
         },
     });
+
+    // Impersonation Logic: Override getUser to return impersonated user if admin
+    const impersonatedId = cookieStore.get('admin_impersonating_id')?.value;
+    if (impersonatedId) {
+        const originalGetUser = client.auth.getUser.bind(client.auth);
+        client.auth.getUser = async (token?: string) => {
+            const { data, error } = await originalGetUser(token);
+            if (data.user && !error) {
+                // Verify if the REAL user is actually an admin
+                const { data: profile } = await client
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', data.user.id)
+                    .single();
+
+                if (profile?.role === 'admin') {
+                    // Return a "fake" user object with the impersonated ID
+                    return {
+                        data: {
+                            user: {
+                                ...data.user,
+                                id: impersonatedId,
+                                // @ts-ignore - custom properties for internal tracking
+                                isImpersonated: true,
+                                // @ts-ignore
+                                adminId: data.user.id
+                            }
+                        },
+                        error: null
+                    };
+                }
+            }
+            return { data, error } as any;
+        };
+    }
+
+    return client;
 }

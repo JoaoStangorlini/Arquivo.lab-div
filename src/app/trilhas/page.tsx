@@ -17,20 +17,24 @@ async function getTrails() {
 
     if (!trails) return [];
 
-    // Busca contagem de artigos para cada trilha
-    const trailsWithStats = await Promise.all(
-        trails.map(async (trail) => {
-            const { count } = await supabase
-                .from('trail_submissions')
-                .select('*', { count: 'exact', head: true })
-                .eq('trail_id', trail.id);
+    // Busca contagem de artigos para cada trilha de forma otimizada (evita N+1 e Stack Overflow no Next.js)
+    const { data: allSubmissions } = await supabase
+        .from('trail_submissions')
+        .select('trail_id');
 
-            return {
-                ...trail,
-                submissionCount: count || 0,
-            };
-        })
-    );
+    const countsByTrail: Record<string, number> = {};
+    if (allSubmissions) {
+        allSubmissions.forEach(sub => {
+            countsByTrail[sub.trail_id] = (countsByTrail[sub.trail_id] || 0) + 1;
+        });
+    }
+
+    const trailsWithStats = trails.map((trail) => {
+        return {
+            ...trail,
+            submissionCount: countsByTrail[trail.id] || 0,
+        };
+    });
 
     return trailsWithStats;
 }

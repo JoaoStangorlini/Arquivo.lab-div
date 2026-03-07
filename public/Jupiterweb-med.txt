@@ -1,0 +1,323 @@
+ 
+ 
+Grade Curricular
+  Preparar para impressão 
+Física Médica - Instituto de Física e Faculdade de
+Medicina
+Curso:
+ 
+Bacharelado em  Física Médica
+Observ ações:
+Informa ções Básicas do Currículo
+Data de Início: 01/01/2026             Duração Ideal  10 seme stres
+Mínima   10 seme stres
+Máxima  15 seme stres
+Carga Horária                                                                 Aula         Trabalho    Subtotal
+Obrigatória                                                       2250           600      2850
+Optativa Livre                                                      240             0       240
+Optativa Eletiva                                                         0             0         0
+Total de carga horária em  disciplinas da grade                                  2490           600      3090(AAC: 60)
+ 
+Subtotal (*Total de carga horária em disciplinas da grade +  AAC):                                                3150
+Total geral de carga horária exigida em extensão:                                                      321 (10,19%)
+ 
+Total Geral (*Total de carga horária em disciplinas da grade +  AAC +  AEX Apolo +  Extensão exigida em optativas):       3150
+ 
+* A carga horária de estágio e a carga horária de atividades de extensão incluídas nas disciplinas obrigatórias já estão somadas no Total de carga horária em disciplinas.
+Informa ções Específicas
+ 
+Grade Curricular
+Legenda: CH=Carga horária Total; CE=Carga horária de Estágio; CP=Carga horária de Práticas como Componentes Curriculares;
+              ATPA= Carga horária em Atividades Teórico-Práticas de Ap rofundamento; EXT=Carga horária em Atividades Extensionistas
+Disciplinas Obrigatórias
+1º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4302111                 Física I                                                                                             4            0           60        0                       0
+4302113                 Física Experime ntal I                                                                                    4            0           60
+MAT0112                 Vetores e Geome tria                                                                                    4            0           60
+MAT2453                 Cálculo Diferencial e Integral I                                                                             6            0           90
+Su btotal:          18            0          270
+                                                                                                                                                                                                                                                       
+2º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300208                 Introdução à Termo dinâmi ca                                                                               2            0           30                                0
+      4302111 - Física I                                                                                                                          Requisito
+4302112                 Física II                                                                                            4            0           60        0                       0
+      4302111 - Física I                                                                                                                          Requisito
+4302114                 Física Experime ntal II                                                                                   4            0           60
+      4302113 - Física Experime ntal I                                                                                                                 Requisito
+MAT2454                 Cálculo Diferencial e Integral II                                                                             4            0           60
+      MAT2453 - Cálculo Diferencial e Integral I                                                                                                          Requisito
+MDR0632                 Introdução à Física Médica                                                                                2            0           30
+MDR0633                 Eleme ntos de An atomi a e Fisiologia Huma na                                                                    4            0           60
+Su btotal:          20            0          300
+                                                                                                                                                                                                                                                       
+3º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4302211                 Física III                                                                                            4            0           60        0                       0
+      MAT0112 - Vetores e Geome tria                                                                                                                 Requisito
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                          Requisito
+      4302111 - Física I                                                                                                                          Requisito
+4302213                 Física Experime ntal III                                                                                   4            2          120        0                       0
+      4302114 - Física Experime ntal II                                                                                                                Requisito
+MAT0216                 Cálculo Diferencial e Integral III                                                                            6            0           90
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                          Requisito
+MDR0635                 Estatística Médica I                                                                                     4            0           60
+Su btotal:          18            2          330
+                                                                                                                                                                                                                                                       
+4º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300218                 Introdução à Física Comp utacional                                                                          4            2          120        0                       0
+      4302111 - Física I                                                                                                                          Requisito
+4302212                 Física IV                                                                                            4            0           60        0                       0
+      4302112 - Física II                                                                                                                          Requisito
+      4302211 - Física III                                                                                                                         Requisito
+4302214                 Física Experime ntal IV                                                                                   4            2          120        0                       0
+      4302213 - Física Experime ntal III                                                                                                                Requisito
+      4302211 - Física III                                                                                                                         Requisito
+MDR0634                 Informá tica Médica e Sa úde Digital                                                                          4            0           60
+Su btotal:          16            4          360
+                                                                                                                                                                                                                                                       
+5º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300325                 Física do Corpo Huma no                                                                                  4            0           60
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                          Requisito
+      4302212 - Física IV                                                                                                                          Requisito
+4302204                 Física Matemá tica I                                                                                     4            0           60
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                          Requisito
+MAT0122                 Álgebra Linear I                                                                                       4            0           60
+      MAT0112 - Vetores e Geome tria                                                                                                                 Requisito
+MDR0637                 Diagnóstico por Ima gens Médicas                                                                           4            0           60
+      4302211 - Física III                                                                                                                         Requisito
+      4302112 - Física II                                                                                                                          Requisito
+MDR0639                 Física do Diagnóstico por ima gens I                                                                          4            0           60
+      4302211 - Física III                                                                                                                         Requisito
+      MDR0633 - Eleme ntos de An atomi a e Fisiologia Humana                                                                                                 Requisito
+Su btotal:          20            0          300
+                                                                                                                                                                                                                                                       
+6º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300436                 Efeitos Biológicos das Radiações Ionizantes e Não Ionizantes                                                         4            0           60
+      4302212 - Física IV                                                                                                                          Requisito
+4302305                 Mecânica I                                                                                           4            0           60        0                       0
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                          Requisito
+      4302112 - Física II                                                                                                                          Requisito
+4302311                 Física Quântica                                                                                        2            0           30        0                       0
+      MAT0216 - Cálculo Diferencial e Integral III                                                                                                         Requisito
+MDR0636                 Equipame ntos Médico-Hospitalares I                                                                         4            0           60
+      MDR0633 - Eleme ntos de An atomi a e Fisiologia Humana                                                                                                 Requisito
+Su btotal:          14            0          210
+                                                                                                                                                                                                                                                       
+7º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300437                 Física das Radiações I                                                                                   6            0           90
+      4302311 - Física Quântica                                                                                                                     Requisito
+      4302212 - Física IV                                                                                                                          Requisito
+4302303                 Eletroma gnetismo  I                                                                                    4            0           60        0                       0
+      MAT0216 - Cálculo Diferencial e Integral III                                                                                                         Requisito
+      4302212 - Física IV                                                                                                                          Requisito
+4302403                 Mecânica Quântica I                                                                                    4            0           60        0                       0
+      4302204 - Física Matemá tica I                                                                                                                  Requisito
+      4302311 - Física Quântica                                                                                                                     Requisito
+MDR0640                 Proteção Radiológica I                                                                                   4            0           60
+      4300436 - Efeitos Biológicos das Radiações Ionizantes e Não Ionizantes                                                                                      Requisito
+Su btotal:          18            0          270
+                                                                                                                                                                                                                                                       
+8º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300439                 Laboratório de Dosime tria das Radiações                                                                      4            0           60
+      4300437 - Física das Radiações I                                                                                                                Requisito
+MDR0641                 Medicina Nuclear                                                                                      4            0           60
+      4300437 - Física das Radiações I                                                                                                                Requisito
+MDR0642                 Radioterapia                                                                                          4            0           60
+      4300437 - Física das Radiações I                                                                                                                Requisito
+      MDR0636 - Equipame ntos Médico-Hospitalares I                                                                                                      Requisito
+MDR0643                 Física do Diagnóstico por Ima gens II                                                                         4            0           60
+      4302303 - Eletroma gnetismo  I                                                                                                                  Requisito
+      MDR0636 - Equipame ntos Médico-Hospitalares I                                                                                                      Requisito
+      MDR0639 - Física do Diagnóstico por ima gens I                                                                                                       Requisito
+MDR0644                 Introdução ao Amb iente Hospitalar                                                                          2            0           30
+Su btotal:          18            0          270
+                                                                                                                                                                                                                                                       
+9º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+MDR0645                 Introdução à Sa úde Ocupacional, Medicina Legal e Ética da Física Médica                                                 4            0           60
+      MDR0635 - Estatística Médica I                                                                                                                 Requisito
+      MDR0637 - Diagnóstico por Ima gens Médicas                                                                                                        Requisito
+MDR0646                 Tópicos Avançados de Matemá tica e Física em  Medicina                                                             4            0           60
+      MAT0216 - Cálculo Diferencial e Integral III                                                                                                         Requisito
+      MDR0634 - Informá tica Médica e Sa úde Digital                                                                                                       Requisito
+MDR0647                 Estágio Hospitalar Geral                                                                                 0            4          120      120
+      MDR0644 - Introdução ao Amb iente Hospitalar                                                                                                       Requisito
+Su btotal:           8            4          240      120
+                                                                                                                                                                                                                                                       
+10º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+MDR0660                 Prática Profissional em  Ima gens Médicas                                                                      0            5          150                              143
+      MDR0647 - Estágio Hospitalar Geral                                                                                                              Requisito
+MDR0661                 Prática Profissional em  Radioterapia                                                                          0            5          150                              143
+      MDR0647 - Estágio Hospitalar Geral                                                                                                              Requisito
+Su btotal:           0           10          300                              286
+                                                                                                                                                                                                                                                       
+Disciplinas Optativas Livres
+1º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300207                 Integração de Conceitos Básicos de Matemá tica e Física                                                            2            0           30
+                                                                                                                                                                                                                                                                                 
+3º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300503                 Perspectivas sobre diversidade em  Física Médica: participação de mulheres e outros grupos sub-representados                       2            0           30
+BMB0255                 Fisiologia I                                                                                          4            0           60        0
+HSP 0141                 Introdução à Sa úde Pública                                                                               2            0           30
+                                                                                                                                                                                                                                                                                 
+4º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+BMB0269                 Biofísica de Memb ranas Básica                                                                             6            0           90
+MSP 4015                 Teleme dicina na Prática Médica e Se gurança Digital                                                               1            0           15
+MSP 4053                 Inovação e emp reendedorismo  na me dicina                                                                     1            0           15
+QBQ1151                 Introdução à Bioquími ca                                                                                  2            1           60                               30
+                                                                                                                                                                                                                                                                                 
+5º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300441                 Detectores de Radiação                                                                                  4            1           90
+     4302212 - Física IV                                                                                                                        Requisito
+QBQ0313                 Bioquími ca                                                                                           4            0           60
+                                                                                                                                                                                                                                                                                 
+6º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300228                 Tratame nto Estatístico de dados em  Física Experimental                                                            4            0           60
+     MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                     Requisito
+     4302114 - Física Experime ntal II                                                                                                               Requisito
+     4302113 - Física Experime ntal I                                                                                                               Requisito
+     MAT2453 - Cálculo Diferencial e Integral I                                                                                                         Requisito
+4302307                 Física Matemá tica II                                                                                    4            0           60
+     4302204 - Física Matemá tica I                                                                                                                Requisito
+MAP 0214                 Cálculo Numé rico com  Ap licações em  Física                                                                     4            0           60
+     MAT2453 - Cálculo Diferencial e Integral I                                                                                                         Requisito
+     MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                     Requisito
+  ou                                                                                                    
+     MAT2453 - Cálculo Diferencial e Integral I                                                                                                         Requisito
+     4300218 - Introdução à Física Comp utacional                                                                                                      Requisito
+MAT0220                 Cálculo Diferencial e Integral IV                                                                             4            0           60
+     MAT0216 - Cálculo Diferencial e Integral III                                                                                                        Requisito
+                                                                                                                                                                                                                                                                                 
+7º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4302306                 Mecânica II                                                                                          4            0           60        0                       0
+     4302305 - Mecânica I                                                                                                                      Requisito
+4302308                 Termo dinâmi ca                                                                                        4            0           60        0                       0
+     4302112 - Física II                                                                                                                        Requisito
+     MAT2454 - Cálculo Diferencial e Integral II                                                                                                        Requisito
+4305512                 Ap rendizado de má quina e inteligência artificial em física                                                            4            0           60
+     MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                     Requisito
+     MAT0122 - Álgebra Linear I                                                                                                                  Requisito
+     4302114 - Física Experime ntal II                                                                                                               Requisito
+QFL0606                 Fundame ntos de Quími ca para Física                                                                         6            0           90
+                                                                                                                                                                                                                                                                                 
+8º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300315                 Introdução à Física Atômi ca e Molecular                                                                       4            0           60
+     4302403 - Mecânica Quântica I                                                                                                                Requisito
+4300406                 Introdução à Física Nuclear                                                                               4            0           60
+     4302403 - Mecânica Quântica I                                                                                                                Requisito
+4302313                 Física Experime ntal V                                                                                    4            2          120
+     4302214 - Física Experime ntal IV                                                                                                               Requisito
+4302314                 Física Experime ntal VI                                                                                    4            0           60
+     4302214 - Física Experime ntal IV                                                                                                               Requisito
+4302404                 Mecânica Quântica II                                                                                    4            0           60        0                       0
+     4302403 - Mecânica Quântica I                                                                                                                Requisito
+MSP 4085                 Princípios básicos de inteligência artificial e sáude                                                                1            0           15
+                                                                                                                                                                                                                                                                                 
+9º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300464                 Trabalho de Conclusão de Curso                                                                            0            2           60
+4302304                 Eletroma gnetismo  II                                                                                    4            0           60        0                       0
+     4302303 - Eletroma gnetismo  I                                                                                                                Requisito
+ 
+ 
+ 
+Créditos | Fale conosco
+© 1999 - 2026 - Superintendência de                Tecnologia da Informação/USP
+Público
+Calendário Escolar
+Cursos de ingresso
+Disciplina
+Editais
+FAQ
+Acesso Restrito
+Entrar
+Esqueci a Senha
+Primeiro Acesso
+----------------Page (0) Break----------------

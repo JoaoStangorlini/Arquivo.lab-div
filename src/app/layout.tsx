@@ -33,6 +33,8 @@ import { SearchProvider } from "@/providers/SearchProvider";
 import { ClientPwaManager } from "@/components/pwa/ClientPwaManager";
 import { SkipLink } from "@/components/ui/SkipLink";
 import { AuthProvider } from "@/providers/AuthProvider";
+import { ImpersonationBanner } from "@/components/admin/ImpersonationBanner";
+import { createServerSupabase } from "@/lib/supabase/server";
 
 /**
  * V4.0.0 Layout - Protocol Apocalypse Certified
@@ -72,6 +74,19 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const theme = cookieStore.get('theme')?.value || '';
   const htmlClass = theme === 'dark' ? 'dark' : '';
+
+  const impersonatedId = cookieStore.get('admin_impersonating_id')?.value;
+  let impersonatedName = '';
+
+  if (impersonatedId) {
+    const supabase = await createServerSupabase();
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('full_name, username')
+      .eq('id', impersonatedId)
+      .single();
+    impersonatedName = profile?.full_name || profile?.username || '';
+  }
 
   return (
     <html lang="pt-BR" suppressHydrationWarning className={htmlClass}>
@@ -134,6 +149,8 @@ export default async function RootLayout({
                 <ClientPwaManager />
                 <ReadingProgressBar />
                 <SkipLink />
+
+                {impersonatedId && <ImpersonationBanner impersonatedName={impersonatedName} />}
 
                 {children}
               </SearchProvider>

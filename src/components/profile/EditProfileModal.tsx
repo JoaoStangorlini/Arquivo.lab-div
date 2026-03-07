@@ -7,8 +7,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'react-hot-toast';
 import { Loader2, X, User, FileText, Globe, Link, Building2, ShieldCheck, Star, Mail, Phone, FileUp, Info } from 'lucide-react';
-import { updateProfile, getProfileWithPseudonyms, uploadEnrollmentProof } from '@/app/actions/profiles';
+import { updateProfile, getProfileWithPseudonyms, uploadEnrollmentProof, updateProfileAsAdmin } from '@/app/actions/profiles';
 import { getUserPseudonyms, createPseudonym } from '@/app/actions/submissions';
+import { createServerSupabase } from '@/lib/supabase/server';
+import { supabase } from '@/lib/supabase';
 import { Profile } from '@/types';
 
 const profileSchema = z.object({
@@ -43,9 +45,11 @@ interface EditProfileModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
+    adminMode?: boolean;
+    adminUserId?: string;
 }
 
-export function EditProfileModal({ isOpen, onClose, onSuccess }: EditProfileModalProps) {
+export function EditProfileModal({ isOpen, onClose, onSuccess, adminMode = false, adminUserId }: EditProfileModalProps) {
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     const [pseudonyms, setPseudonyms] = useState<any[]>([]);
@@ -105,12 +109,29 @@ export function EditProfileModal({ isOpen, onClose, onSuccess }: EditProfileModa
 
     const loadInitialData = async () => {
         setIsLoading(true);
-        const res = await getProfileWithPseudonyms();
-        if ('error' in res) {
-            toast.error(res.error || 'Erro ao carregar dados');
-            onClose();
+
+        // If admin mode, we might need a different way to fetch the profile since 
+        // getProfileWithPseudonyms is for the "current" user.
+        let profile: any;
+        let pNames: any[] = [];
+
+        if (adminMode && adminUserId) {
+            const { data } = await supabase.from('profiles').select('*').eq('id', adminUserId).single();
+            profile = data;
+            const { data: ps } = await supabase.from('pseudonyms').select('*').eq('user_id', adminUserId);
+            pNames = ps || [];
         } else {
-            const { profile, pseudonyms } = res;
+            const res = await getProfileWithPseudonyms();
+            if ('error' in res) {
+                toast.error(res.error || 'Erro ao carregar dados');
+                onClose();
+                return;
+            }
+            profile = res.profile;
+            pNames = res.pseudonyms || [];
+        }
+
+        if (profile) {
             setCurrentStatus(profile.review_status);
             setValue('email', profile.email || '');
             setValue('full_name', profile.full_name || '');
@@ -134,7 +155,7 @@ export function EditProfileModal({ isOpen, onClose, onSuccess }: EditProfileModa
             setValue('available_to_mentor', profile.available_to_mentor || false);
             setValue('seeking_mentor', profile.seeking_mentor || false);
             setProfileData(profile);
-            setPseudonyms(pseudonyms);
+            setPseudonyms(pNames);
         }
         setIsLoading(false);
     };
@@ -185,7 +206,7 @@ export function EditProfileModal({ isOpen, onClose, onSuccess }: EditProfileModa
         // Remove new_nickname and email (read-only) and map fields to profileData
         const { new_nickname, email, artistic_interests_str, entrance_year, other_institute, ...restData } = data;
 
-        const updatedProfileData = {
+        const updatedProfileData: any = {
             ...restData,
             institute: data.institute === 'Outros' ? other_institute : data.institute,
             usp_proof_url: proofUrl,
@@ -194,13 +215,25 @@ export function EditProfileModal({ isOpen, onClose, onSuccess }: EditProfileModa
                 ? artistic_interests_str.split(',').map((s: string) => s.trim()).filter(Boolean)
                 : []
         };
-        const res = await updateProfile(updatedProfileData as any);
-        if (res.success) {
-            toast.success('Alterações enviadas para aprovação!');
-            onSuccess();
-            onClose();
+
+        if (adminMode && adminUserId) {
+            const res = await updateProfileAsAdmin(adminUserId, updatedProfileData);
+            if (res.success) {
+                toast.success('Perfil atualizado pelo admin!');
+                onSuccess();
+                onClose();
+            } else {
+                toast.error(res.error || 'Erro ao salvar alterações');
+            }
         } else {
-            toast.error(res.error || 'Erro ao salvar alterações');
+            const res = await updateProfile(updatedProfileData as any);
+            if (res.success) {
+                toast.success('Alterações enviadas para aprovação!');
+                onSuccess();
+                onClose();
+            } else {
+                toast.error(res.error || 'Erro ao salvar alterações');
+            }
         }
         setIsSaving(false);
     };
@@ -236,35 +269,54 @@ export function EditProfileModal({ isOpen, onClose, onSuccess }: EditProfileModa
                             </div>
                         )}
 
+                        {adminMode && (
+                            <div className="grid grid-cols-2 gap-4 p-4 bg-brand-red/5 border border-brand-red/10 rounded-2xl">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-brand-red">Membro Lab-Div</span>
+                                    <label className="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" checked={profileData?.is_labdiv} onChange={() => profileData && setProfileData({ ...profileData, is_labdiv: !profileData.is_labdiv })} className="sr-only peer" />
+                                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none dark:bg-gray-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-red"></div>
+                                    </label>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-brand-red">Visibilidade</span>
+                                    <label className="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" checked={profileData?.is_visible} onChange={() => profileData && setProfileData({ ...profileData, is_visible: !profileData.is_visible })} className="sr-only peer" />
+                                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none dark:bg-gray-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-red"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        )}
+
                         {/* Email */}
-                        <div className="space-y-2 opacity-70">
+                        <div className={`space-y-2 ${!adminMode && 'opacity-70'}`}>
                             <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1 flex items-center gap-2">
-                                <Mail className="w-3 h-3" /> E-mail (Bloqueado)
+                                <Mail className="w-3 h-3" /> E-mail {!adminMode && '(Bloqueado)'}
                             </label>
                             <div className="relative">
                                 <input
                                     {...register('email')}
-                                    readOnly
-                                    className="w-full bg-gray-100 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl px-4 py-3 text-sm outline-none cursor-not-allowed text-gray-400"
+                                    readOnly={!adminMode}
+                                    className={`w-full bg-gray-100 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl px-4 py-3 text-sm outline-none ${!adminMode ? 'cursor-not-allowed text-gray-400' : 'focus:border-brand-blue/50 text-gray-900 dark:text-white font-bold'}`}
                                     placeholder="seu.email@usp.br"
                                 />
-                                <X className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                                {!adminMode && <X className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-gray-500" />}
                             </div>
                         </div>
 
                         {/* Full Name */}
-                        <div className="space-y-2 opacity-70">
+                        <div className={`space-y-2 ${!adminMode && 'opacity-70'}`}>
                             <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1 flex items-center gap-2">
-                                <User className="w-3 h-3" /> Nome Completo (Bloqueado)
+                                <User className="w-3 h-3" /> Nome Completo {!adminMode && '(Bloqueado)'}
                             </label>
                             <div className="relative">
                                 <input
                                     {...register('full_name')}
-                                    readOnly
-                                    className="w-full bg-gray-100 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl px-4 py-3 text-sm outline-none cursor-not-allowed text-gray-400"
+                                    readOnly={!adminMode}
+                                    className={`w-full bg-gray-100 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl px-4 py-3 text-sm outline-none ${!adminMode ? 'cursor-not-allowed text-gray-400' : 'focus:border-brand-blue/50 text-gray-900 dark:text-white font-bold'}`}
                                     placeholder="Seu nome"
                                 />
-                                <X className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                                {!adminMode && <X className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-gray-500" />}
                             </div>
                         </div>
 

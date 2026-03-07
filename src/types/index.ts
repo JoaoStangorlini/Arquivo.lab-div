@@ -30,7 +30,9 @@ export interface Profile {
     objective?: string;
     interests: string[];
     artistic_interests: string[];
-    role: string; // 'user', 'admin', 'Graduação', etc.
+    role: string; // 'user', 'admin', 'moderator'
+    is_labdiv: boolean;
+    is_visible: boolean;
     is_public: boolean;
     review_status: 'pending' | 'approved' | 'rejected';
     bio_draft?: string;

@@ -1,0 +1,534 @@
+ 
+ 
+Grade Curricular
+  Preparar para impressão 
+Instituto de Física
+Curso:
+ 
+Física - Bacharelado
+Observ ações:
+Informa ções Básicas do Currículo
+Data de Início: 01/01/2026             Duração Ideal   8 seme stres
+Mínima   6 seme stres
+Máxima  12 seme stres
+Carga Horária                                                                 Aula         Trabalho    Subtotal
+Obrigatória                                                       1440           240      1680
+Optativa Livre                                                        0             0         0
+Optativa Eletiva                                                       660             0       660
+Total de carga horária em  disciplinas da grade                                  2100           240      2340(AAC: 60)
+ 
+(AE X Ap olo: 260)
+ 
+Subtotal (*Total de carga horária em disciplinas da grade +  AAC):                                                2400
+Total geral de carga horária exigida em extensão:                                                      260 (10,83%)
+ 
+Total Geral (*Total de carga horária em disciplinas da grade +  AAC +  AEX Apolo +  Extensão exigida em optativas):       2660
+ 
+* A carga horária de estágio e a carga horária de atividades de extensão incluídas nas disciplinas obrigatórias já estão somadas no Total de carga horária em disciplinas.
+Informa ções Específicas
+ 
+Para ingressantes a partir de 2023, os alunos dev em cumprir ao menos
+260 horas em atividades curriculares extensionistas, em conformidade com a
+Resolução CES/CNE no 7, de 18 de dez embro de 2018 e Deliber ação CEE
+216/2023. Estas
+atividades são contabilizadas de duas maneir as. A primeira é através de
+disciplinas, oferecidas pelo IF ou demais unidades da USP, que possuem parte
+de sua carga horária em atividades de extensão  . A segunda, sob o nome de
+Atividades Extensionistas Curriculares (AEX), engloba diversas modalidades
+de participação dos estudantes em ações de natureza extensionista como
+projetos, cursos, eventos e prestação de serviços, dentre outr as.
+Cabe lembr ar que são consideradas A tividades de Extensão as intervenções
+que en volvam diretamente grupos sociais definidos e que estejam vinculadas
+à formação do estudante. A carga horária cumprida nessas atividades
+será cadastrada no histórico escolar do estudante por meio da sigla
+aglutinadora EXT (A tividades Curriculares Extensionistas).
+Grade Curricular
+Legenda: CH=Carga horária Total; CE=Carga horária de Estágio; CP=Carga horária de Práticas como Componentes Curriculares;
+              ATPA= Carga horária em Atividades Teórico-Práticas de Ap rofundamento; EXT=Carga horária em Atividades Extensionistas
+Disciplinas Obrigatórias
+1º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4302111                 Física I                                                                                             4            0           60        0                       0
+4302113                 Física Experime ntal I                                                                                    4            0           60
+MAT0112                 Vetores e Geome tria                                                                                    4            0           60
+MAT2453                 Cálculo Diferencial e Integral I                                                                             6            0           90
+Su btotal:          18            0          270
+                                                                                                                                                                                                                                                       
+2º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300208                 Introdução à Termo dinâmi ca                                                                               2            0           30                                0
+      4302111 - Física I                                                                                                                          Requisito
+4300218                 Introdução à Física Comp utacional                                                                          4            2          120        0                       0
+      4302111 - Física I                                                                                                                          Requisito
+4302112                 Física II                                                                                            4            0           60        0                       0
+      4302111 - Física I                                                                                                                          Requisito
+4302114                 Física Experime ntal II                                                                                   4            0           60
+      4302113 - Física Experime ntal I                                                                                                                 Requisito
+MAT2454                 Cálculo Diferencial e Integral II                                                                             4            0           60
+      MAT2453 - Cálculo Diferencial e Integral I                                                                                                          Requisito
+Su btotal:          18            2          330
+                                                                                                                                                                                                                                                       
+3º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4302211                 Física III                                                                                            4            0           60        0                       0
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                          Requisito
+      MAT0112 - Vetores e Geome tria                                                                                                                 Requisito
+      4302111 - Física I                                                                                                                          Requisito
+4302213                 Física Experime ntal III                                                                                   4            2          120        0                       0
+      4302114 - Física Experime ntal II                                                                                                                Requisito
+MAT0122                 Álgebra Linear I                                                                                       4            0           60
+      MAT0112 - Vetores e Geome tria                                                                                                                 Requisito
+MAT0216                 Cálculo Diferencial e Integral III                                                                            6            0           90
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                          Requisito
+Su btotal:          18            2          330
+                                                                                                                                                                                                                                                       
+4º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4302204                 Física Matemá tica I                                                                                     4            0           60
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                          Requisito
+4302212                 Física IV                                                                                            4            0           60        0                       0
+      4302211 - Física III                                                                                                                         Requisito
+      4302112 - Física II                                                                                                                          Requisito
+4302214                 Física Experime ntal IV                                                                                   4            2          120        0                       0
+      4302211 - Física III                                                                                                                         Requisito
+      4302213 - Física Experime ntal III                                                                                                                Requisito
+MAT0220                 Cálculo Diferencial e Integral IV                                                                             4            0           60
+      MAT0216 - Cálculo Diferencial e Integral III                                                                                                         Requisito
+Su btotal:          16            2          300
+                                                                                                                                                                                                                                                       
+5º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4302305                 Mecânica I                                                                                           4            0           60        0                       0
+      4302112 - Física II                                                                                                                          Requisito
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                          Requisito
+4302311                 Física Quântica                                                                                        2            0           30        0                       0
+      MAT0216 - Cálculo Diferencial e Integral III                                                                                                         Requisito
+4302313                 Física Experime ntal V                                                                                    4            2          120
+      4302214 - Física Experime ntal IV                                                                                                                Requisito
+Su btotal:          10            2          210
+                                                                                                                                                                                                                                                       
+6º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4302303                 Eletroma gnetismo  I                                                                                    4            0           60        0                       0
+      4302212 - Física IV                                                                                                                          Requisito
+      MAT0216 - Cálculo Diferencial e Integral III                                                                                                         Requisito
+4302401                 Mecânica Estatística                                                                                    4            0           60        0                       0
+      4302112 - Física II                                                                                                                          Requisito
+      4300208 - Introdução à Termo dinâmi ca                                                                                                            Requisito
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                          Requisito
+4302403                 Mecânica Quântica I                                                                                    4            0           60        0                       0
+      MAT0122 - Álgebra Linear I                                                                                                                    Requisito
+      4302311 - Física Quântica                                                                                                                     Requisito
+      4302204 - Física Matemá tica I                                                                                                                  Requisito
+MAP 0214                 Cálculo Numé rico com  Ap licações em  Física                                                                     4            0           60
+      MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                      Requisito
+      MAT2453 - Cálculo Diferencial e Integral I                                                                                                          Requisito
+  ou                                                                                                    
+      MAT2453 - Cálculo Diferencial e Integral I                                                                                                          Requisito
+      4300218 - Introdução à Física Comp utacional                                                                                                        Requisito
+Su btotal:          16            0          240
+                                                                                                                                                                                                                                                       
+Disciplinas Optativas Eletivas
+1º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300163                 Praticas de Atividades Física I                                                                              0            1           30
+4300207                 Integração de Conceitos Básicos de Matemá tica e Física                                                            2            0           30
+AC A0 115                 Introdução às Ciências Atmo sféricas                                                                         4            2          120
+AG A0 100                 Astronomi a: Uma  Visão Geral I                                                                             2            0           30        0
+                                                                                                                                                                                                                                                                                                                                               
+2º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300164                 Práticas de Atividades Física II                                                                             0            1           30
+4300206                 Tópicos Atuais em  Física                                                                                  2            0           30        0
+4300220                 Processos Criativos em  Ciências: da Ima ginação à Divulgação Científica                                                  4            0           60
+AC A0 221                 Instrume ntos Meteorológicos e Métodos de Observação                                                             3            0           45
+      AC A0 115 - Introdução às Ciências Atmo sféricas                                                                                                     Requisito
+AG A0 101                 Astronomi a: Uma  Visão Geral II                                                                            2            0           30        0
+      AG A0 100 - Astronomi a: Uma  Visão Geral I                                                                                                        Requisito
+                                                                                                                                                                                                                                                                                                                                               
+3º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300318                 Introdução à Física Comp utacional II                                                                         2            2           90
+      4300218 - Introdução à Física Comp utacional                                                                                                      Requisito
+      4302112 - Física II                                                                                                                        Requisito
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                        Requisito
+AG A0 106                 Astronomi a de Posição                                                                                   4            0           60
+AG A0 215                 Fundame ntos de Astronomi a                                                                               4            0           60
+      MAT2453 - Cálculo Diferencial e Integral I                                                                                                        Requisito
+      4302111 - Física I                                                                                                                        Requisito
+AG A0 502                 Planetas e Sistema s Planetários                                                                            4            0           60
+      MAT2453 - Cálculo Diferencial e Integral I                                                                                                        Requisito
+      4302111 - Física I                                                                                                                        Requisito
+GMG0630                 Eleme ntos de Mineralogia e Petrologia                                                                        4            0           60
+IOF0201                 Fundame ntos de Oceanografia Fisica                                                                         3            0           45
+IOF0210                 Introdução à Dinâmi ca da Atmo sfera e dos Oceanos                                                               4            0           60
+      MAT2453 - Cálculo Diferencial e Integral I                                                                                                        Requisito
+QBQ0102                 Bioquími ca e Biologia Molecular                                                                             8            0          120
+QBQ0104                 Bioquími ca e Biologia Molecular                                                                             4            0           60                1
+QBQ0106                 Bioquími ca                                                                                           6            0           90
+QBQ0116                 Bioquími ca: Estrutura de Biomo léculas e Metabolismo                                                              7            0          105
+QBQ0204                 Bioquími ca: Estrutura de Biomo léculas e Metabolismo                                                              6            0           90
+QBQ0313                 Bioquími ca                                                                                           4            0           60
+QBQ0317                 Biologia Molecular                                                                                      4            0           60
+QBQ2500                 Bioquími ca e Biologia Molecular: Realizações e Perspectivas                                                          2            0           30
+QBQ2505                 Biologia Estrutural                                                                                     4            0           60
+                                                                                                                                                                                                                                                                                                                                               
+4º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300225                 Métodos da Fisica Teórica                                                                                 4            0           60        0
+      MAT2453 - Cálculo Diferencial e Integral I                                                                                                        Requisito
+4300227                 A Física do Sp in                                                                                       2            0           30
+      4302112 - Física II                                                                                                                        Requisito
+4300228                 Tratame nto Estatístico de dados em  Física Experimental                                                            4            0           60
+      4302113 - Física Experime ntal I                                                                                                               Requisito
+      MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                    Requisito
+      4302114 - Física Experime ntal II                                                                                                              Requisito
+      MAT2453 - Cálculo Diferencial e Integral I                                                                                                        Requisito
+  ou                                                                                                    
+      4302113 - Física Experime ntal I                                                                                                               Requisito
+      4302114 - Física Experime ntal II                                                                                                              Requisito
+      MAT2453 - Cálculo Diferencial e Integral I                                                                                                        Requisito
+      4300218 - Introdução à Física Comp utacional                                                                                                      Requisito
+4300410                 Métodos Experime ntais Avançados em  Física da Matéria Condensada                                                    4            0           60
+      4302211 - Física III                                                                                                                       Requisito
+4300414                 Ap rendendo física enfrentando problema s em  aberto                                                              2            4          150
+      4302114 - Física Experime ntal II                                                                                                              Requisito
+      4302211 - Física III                                                                                                                       Requisito
+AC A0 324                 Meteorologia Física I                                                                                    4            0           60
+      AC A0 115 - Introdução às Ciências Atmo sféricas                                                                                                     Requisito
+      4302112 - Física II                                                                                                                        Requisito
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                        Requisito
+AG G0110                 Eleme ntos de Geofísica                                                                                  4            0           60
+MAC 0122                 Princípios de Desenvolvime nto de Algoritmo s                                                                    4            0           60
+      MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                    Requisito
+QBQ0230                 Bioquími ca: Estrutura de Biomo léculas e Metabolismo                                                              8            0          120
+QBQ0250                 Bioquími ca: Estrutura de Biomo léculas e Metabolismo                                                              8            0          120
+QBQ0314                 Bioquími ca da Nutrição                                                                                  4            0           60
+QBQ1252                 Bioquími ca Metabólica                                                                                   4            0           60
+QBQ2457                 Tecnologia do Dna Recomb inante                                                                            4            0           60
+                                                                                                                                                                                                                                                                                                                                               
+5º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300223                 Probabilidade                                                                                         4            0           60
+      4302204 - Física Matemá tica I                                                                                                                Requisito
+4300323                 Ciência e Tecnologia do Vá cuo                                                                              6            0           90
+      4302213 - Física Experime ntal III                                                                                                              Requisito
+4300324                 Mecânica dos Fluidos                                                                                    4            0           60
+      4302112 - Física II                                                                                                                        Requisito
+      MAT0216 - Cálculo Diferencial e Integral III                                                                                                       Requisito
+      4300208 - Introdução à Termo dinâmi ca                                                                                                          Requisito
+4300325                 Física do Corpo Huma no                                                                                  4            0           60
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                        Requisito
+      4302212 - Física IV                                                                                                                        Requisito
+4300337                 Introdução à Relatividade                                                                                 4            0           60
+      4302212 - Física IV                                                                                                                        Requisito
+4300345                 Introdução à Física Atmo sférica                                                                             4            0           60                               15
+      4302112 - Física II                                                                                                                        Requisito
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                        Requisito
+      4300208 - Introdução à Termo dinâmi ca                                                                                                          Requisito
+4300429                 Grupos e Tensores                                                                                     4            0           60
+      MAT0122 - Álgebra Linear I                                                                                                                  Requisito
+4300441                 Detectores de Radiação                                                                                  4            1           90
+      4302212 - Física IV                                                                                                                        Requisito
+4302307                 Física Matemá tica II                                                                                    4            0           60
+      4302204 - Física Matemá tica I                                                                                                                Requisito
+4305512                 Ap rendizado de má quina e inteligência artificial em física                                                            4            0           60
+      MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                    Requisito
+      MAT0122 - Álgebra Linear I                                                                                                                  Requisito
+      4302114 - Física Experime ntal II                                                                                                              Requisito
+  ou                                                                                                    
+      4300218 - Introdução à Física Comp utacional                                                                                                      Requisito
+      MAT0122 - Álgebra Linear I                                                                                                                  Requisito
+      4302114 - Física Experime ntal II                                                                                                              Requisito
+AC A0 223                 Clima tologia I                                                                                        4            0           60
+      AC A0 115 - Introdução às Ciências Atmo sféricas                                                                                                     Requisito
+AC A0 326                 Meteorologia Física II                                                                                   6            0           90
+      4302211 - Física III                                                                                                                       Requisito
+      4302212 - Física IV                                                                                                                        Requisito
+      AG A0 106 - Astronomi a de Posição                                                                                                              Requisito
+      4302112 - Física II                                                                                                                        Requisito
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                        Requisito
+AC A0 330                 Introdução à Eletricidade Atmo sférica                                                                         2            2           90
+      4302211 - Física III                                                                                                                       Requisito
+AC A0 410                 Introdução à Quími ca Atmo sférica                                                                           4            0           60
+AC A0 537                 Meteorologia Dinâmi ca I                                                                                 5            0           75
+      MAT0112 - Vetores e Geome tria                                                                                                               Requisito
+      MAT0216 - Cálculo Diferencial e Integral III                                                                                                       Requisito
+AG A0 293                 Astrofísica Estelar                                                                                      4            0           60
+      AG A0 215 - Fundame ntos de Astronomi a                                                                                                          Requisito
+      MAT0216 - Cálculo Diferencial e Integral III                                                                                                       Requisito
+      4302211 - Física III                                                                                                                       Requisito
+  ou                                                                                                    
+      AG A0 101 - Astronomi a: Uma  Visão Geral II                                                                                                       Requisito
+      AG A0 100 - Astronomi a: Uma  Visão Geral I                                                                                                        Requisito
+      MAT0216 - Cálculo Diferencial e Integral III                                                                                                       Requisito
+      4302211 - Física III                                                                                                                       Requisito
+AG A0 521                 Manobras Orbitais                                                                                      2            0           30
+      MAT0122 - Álgebra Linear I                                                                                                                  Requisito
+      MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                    Requisito
+AG G0222                 Física do Interior da Terra                                                                                 4            2          120
+      MAT2453 - Cálculo Diferencial e Integral I                                                                                                        Requisito
+      4302111 - Física I                                                                                                                        Requisito
+AG G0232                 Sísmi ca I                                                                                           4            0           60
+      4302112 - Física II                                                                                                                        Requisito
+      AG G0110 - Eleme ntos de Geofísica                                                                                                             Requisito
+AG G0243                 Métodos Matemá ticos em  Geofísica                                                                          6            0           90
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                        Requisito
+      4302211 - Física III                                                                                                                       Requisito
+MAT0222                 Álgebra Linear II                                                                                      4            0           60
+      MAT0122 - Álgebra Linear I                                                                                                                  Requisito
+QBQ1354                 Biologia Molecular                                                                                      4            0           60
+QBQ2502                 Enzimo logia                                                                                          2            0           30
+                                                                                                                                                                                                                                                                                                                                               
+6º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300320                 Introdução ao Caos                                                                                     4            0           60
+      4302305 - Mecânica I                                                                                                                      Requisito
+      4300218 - Introdução à Física Comp utacional                                                                                                      Requisito
+4300360                 Técnicas Experime ntais em  Física de Partículas Elementares                                                          4            0           60
+      4302313 - Física Experime ntal V                                                                                                               Requisito
+4300430                 Cosmo logia Física                                                                                      4            0           60
+      4302212 - Física IV                                                                                                                        Requisito
+4300436                 Efeitos Biológicos das Radiações Ionizantes e Não Ionizantes                                                         4            0           60
+      4302212 - Física IV                                                                                                                        Requisito
+4302306                 Mecânica II                                                                                          4            0           60        0                       0
+      4302305 - Mecânica I                                                                                                                      Requisito
+4302314                 Física Experime ntal VI                                                                                    4            0           60
+      4302214 - Física Experime ntal IV                                                                                                              Requisito
+4302322                 Física Matemá tica III                                                                                    4            0           60
+      4302307 - Física Matemá tica II                                                                                                               Requisito
+4302360                 Aceleradores de Partículas: Fundame ntos e Ap licações                                                             4            0           60
+      4302212 - Física IV                                                                                                                        Requisito
+4302504                 Técnicas de Caracterização de Materiais                                                                       4            0           60
+      4302311 - Física Quântica                                                                                                                   Requisito
+4305005                 Mecânica Clássica                                                                                      4            0           60
+      4302305 - Mecânica I                                                                                                                      Requisito
+4305103                 Tópicos avançados em  tratame nto estatístico de dados em física experimental                                             6            0           90
+      4300228 - Tratame nto Estatístico de dados em Física Experimental                                                                                       Requisito
+      MAT0122 - Álgebra Linear I                                                                                                                  Requisito
+4305205                 Microscopia de Força Atômi ca e Tunelame nto                                                                    5            0           75
+      4302311 - Física Quântica                                                                                                                   Requisito
+4305326                 Sistema s Dinâmi cos não Lineares                                                                           4            0           60
+      4302305 - Mecânica I                                                                                                                      Requisito
+4305374                 Processame nto de dispositivos em  sala limp a                                                                    4            0           60
+      4302305 - Mecânica I                                                                                                                      Requisito
+AC A0 413                 Meteorologia Por Sa télite                                                                                 4            0           60
+      AC A0 326 - Meteorologia Física II                                                                                                              Requisito
+AC A0 429                 Ag rome teorologia                                                                                      4            0           60
+      AC A0 326 - Meteorologia Física II                                                                                                              Requisito
+AC A0 522                 Meteorologia Sinótica I                                                                                  3            0           45
+      AC A0 223 - Clima tologia I                                                                                                                   Requisito
+      MAT0112 - Vetores e Geome tria                                                                                                               Requisito
+      MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                    Requisito
+AG A0 309                 Mecânica Celeste                                                                                      4            0           60
+      4302112 - Física II                                                                                                                        Requisito
+      MAT2454 - Cálculo Diferencial e Integral II                                                                                                        Requisito
+AG A0 315                 Astrofísica de Altas Energias                                                                               4            0           60
+      4302311 - Física Quântica                                                                                                                   Requisito
+      AG A0 215 - Fundame ntos de Astronomi a                                                                                                          Requisito
+  ou                                                                                                    
+      AG A0 293 - Astrofísica Estelar                                                                                                                 Requisito
+      4302212 - Física IV                                                                                                                        Requisito
+AG A0 319                 Relatividade Geral e Ap licações Astrofísicas                                                                     4            0           60
+      4302305 - Mecânica I                                                                                                                      Requisito
+AG A0 416                 Introdução à Cosmo logia                                                                                 4            0           60
+      4302311 - Física Quântica                                                                                                                   Requisito
+  ou                                                                                                    
+      4302212 - Física IV                                                                                                                        Requisito
+      AG A0 215 - Fundame ntos de Astronomi a                                                                                                          Requisito
+QBQ2503                 Expressão Gênica                                                                                      2            0           30
+QBQ2507                 Biologia Molecular Comp utacional                                                                           4            0           60
+QBQ2508                 Transporte e Sinalização Celular                                                                            2            0           30
+QBQ2509                 Bioquími ca Redox                                                                                      2            0           30
+                                                                                                                                                                                                                                                                                                                                               
+7º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300315                 Introdução à Física Atômi ca e Molecular                                                                       4            0           60
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4300326                 Introdução à Física de Plasma s e Fusão Nuclear                                                                  4            0           60
+      4302212 - Física IV                                                                                                                        Requisito
+      4302214 - Física Experime ntal IV                                                                                                              Requisito
+4300331                 Métodos comp utacionais em  Física                                                                           4            0           60
+      MAP 0214 - Cálculo Numé rico com  Ap licações em Física                                                                                                Requisito
+      4302401 - Mecânica Estatística                                                                                                                Requisito
+4300406                 Introdução à Física Nuclear                                                                               4            0           60
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4300407                 Simu lação Comp utacional dos Materiais                                                                       4            0           60
+      4302311 - Física Quântica                                                                                                                   Requisito
+4300409                 Grupos e Tensores Ap licados à Ciência dos Materiais                                                               4            0           60
+      4302204 - Física Matemá tica I                                                                                                                Requisito
+      MAT0122 - Álgebra Linear I                                                                                                                  Requisito
+      4302311 - Física Quântica                                                                                                                   Requisito
+4300427                 Dinâmi ca Estocástica                                                                                    4            0           60
+      4302212 - Física IV                                                                                                                        Requisito
+      4302214 - Física Experime ntal IV                                                                                                              Requisito
+4300437                 Física das Radiações I                                                                                   6            0           90
+      4302313 - Física Experime ntal V                                                                                                               Requisito
+      4302311 - Física Quântica                                                                                                                   Requisito
+      4302212 - Física IV                                                                                                                        Requisito
+4300502                 Física dos Materiais                                                                                     4            0           60
+      4302311 - Física Quântica                                                                                                                   Requisito
+4302304                 Eletroma gnetismo  II                                                                                    4            0           60        0                       0
+      4302303 - Eletroma gnetismo  I                                                                                                                Requisito
+4302308                 Termo dinâmi ca                                                                                        4            0           60        0                       0
+      4300208 - Introdução à Termo dinâmi ca                                                                                                          Requisito
+4302404                 Mecânica Quântica II                                                                                    4            0           60        0                       0
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4305001                 Mecânica Quântica Avançada I                                                                             6            0           90
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4305003                 Eletrodinâmi ca I                                                                                       4            0           60
+      4302303 - Eletroma gnetismo  I                                                                                                                Requisito
+4305106                 Física de Partículas Eleme ntares                                                                            6            0           90
+      4302303 - Eletroma gnetismo  I                                                                                                                Requisito
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4305107                 Introdução à Teoria Quântica de Camp os I                                                                     4            0           60
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+      4302303 - Eletroma gnetismo  I                                                                                                                Requisito
+4305292                 Cosmo logia Física I                                                                                     4            0           60
+      4300430 - Cosmo logia Física                                                                                                                 Requisito
+4305300                 Introdução à física de hádrons                                                                             4            0           60
+      4302303 - Eletroma gnetismo  I                                                                                                                Requisito
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4305343                 Informa ção Quântica e Ruídos Quânticos                                                                      4            0           60
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4305360                 Teoria do Funcional da Densidade: Moléculas e Só lidos                                                             4            2          120
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+AC A0 226                 Clima tologia II                                                                                        4            0           60
+      AC A0 537 - Meteorologia Dinâmi ca I                                                                                                            Requisito
+      AC A0 223 - Clima tologia I                                                                                                                   Requisito
+AC A0 245                 Biome teorologia                                                                                       4            2          120
+AC A0 336                 Meteorologia Amb iental                                                                                  4            0           60
+      AC A0 324 - Meteorologia Física I                                                                                                               Requisito
+AG A0 299                 Astrofísica Galáctica e Extragaláctica                                                                         4            0           60
+      AG A0 293 - Astrofísica Estelar                                                                                                                 Requisito
+AG A0 505                 An álise de Dados em  Astronomi a                                                                            2            0           30        0
+      MAP 0214 - Cálculo Numé rico com  Ap licações em Física                                                                                                Requisito
+AG A0 506                 Transporte de Energia em  Astrofísica                                                                         4            0           60
+      4302311 - Física Quântica                                                                                                                   Requisito
+      AG A0 215 - Fundame ntos de Astronomi a                                                                                                          Requisito
+  ou                                                                                                    
+      AG A0 293 - Astrofísica Estelar                                                                                                                 Requisito
+      4302212 - Física IV                                                                                                                        Requisito
+AG A0 511                 Métodos Comp utacionais em  Astronomi a                                                                       4            0           60
+      MAP 0214 - Cálculo Numé rico com  Ap licações em Física                                                                                                Requisito
+AG A0 523                 Se nsoriame nto Remo to Multiespectral                                                                        2            0           30
+      4302212 - Física IV                                                                                                                        Requisito
+      MAC 0115 - Introdução à Comp utação para Ciências Exatas e Tecnologia                                                                                    Requisito
+AG G0305                 Teoria de Ondas Sísmi cas e Estrutura da Terra                                                                   4            0           60
+      AG G0232 - Sísmi ca I                                                                                                                      Requisito
+      AG G0243 - Métodos Matemá ticos em  Geofísica                                                                                                     Requisito
+QFL0606                 Fundame ntos de Quími ca para Física                                                                         6            0           90
+                                                                                                                                                                                                                                                                                                                                               
+8º Período Ideal
+Créd.
+Aula
+Créd.
+Trab.
+CH        CE      CP     ATPA    EXT
+4300402                 Introdução à Física do Estado Só lido                                                                         4            0           60
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4300422                 Introdução à Física de Partículas Eleme ntares                                                                   4            0           60
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+      4302303 - Eletroma gnetismo  I                                                                                                                Requisito
+4300438                 Física das Radiações II                                                                                  6            0           90
+      4300437 - Física das Radiações I                                                                                                              Requisito
+4300464                 Trabalho de Conclusão de Curso                                                                            0            2           60
+4305002                 Mecânica Quântica Avançada II                                                                             6            0           90
+      4305001 - Mecânica Quântica Avançada I                                                                                                        Requisito
+4305004                 Eletrodinâmi ca II                                                                                      4            0           60
+      4305003 - Eletrodinâmi ca I                                                                                                                  Requisito
+4305006                 Mecânica Estatística II                                                                                   4            0           60
+      4302401 - Mecânica Estatística                                                                                                                Requisito
+4305110                 Física do Estado Só lido I                                                                                 4            0           60
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4305216                 Simu lação Comp utacional de Líquidos Moleculares e So luções                                                        6            0           90
+      4302401 - Mecânica Estatística                                                                                                                Requisito
+      4300218 - Introdução à Física Comp utacional                                                                                                      Requisito
+4305275                 Introdução à Teoria Quântica da Luz                                                                         4            0           60
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+      4302303 - Eletroma gnetismo  I                                                                                                                Requisito
+4305295                 Teoria Quântica de Muitos Corpos em  Matéria Condensada                                                           4            0           60
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4305299                 Cosmo logia Física II                                                                                    4            0           60
+      4305292 - Cosmo logia Física I                                                                                                                Requisito
+4305324                 Fenome nologia de Colisões de Íons Pesados Relativísticos                                                           4            0           60
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+      4302401 - Mecânica Estatística                                                                                                                Requisito
+4305358                 Fenôme nos Eme rgentes em  Matéria Quântica Correlacionada                                                         6            0           90
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4305359                 Matéria Quântica Topológica e seu desafio na física                                                                6            0           90
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4305376                 Termo eletricidade e ma teriais quânticos                                                                       4            0           60
+      4302403 - Mecânica Quântica I                                                                                                               Requisito
+4305828                 Introdução à Teoria Quântica de Camp os II                                                                     4            0           60
+      4305107 - Introdução à Teoria Quântica de Campos I                                                                                                 Requisito
+AC A0 415                 O Clima  da Terra: Processos, Mudanças e Imp actos                                                               4            1           90
+                                                                                                                                                                                                                                                                                 
+ 
+ 
+ 
+Créditos | Fale conosco
+© 1999 - 2026 - Superintendência de                Tecnologia da Informação/USP
+Público
+Calendário Escolar
+Cursos de ingresso
+Disciplina
+Editais
+FAQ
+Acesso Restrito
+Entrar
+Esqueci a Senha
+Primeiro Acesso
+----------------Page (0) Break----------------
