@@ -39,13 +39,13 @@ export default function SubmitPage() {
             }
 
             // Initialization sequence
-            reset();
+            // Do not call reset() unconditionally, as it breaks persistence when mobile browser suspends/resumes tab
             setIsInitializing(false);
             clearTimeout(timeout);
         }
 
         return () => clearTimeout(timeout);
-    }, [authLoading, user, router, reset, isInitializing]);
+    }, [authLoading, user, router, isInitializing]);
 
     if (authLoading || isInitializing) {
         return (

@@ -8,6 +8,7 @@ export const SubmissionSchema = z.object({
     authors: z.string().min(2, "Autores são obrigatórios"),
     media_type: z.enum(['image', 'video', 'pdf', 'text', 'link', 'zip', 'sdocx']),
     media_url: z.string().min(1, "URL de mídia é obrigatória"), // Can be JSON string or single URL
+    video_url: z.string().optional().nullable(),
     tags: z.array(z.string()).max(10, "Máximo de 10 tags permitidas").default([]),
     location_name: z.string().optional().nullable(),
     location_lat: z.number().optional().nullable(),

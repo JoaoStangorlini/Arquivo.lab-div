@@ -487,6 +487,7 @@ export async function createSubmission(formData: z.infer<typeof SubmissionSchema
         pseudonym_id,
         new_pseudonym,
         quiz,
+        video_url, // Excluded from DB insert as it has no column
         ...insertData
     } = validated.data;
 

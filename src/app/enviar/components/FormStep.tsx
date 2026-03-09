@@ -128,10 +128,20 @@ export function FormStep() {
 
             if (result.error) {
                 const err = result.error as any;
-                const message = err.message || "Erro ao enviar. Verifique os dados.";
+                let message = err.message || "Erro ao enviar. Verifique os dados.";
+
+                if (err.database && err.database.length > 0) {
+                    const dbError = err.database[0];
+                    if (dbError.includes('LIMITE_PSEUDONIMO_ATINGIDO')) {
+                        message = "Você atingiu o limite de publicações ativas com o mesmo apelido (máximo 2). Desative o apelido ou exclua uma submissão antiga.";
+                    } else {
+                        message = dbError; // Exibe o erro real do DB (ex: column not found)
+                    }
+                }
+
                 const validationFields = err.validation ? Object.keys(err.validation).join(', ') : '';
 
-                toast.error(`${message} ${validationFields ? `(Campos: ${validationFields})` : ''}`);
+                toast.error(`${message} ${validationFields ? `(Campos inválidos: ${validationFields})` : ''}`);
                 console.error("Submission Error Details:", result.error);
             } else {
                 clearAutoSave();
