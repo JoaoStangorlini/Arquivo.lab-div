@@ -26,6 +26,7 @@ export interface Profile {
     available_to_mentor: boolean;
     seeking_mentor: boolean;
     education_level?: string;
+    external_institution?: string;
     school_year?: string;
     objective?: string;
     interests: string[];

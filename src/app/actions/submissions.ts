@@ -142,6 +142,93 @@ export async function getUserPseudonyms() {
     return data;
 }
 
+import { v2 as cloudinary } from 'cloudinary';
+
+// Opcional: configurar globalmente se as envs estiverem disponíveis no startup
+if (process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) {
+    cloudinary.config({
+        cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+}
+
+export async function deleteSubmissionAdmin(id: string) {
+    try {
+        const supabaseServer = await createServerSupabase();
+
+        // 1. Validar Admin
+        const { data: { user } } = await supabaseServer.auth.getUser();
+        if (!user) return { error: "Não autenticado" };
+
+        const { data: profile } = await supabaseServer.from('profiles').select('is_labdiv').eq('id', user.id).single();
+        if (!profile?.is_labdiv) return { error: "Acesso negado: Administrador necessário." };
+
+        // 2. Buscar a mídia para deletar do Cloudinary
+        const { data: sub } = await supabaseServer.from('submissions').select('media_url, media_type').eq('id', id).single();
+        if (!sub) return { error: "Submissão não encontrada" };
+
+        // 3. Deletar Arquivos Físicos do Cloudinary (se aplicável)
+        if (sub.media_url && ['image', 'pdf', 'zip', 'sdocx'].includes(sub.media_type)) {
+            try {
+                // Ensure config is present (in case global init failed or wasn't executed)
+                cloudinary.config({
+                    cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+                    api_key: process.env.CLOUDINARY_API_KEY,
+                    api_secret: process.env.CLOUDINARY_API_SECRET,
+                });
+
+                let urls: string[] = [];
+                try {
+                    urls = JSON.parse(sub.media_url);
+                } catch {
+                    // Try parsing as simple array string if single URL or not JSON format
+                    if (sub.media_url.startsWith('["') || sub.media_url.startsWith('[')) {
+                        urls = JSON.parse(sub.media_url);
+                    } else {
+                        urls = [sub.media_url];
+                    }
+                }
+
+                for (const url of urls) {
+                    if (typeof url === 'string' && url.includes('cloudinary.com')) {
+                        const parts = url.split('/upload/');
+                        if (parts.length > 1) {
+                            let publicIdPath = parts[1];
+                            publicIdPath = publicIdPath.replace(/^v\d+\//, '');
+                            // Remove a extensão (o Cloudinary destroy precisa só do Public ID sem a extensão por padrão para image)
+                            const publicId = publicIdPath.replace(/\.[^/.]+$/, "");
+
+                            const resourceType = ['image', 'pdf'].includes(sub.media_type) ? 'image' : 'raw';
+
+                            await cloudinary.uploader.destroy(publicId, { invalidate: true, resource_type: resourceType });
+                            console.log(`Cloudinary Delete Log: Deleted ${publicId} (${resourceType})`);
+                        }
+                    }
+                }
+            } catch (mediaErr) {
+                console.warn("Erro ao tentar deletar mídia do Cloudinary:", mediaErr);
+                // Não bloqueia a deleção do banco se falhar a mídia
+            }
+        }
+
+        // 4. Deletar do banco de dados Submissions
+        const { error } = await supabaseServer.from('submissions').delete().eq('id', id);
+
+        if (error) {
+            console.error("Erro ao deletar submissão do banco:", error);
+            return { error: error.message };
+        }
+
+        revalidatePath('/admin/pendentes');
+        return { success: true };
+
+    } catch (err: any) {
+        console.error("Erro inesperado em deleteSubmissionAdmin:", err);
+        return { error: err.message || "Erro interno do servidor." };
+    }
+}
+
 export async function createPseudonym(name: string) {
     const serverSupabase = await createServerSupabase();
     const { data: { user } } = await serverSupabase.auth.getUser();

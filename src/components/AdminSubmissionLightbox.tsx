@@ -61,6 +61,10 @@ export function AdminSubmissionLightbox({
     const [selectedTopicIndex, setSelectedTopicIndex] = useState<number>(0);
     const [isTrailsLoading, setIsTrailsLoading] = useState(false);
 
+    // Deletion State
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+
     React.useEffect(() => {
         async function loadTrailsData() {
             setIsTrailsLoading(true);
@@ -107,6 +111,29 @@ export function AdminSubmissionLightbox({
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(date);
+    };
+
+    const handleDelete = async () => {
+        setIsDeleting(true);
+        try {
+            // Import dynamicaction to prevent circular/server deps if any, but since it's a server action, it's better to import at top or call directly.
+            // But we don't have it imported at the top, let's just import it dynamically or we can just import it at the top.
+            // For now, let's import it inline.
+            const { deleteSubmissionAdmin } = await import('@/app/actions/submissions');
+
+            const res = await deleteSubmissionAdmin(item.id);
+            if (res.success) {
+                toast.success('Submissão e arquivos removidos com sucesso!');
+                onClose(); // Fechar o modal após deletar
+            } else {
+                toast.error(res.error || 'Erro ao deletar submissão.');
+            }
+        } catch (error: any) {
+            toast.error(error.message || 'Erro inesperado.');
+        } finally {
+            setIsDeleting(false);
+            setShowDeleteConfirm(false);
+        }
     };
 
     return (
@@ -641,12 +668,20 @@ export function AdminSubmissionLightbox({
                             )}
 
                             {statusType === 'rejeitado' && (
-                                <button
-                                    onClick={() => { onApprove?.(item.id); onClose(); }}
-                                    className="w-full flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/40 border border-green-200 dark:border-green-800 transition-colors text-sm font-medium"
-                                >
-                                    <RefreshCw className="w-5 h-5" /> Restaurar (Aprovar)
-                                </button>
+                                <div className="w-full flex flex-col gap-2">
+                                    <button
+                                        onClick={() => { onApprove?.(item.id); onClose(); }}
+                                        className="w-full flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/40 border border-green-200 dark:border-green-800 transition-colors text-sm font-medium"
+                                    >
+                                        <RefreshCw className="w-5 h-5" /> Restaurar (Aprovar)
+                                    </button>
+                                    <button
+                                        onClick={() => setShowDeleteConfirm(true)}
+                                        className="w-full flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/40 border border-red-200 dark:border-red-800 transition-colors text-sm font-medium"
+                                    >
+                                        <Trash2 className="w-5 h-5" /> Deletar Definitivamente
+                                    </button>
+                                </div>
                             )}
                         </div>
                     </div>
@@ -665,6 +700,48 @@ export function AdminSubmissionLightbox({
                     />
                 )
             }
+
+            {/* Confirmation Modal for Permanent Deletion */}
+            {showDeleteConfirm && (
+                <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+                    <div className="bg-white dark:bg-form-dark p-8 rounded-3xl max-w-md w-full shadow-2xl animate-in zoom-in-95 duration-200 border-2 border-red-100 dark:border-red-900/30">
+                        <div className="flex flex-col items-center text-center">
+                            <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-6">
+                                <Trash2 className="w-8 h-8 text-red-600 dark:text-red-400" />
+                            </div>
+                            <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-3">Deleção Permanente</h3>
+                            <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                                Tem certeza que deseja excluir permanentemente esta submissão?
+                                <br /><br />
+                                <strong className="text-red-600 dark:text-red-400">Esta ação NÃO PODE ser desfeita.</strong> Os arquivos físicos associados serão apagados do servidor.
+                            </p>
+                            <div className="flex gap-3 w-full">
+                                <button
+                                    onClick={() => setShowDeleteConfirm(false)}
+                                    disabled={isDeleting}
+                                    className="flex-1 px-6 py-3 rounded-xl font-bold border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all disabled:opacity-50"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    onClick={handleDelete}
+                                    disabled={isDeleting}
+                                    className="flex-1 px-6 py-3 rounded-xl font-bold bg-red-600 hover:bg-red-700 text-white transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                                >
+                                    {isDeleting ? (
+                                        <>
+                                            <span className="material-symbols-outlined animate-spin text-sm">progress_activity</span>
+                                            Excluindo...
+                                        </>
+                                    ) : (
+                                        'Sim, Excluir'
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

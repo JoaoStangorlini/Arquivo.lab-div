@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { MainLayoutWrapper } from '@/components/layout/MainLayoutWrapper';
-import { Zap, Atom, Microscope, Binary, LayoutGrid, Timer, Layers, ShieldCheck, Milestone, Sparkles, Link2, AlertTriangle, Play, CheckCircle2, Circle, Trophy, GraduationCap, ArrowRight, User, Loader2 } from 'lucide-react';
+import { Zap, Atom, Microscope, Binary, LayoutGrid, Timer, Layers, ShieldCheck, Milestone, Sparkles, Link2, AlertTriangle, Play, CheckCircle2, Circle, Trophy, GraduationCap, ArrowRight, User, Loader2, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'react-hot-toast';
@@ -64,6 +64,8 @@ export default function TrilhasClient({
     const [dashboardTab, setDashboardTab] = useState<'faltam' | 'concluidas' | 'cursando'>('faltam');
     const [isDashboardCollapsed, setIsDashboardCollapsed] = useState(false);
     const router = useRouter();
+
+    const isUspUser = userProfile?.email ? userProfile.email.endsWith('@usp.br') : false;
 
     // Semester Options
     const availableSemesters = useMemo(() => {
@@ -488,13 +490,24 @@ export default function TrilhasClient({
                                     </div>
                                 ) : (
                                     <div className="px-8 pb-8">
-                                        <div className="p-6 dark:bg-brand-yellow/5 bg-brand-yellow/10 border border-brand-yellow/20 rounded-3xl text-center space-y-2">
-                                            <AlertTriangle className="mx-auto text-brand-yellow" size={24} />
-                                            <p className="text-[10px] font-mono font-black uppercase text-brand-yellow tracking-[0.2em]">Fluxo Incompleto detectado</p>
-                                            <p className="text-xs text-gray-400 font-medium">Configure seu <span className="text-white">Curso</span> e <span className="text-white">Instituto (IFUSP)</span> nas configurações de perfil para habilitar o rastreamento dinâmico de disciplinas obrigatórias.</p>
-                                            <Link href="/lab" className="inline-block mt-4 px-6 py-2 bg-brand-yellow/10 hover:bg-brand-yellow/20 text-brand-yellow text-[10px] font-black uppercase tracking-widest rounded-xl transition-all border border-brand-yellow/30">
-                                                Configurar Perfil
-                                            </Link>
+                                        <div className={`p-6 border rounded-3xl text-center space-y-2 ${isUspUser ? 'dark:bg-brand-yellow/5 bg-brand-yellow/10 border-brand-yellow/20' : 'dark:bg-[#00A3FF]/5 bg-[#00A3FF]/10 border-[#00A3FF]/20'}`}>
+                                            {isUspUser ? (
+                                                <>
+                                                    <AlertTriangle className="mx-auto text-brand-yellow" size={24} />
+                                                    <p className="text-[10px] font-mono font-black uppercase text-brand-yellow tracking-[0.2em]">Fluxo Incompleto detectado</p>
+                                                    <p className="text-xs text-gray-400 font-medium">Configure seu <span className="text-white">Curso</span> e <span className="text-white">Instituto (IFUSP)</span> nas configurações de perfil para habilitar o rastreamento dinâmico de disciplinas obrigatórias.</p>
+                                                    <Link href="/lab" className="inline-block mt-4 px-6 py-2 bg-brand-yellow/10 hover:bg-brand-yellow/20 text-brand-yellow text-[10px] font-black uppercase tracking-widest rounded-xl transition-all border border-brand-yellow/30">
+                                                        Configurar Perfil
+                                                    </Link>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Globe className="mx-auto text-[#00A3FF]" size={24} />
+                                                    <p className="text-[10px] font-mono font-black uppercase text-[#00A3FF] tracking-[0.2em]">Modo Visitante Ativo</p>
+                                                    <p className="text-xs text-gray-400 font-medium">O rastreamento de disciplinas obrigatórias é exclusivo para alunos USP.</p>
+                                                    <p className="text-[11px] text-gray-500 font-medium mt-1">Sinta-se livre para explorar todas as trilhas e materiais disponíveis na base Síncrotron abaixo.</p>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 )}

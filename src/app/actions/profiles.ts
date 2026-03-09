@@ -262,7 +262,9 @@ export async function updateProfileAsAdmin(profileId: string, updates: Partial<P
             is_visible: updates.is_visible,
             available_to_mentor: updates.available_to_mentor,
             seeking_mentor: updates.seeking_mentor,
-            review_status: updates.review_status
+            review_status: updates.review_status,
+            education_level: updates.education_level,
+            external_institution: updates.external_institution
         })
         .eq('id', profileId);
 
