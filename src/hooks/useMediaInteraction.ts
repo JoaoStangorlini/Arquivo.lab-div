@@ -10,15 +10,16 @@ interface UseMediaInteractionProps {
     initialLikes: number;
     initialSaves: number;
     initialLiked?: boolean;
+    initialSaved?: boolean;
     userId?: string;
 }
 
-export function useMediaInteraction({ id, initialLikes, initialSaves, initialLiked = false, userId }: UseMediaInteractionProps) {
+export function useMediaInteraction({ id, initialLikes, initialSaves, initialLiked = false, initialSaved = false, userId }: UseMediaInteractionProps) {
     const router = useRouter();
     const [likes, setLikes] = useState(initialLikes);
     const [liked, setLiked] = useState(initialLiked);
     const [saves, setSaves] = useState(initialSaves);
-    const [saved, setSaved] = useState(false);
+    const [saved, setSaved] = useState(initialSaved);
     const [isLiking, setIsLiking] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
@@ -26,7 +27,9 @@ export function useMediaInteraction({ id, initialLikes, initialSaves, initialLik
     useEffect(() => {
         setLikes(initialLikes);
         setLiked(initialLiked);
-    }, [initialLikes, initialLiked]);
+        setSaves(initialSaves);
+        setSaved(initialSaved);
+    }, [initialLikes, initialLiked, initialSaves, initialSaved]);
 
     const lastLikeClick = useRef<number>(0);
 

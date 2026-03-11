@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MainLayoutWrapper } from "@/components/layout/MainLayoutWrapper";
 import { MediaCard, MediaCardProps } from "@/components/MediaCard";
-import { Megaphone, ArrowRight, UserPlus, Award, Star, ExternalLink, BookOpen, Route } from 'lucide-react';
+import { Megaphone, ArrowRight, UserPlus, Award, Star, ExternalLink, BookOpen, Route, Rocket, Smartphone, Gamepad2, Database, Users, Mic, Shield, Map, Layout, MessageSquare, Book, Calculator, Settings, Link2, Globe, Video, Briefcase, Accessibility, Building, ScrollText, FileText, Network } from 'lucide-react';
 
 interface SobreClientProps {
     initialTestimonials: MediaCardProps[];
@@ -138,8 +138,9 @@ export function SobreClient({ initialTestimonials }: SobreClientProps) {
                     <div className="w-full lg:w-72 shrink-0 grid grid-cols-2 lg:grid-cols-1 gap-4">
                         <div className="bg-gray-50 dark:bg-white/5 p-8 rounded-3xl border border-gray-100 dark:border-white/5 flex flex-col justify-center text-center">
                             <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Comunidade</span>
-                            <span className="text-4xl font-black text-brand-blue">247</span>
+                            <span className="text-4xl font-black text-brand-blue">~500</span>
                             <span className="text-xs font-bold text-gray-500 mt-1">Usuários Ativos</span>
+                            <span className="text-[10px] text-gray-400 mt-1">*estimativa de alunos da graduação</span>
                         </div>
                         <div className="bg-gray-50 dark:bg-white/5 p-8 rounded-3xl border border-gray-100 dark:border-white/5 flex flex-col justify-center text-center">
                             <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Acervo Digital</span>
@@ -258,6 +259,332 @@ export function SobreClient({ initialTestimonials }: SobreClientProps) {
                     <Link href="/wiki" className="text-[10px] font-black uppercase tracking-widest text-brand-blue flex items-center gap-2 group/link">
                         Explorar Wiki <ArrowRight className="size-3 group-hover/link:translate-x-1 transition-transform" />
                     </Link>
+                </div>
+            </div>
+
+
+            {/* Mapeamento Arquitetural: Atual e Futuro */}
+            <div className="space-y-8 mt-20 mb-20 px-4 md:px-0">
+                <div className="mb-12 text-center md:text-left">
+                    <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white flex flex-col md:flex-row items-center gap-4 mb-3 justify-center md:justify-start">
+                        <Layout className="text-brand-blue w-10 h-10" />
+                        Mapeamento Arquitetural
+                    </h2>
+                    <p className="text-gray-500 dark:text-gray-400 text-lg md:text-xl">
+                        A anatomia atual do Hub Lab-Div e nosso roadmap de expansão.
+                    </p>
+                </div>
+
+                <div className="flex flex-col gap-8">
+                    {/* ÁREA 1 */}
+                    <div className="glass-card rounded-[32px] p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-stretch border border-white/5 hover:border-brand-blue/30 transition-all group">
+                        {/* Header da Área */}
+                        <div className="lg:w-1/3 flex flex-col justify-center">
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-brand-blue mb-3 inline-block px-3 py-1 bg-brand-blue/10 rounded-full w-fit">[ÁREA 1] Identidade (IAM)</span>
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-brand-blue shrink-0 group-hover:scale-110 group-hover:bg-brand-blue/10 transition-all">
+                                    <Shield className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold leading-tight">Autenticação & Perfis</h3>
+                            </div>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                Gerenciamento de credenciais, personalização do laboratório pessoal e mapeamento de cursos.
+                            </p>
+                        </div>
+                        {/* Cards Atual/Futuro */}
+                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="bg-[#11141a] rounded-2xl p-6 border border-white/5 flex flex-col h-full">
+                                <span className="text-[10px] uppercase font-black tracking-widest text-green-400 mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div> Status Atual</span>
+                                <h4 className="font-bold text-white mb-2">Laboratório Pessoal</h4>
+                                <p className="text-xs text-slate-500 flex-1">Gestão de perfil básico e configuração inicial de preferência de cursos (Bacharelado/Licenciatura).</p>
+                            </div>
+                            <div className="bg-brand-blue/5 rounded-2xl p-6 border border-brand-blue/10 flex flex-col h-full relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/10 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                <span className="text-[10px] uppercase font-black tracking-widest text-brand-blue mb-2 relative z-10 flex items-center gap-2"><Rocket className="w-3 h-3" /> Roadmap Futuro</span>
+                                <h4 className="font-bold text-brand-blue mb-2 relative z-10">Login Único USP</h4>
+                                <p className="text-xs text-slate-400 flex-1 relative z-10">Migração para <code>hublabdiv.if.usp.br</code> e integração completa com sistemas oficiais de senha única (OAuth / Jupiter).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ÁREA 2 */}
+                    <div className="glass-card rounded-[32px] p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-stretch border border-white/5 hover:border-brand-red/30 transition-all group">
+                        {/* Header da Área */}
+                        <div className="lg:w-1/3 flex flex-col justify-center">
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-brand-red mb-3 inline-block px-3 py-1 bg-brand-red/10 rounded-full w-fit">[ÁREA 2] Produção Multimídia</span>
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-brand-red shrink-0 group-hover:scale-110 group-hover:bg-brand-red/10 transition-all">
+                                    <Video className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold leading-tight">Criação & Ingestão</h3>
+                            </div>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                Fluxos de entrada de dados, envio de mídias pela comunidade e produção de estúdio.
+                            </p>
+                        </div>
+                        {/* Cards Atual/Futuro */}
+                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="bg-[#11141a] rounded-2xl p-6 border border-white/5 flex flex-col h-full">
+                                <span className="text-[10px] uppercase font-black tracking-widest text-green-400 mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div> Status Atual</span>
+                                <h4 className="font-bold text-white mb-2">Submissões Colaborativas</h4>
+                                <p className="text-xs text-slate-500 flex-1">Formulários de captação de registros de celulares e interações assíncronas de pesquisadores (O Fluxo).</p>
+                            </div>
+                            <div className="bg-brand-red/5 rounded-2xl p-6 border border-brand-red/10 flex flex-col h-full relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-brand-red/10 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                <span className="text-[10px] uppercase font-black tracking-widest text-brand-red mb-2 relative z-10 flex items-center gap-2"><Rocket className="w-3 h-3" /> Roadmap Futuro</span>
+                                <h4 className="font-bold text-brand-red mb-2 relative z-10">Conteúdo 'Padrão Ouro'</h4>
+                                <p className="text-xs text-slate-400 flex-1 relative z-10">Artigos teóricos profundos e superproduções audiovisuais institucionais gravadas em estúdio pelo Lab-Div.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ÁREA 3 */}
+                    <div className="glass-card rounded-[32px] p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-stretch border border-white/5 hover:border-brand-yellow/30 transition-all group">
+                        {/* Header da Área */}
+                        <div className="lg:w-1/3 flex flex-col justify-center">
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-brand-yellow mb-3 inline-block px-3 py-1 bg-brand-yellow/10 rounded-full w-fit">[ÁREA 3] Descoberta e Carreiras</span>
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-brand-yellow shrink-0 group-hover:scale-110 group-hover:bg-brand-yellow/10 transition-all">
+                                    <Briefcase className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold leading-tight">Rotas & Vetores</h3>
+                            </div>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                Estruturação do conhecimento para que o aluno trace sua tragetória acadêmica e profissional.
+                            </p>
+                        </div>
+                        {/* Cards Atual/Futuro */}
+                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="bg-[#11141a] rounded-2xl p-6 border border-white/5 flex flex-col h-full">
+                                <span className="text-[10px] uppercase font-black tracking-widest text-green-400 mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div> Status Atual</span>
+                                <h4 className="font-bold text-white mb-2">Síncrotron (Trilhas)</h4>
+                                <p className="text-xs text-slate-500 flex-1">Mapa de arquivos e Trilhas Curriculares de aprendizado autodirigido para facilitar os estudos focados.</p>
+                            </div>
+                            <div className="bg-brand-yellow/5 rounded-2xl p-6 border border-brand-yellow/10 flex flex-col h-full relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-brand-yellow/10 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                <span className="text-[10px] uppercase font-black tracking-widest text-brand-yellow mb-2 relative z-10 flex items-center gap-2"><Rocket className="w-3 h-3" /> Roadmap Futuro</span>
+                                <h4 className="font-bold text-brand-yellow mb-2 relative z-10">Catálogo de Iniciações</h4>
+                                <p className="text-xs text-slate-400 flex-1 relative z-10">Vitrine de oportunidades de pesquisa (ICs), vagas de estágios, e guia de Vetores profissionais (Olimpíadas, Mercado, Vida Acadêmica).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ÁREA 4 */}
+                    <div className="glass-card rounded-[32px] p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-stretch border border-white/5 hover:border-brand-blue/30 transition-all group">
+                        {/* Header da Área */}
+                        <div className="lg:w-1/3 flex flex-col justify-center">
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-brand-blue mb-3 inline-block px-3 py-1 bg-brand-blue/10 rounded-full w-fit">[ÁREA 4] Experiência Transversal</span>
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-brand-blue shrink-0 group-hover:scale-110 group-hover:bg-brand-blue/10 transition-all">
+                                    <Accessibility className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold leading-tight">UX & Acessibilidade</h3>
+                            </div>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                A ponte entre o volume bruto de material gerado e a exibição otimizada, inclusiva e artística na interface.
+                            </p>
+                        </div>
+                        {/* Cards Atual/Futuro */}
+                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="bg-[#11141a] rounded-2xl p-6 border border-white/5 flex flex-col h-full">
+                                <span className="text-[10px] uppercase font-black tracking-widest text-green-400 mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div> Status Atual</span>
+                                <h4 className="font-bold text-white mb-2">Fluxo & Catálogo Core</h4>
+                                <p className="text-xs text-slate-500 flex-1">Feed contínuo e interativo (Fluxo) aliado à estabilidade fundamental do repositório Padrão Ouro IFUSP.</p>
+                            </div>
+                            <div className="bg-brand-blue/5 rounded-2xl p-6 border border-brand-blue/10 flex flex-col h-full relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/10 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                <span className="text-[10px] uppercase font-black tracking-widest text-brand-blue mb-2 relative z-10 flex items-center gap-2"><Rocket className="w-3 h-3" /> Roadmap Futuro</span>
+                                <h4 className="font-bold text-brand-blue mb-2 relative z-10">CLS Zero (TEA) & Acervo</h4>
+                                <p className="text-xs text-slate-400 flex-1 relative z-10">Design system neurodivergente focado em zerar Cumulative Layout Shift, somado a uma **Vitrine Imersiva Interativa** para História do IF.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ÁREA 5 */}
+                    <div className="glass-card rounded-[32px] p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-stretch border border-white/5 hover:border-brand-red/30 transition-all group">
+                        {/* Header da Área */}
+                        <div className="lg:w-1/3 flex flex-col justify-center">
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-brand-red mb-3 inline-block px-3 py-1 bg-brand-red/10 rounded-full w-fit">[ÁREA 5] Engajamento</span>
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-brand-red shrink-0 group-hover:scale-110 group-hover:bg-brand-red/10 transition-all">
+                                    <MessageSquare className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold leading-tight">Interação & Conexão</h3>
+                            </div>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                Estruturas para que as vozes do Instituto se sobreponham, se organizem e gerem conhecimento vivo.
+                            </p>
+                        </div>
+                        {/* Cards Atual/Futuro */}
+                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="bg-[#11141a] rounded-2xl p-6 border border-white/5 flex flex-col h-full">
+                                <span className="text-[10px] uppercase font-black tracking-widest text-green-400 mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div> Status Atual</span>
+                                <h4 className="font-bold text-white mb-2">Comunidades Radiais</h4>
+                                <p className="text-xs text-slate-500 flex-1">O Fórum Grande Colisor (projetos externos) e a plataforma Perseus (Pergunte a um Cientista) via Hub.</p>
+                            </div>
+                            <div className="bg-brand-red/5 rounded-2xl p-6 border border-brand-red/10 flex flex-col h-full relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-brand-red/10 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                <span className="text-[10px] uppercase font-black tracking-widest text-brand-red mb-2 relative z-10 flex items-center gap-2"><Rocket className="w-3 h-3" /> Roadmap Futuro</span>
+                                <h4 className="font-bold text-brand-red mb-2 relative z-10">App Mobile e Mentorias 1:1</h4>
+                                <p className="text-xs text-slate-400 flex-1 relative z-10">Lançamento nativo (iOS/Android) com Push Notifications, e programa conectando calouros a veteranos mentores.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ÁREA 6 */}
+                    <div className="glass-card rounded-[32px] p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-stretch border border-white/5 hover:border-brand-yellow/30 transition-all group">
+                        {/* Header da Área */}
+                        <div className="lg:w-1/3 flex flex-col justify-center">
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-brand-yellow mb-3 inline-block px-3 py-1 bg-brand-yellow/10 rounded-full w-fit">[ÁREA 6] Colaboração Institucional</span>
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-brand-yellow shrink-0 group-hover:scale-110 group-hover:bg-brand-yellow/10 transition-all">
+                                    <Building className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold leading-tight">Wiki & Sobrevivência</h3>
+                            </div>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                Manutenção de guias coletivos, tutoriais de como viver e entender o ecossistema fechado do campus.
+                            </p>
+                        </div>
+                        {/* Cards Atual/Futuro */}
+                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="bg-[#11141a] rounded-2xl p-6 border border-white/5 flex flex-col h-full">
+                                <span className="text-[10px] uppercase font-black tracking-widest text-green-400 mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div> Status Atual</span>
+                                <h4 className="font-bold text-white mb-2">Wiki do IFUSP</h4>
+                                <p className="text-xs text-slate-500 flex-1">Artigos curtos redigidos colaborativamente descrevendo centros, CAIF, instâncias colegiadas e mapas mentais do Ifusp.</p>
+                            </div>
+                            <div className="bg-brand-yellow/5 rounded-2xl p-6 border border-brand-yellow/10 flex flex-col h-full relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-brand-yellow/10 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                <span className="text-[10px] uppercase font-black tracking-widest text-brand-yellow mb-2 relative z-10 flex items-center gap-2"><Rocket className="w-3 h-3" /> Roadmap Futuro</span>
+                                <h4 className="font-bold text-brand-yellow mb-2 relative z-10">Aba Exclusiva "O Instituto"</h4>
+                                <p className="text-xs text-slate-400 flex-1 relative z-10">O consolidado "Guia de Sobrevivência do Calouro": burocracias desmistificadas, horários do circular, guias do Reffis e cardápios.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ÁREA 7 */}
+                    <div className="glass-card rounded-[32px] p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-stretch border border-white/5 hover:border-brand-blue/30 transition-all group">
+                        {/* Header da Área */}
+                        <div className="lg:w-1/3 flex flex-col justify-center">
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-brand-blue mb-3 inline-block px-3 py-1 bg-brand-blue/10 rounded-full w-fit">[ÁREA 7] Gamificação Pessoal</span>
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-brand-blue shrink-0 group-hover:scale-110 group-hover:bg-brand-blue/10 transition-all">
+                                    <ScrollText className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold leading-tight">Mecânicas de Retenção</h3>
+                            </div>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                Convertendo navegação diária em engajamento duradouro recompensando a absorção de conhecimento.
+                            </p>
+                        </div>
+                        {/* Cards Atual/Futuro */}
+                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="bg-[#11141a] rounded-2xl p-6 border border-white/5 flex flex-col h-full">
+                                <span className="text-[10px] uppercase font-black tracking-widest text-green-400 mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div> Status Atual</span>
+                                <h4 className="font-bold text-white mb-2">Energia e Níveis Core</h4>
+                                <p className="text-xs text-slate-500 flex-1">Sistema base Ativo: Radiação (XP), alcance de níveis ("Quark", "Fóton", "Bóson") e conquistas iniciais de envios.</p>
+                            </div>
+                            <div className="bg-brand-blue/5 rounded-2xl p-6 border border-brand-blue/10 flex flex-col h-full relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/10 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                <span className="text-[10px] uppercase font-black tracking-widest text-brand-blue mb-2 relative z-10 flex items-center gap-2"><Rocket className="w-3 h-3" /> Roadmap Futuro</span>
+                                <h4 className="font-bold text-brand-blue mb-2 relative z-10">Conquistas Históricas 2.0</h4>
+                                <p className="text-xs text-slate-400 flex-1 relative z-10">Tokens (badges) concedidos por explorar seções imersivas interativas (easter-eggs na Linha do Tempo e Leitura de Artigos Ouro).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ÁREA 8 */}
+                    <div className="glass-card rounded-[32px] p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-stretch border border-white/5 hover:border-brand-red/30 transition-all group">
+                        {/* Header da Área */}
+                        <div className="lg:w-1/3 flex flex-col justify-center">
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-brand-red mb-3 inline-block px-3 py-1 bg-brand-red/10 rounded-full w-fit">[ÁREA 8] Utilitários de Graduação</span>
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-brand-red shrink-0 group-hover:scale-110 group-hover:bg-brand-red/10 transition-all">
+                                    <FileText className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold leading-tight">Ferramentas Práticas</h3>
+                            </div>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                Apps web internos focados em facilitar o planejamento das aulas e simplificar requerimentos dos estudantes.
+                            </p>
+                        </div>
+                        {/* Cards Atual/Futuro */}
+                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="bg-[#11141a] rounded-2xl p-6 border border-white/5 flex flex-col h-full">
+                                <span className="text-[10px] uppercase font-black tracking-widest text-green-400 mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div> Status Atual</span>
+                                <h4 className="font-bold text-white mb-2">Calculadora de Formatura</h4>
+                                <p className="text-xs text-slate-500 flex-1">Barras de energia baseadas no catálogo oficial com visualização dedutiva de optativas eletivas x livres e defasagens do instituto.</p>
+                            </div>
+                            <div className="bg-brand-red/5 rounded-2xl p-6 border border-brand-red/10 flex flex-col h-full relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-brand-red/10 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                <span className="text-[10px] uppercase font-black tracking-widest text-brand-red mb-2 relative z-10 flex items-center gap-2"><Rocket className="w-3 h-3" /> Roadmap Futuro</span>
+                                <h4 className="font-bold text-brand-red mb-2 relative z-10">Secretaria Digital</h4>
+                                <p className="text-xs text-slate-400 flex-1 relative z-10">Painel com links diretos limpos das e-secretarias, formulários de requerimento automatizados e visualizadores de equivalência abertos.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ÁREA 9 */}
+                    <div className="glass-card rounded-[32px] p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-stretch border border-white/5 hover:border-brand-yellow/30 transition-all group">
+                        {/* Header da Área */}
+                        <div className="lg:w-1/3 flex flex-col justify-center">
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-brand-yellow mb-3 inline-block px-3 py-1 bg-brand-yellow/10 rounded-full w-fit">[ÁREA 9] Gestão & Governança</span>
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-brand-yellow shrink-0 group-hover:scale-110 group-hover:bg-brand-yellow/10 transition-all">
+                                    <Settings className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold leading-tight">Controle & Moderação</h3>
+                            </div>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                Estrutura administrativa invisível (Backoffice) que garante a idoneidade, segurança e curadoria científica dos materiais postados na rede.
+                            </p>
+                        </div>
+                        {/* Cards Atual/Futuro */}
+                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="bg-[#11141a] rounded-2xl p-6 border border-white/5 flex flex-col h-full">
+                                <span className="text-[10px] uppercase font-black tracking-widest text-green-400 mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div> Status Atual</span>
+                                <h4 className="font-bold text-white mb-2">Painel Curatorial</h4>
+                                <p className="text-xs text-slate-500 flex-1">Sistema de moderação fechado (RLS) para o Lab-Div aceitar, revisar e publicar fluxos submetidos pelos usuários, bloqueando fake-news.</p>
+                            </div>
+                            <div className="bg-brand-yellow/5 rounded-2xl p-6 border border-brand-yellow/10 flex flex-col h-full relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-brand-yellow/10 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                <span className="text-[10px] uppercase font-black tracking-widest text-brand-yellow mb-2 relative z-10 flex items-center gap-2"><Rocket className="w-3 h-3" /> Roadmap Futuro</span>
+                                <h4 className="font-bold text-brand-yellow mb-2 relative z-10">Módulo Direto CCIFUSP</h4>
+                                <p className="text-xs text-slate-400 flex-1 relative z-10">Abertura controlada da moderação para equipes do instituto incluírem informes oficiais no Fluxo e na Linha Do Tempo com flag institucional.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ÁREA 10 */}
+                    <div className="glass-card rounded-[32px] p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-stretch border border-white/5 hover:border-brand-blue/30 transition-all group">
+                        {/* Header da Área */}
+                        <div className="lg:w-1/3 flex flex-col justify-center">
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-brand-blue mb-3 inline-block px-3 py-1 bg-brand-blue/10 rounded-full w-fit">[ÁREA 10] Integração Sistêmica</span>
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-brand-blue shrink-0 group-hover:scale-110 group-hover:bg-brand-blue/10 transition-all">
+                                    <Network className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-2xl font-bold leading-tight">Motores de Base USP</h3>
+                            </div>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                Abstração do caos das matrizes de grade da Universidade em algoritmos estáveis para nutrir as demais áreas do app.
+                            </p>
+                        </div>
+                        {/* Cards Atual/Futuro */}
+                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="bg-[#11141a] rounded-2xl p-6 border border-white/5 flex flex-col h-full">
+                                <span className="text-[10px] uppercase font-black tracking-widest text-green-400 mb-2 flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div> Status Atual</span>
+                                <h4 className="font-bold text-white mb-2">Motor de Equivalências USP</h4>
+                                <p className="text-xs text-slate-500 flex-1">Algoritmo operacional convertendo estruturas rígidas de disciplinas Mestra X N-Equivalentes (via raspagem e SQL Complexo).</p>
+                            </div>
+                            <div className="bg-brand-blue/5 rounded-2xl p-6 border border-brand-blue/10 flex flex-col h-full relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/10 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                <span className="text-[10px] uppercase font-black tracking-widest text-brand-blue mb-2 relative z-10 flex items-center gap-2"><Rocket className="w-3 h-3" /> Roadmap Futuro</span>
+                                <h4 className="font-bold text-brand-blue mb-2 relative z-10">Multi-Tenant (CQ, IME, IO)</h4>
+                                <p className="text-xs text-slate-400 flex-1 relative z-10">Expandir as fundações da Plataforma (atualmente hardcoded para física) para uma arquitetura SAAS interna integrando outros Pólos (Institutos) da USP.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

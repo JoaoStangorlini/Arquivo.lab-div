@@ -46,6 +46,7 @@ export interface MediaCardProps {
     post: PostDTO;
     priority?: boolean;
     isLikedByUser?: boolean;
+    isSavedByUser?: boolean;
     highlightQuery?: string;
 }
 
@@ -55,7 +56,7 @@ import { CATEGORY_STYLES, DEFAULT_STYLE } from '@/lib/constants';
  * V8.0 MediaCard - Hardened & Refactored
  * Implements DTO Enforcement and hook-based logic.
  */
-export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = false, highlightQuery = '' }: MediaCardProps) => {
+export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = false, isSavedByUser = false, highlightQuery = '' }: MediaCardProps) => {
     const { user } = useAuth();
     const userId = user?.id;
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -85,6 +86,7 @@ export const MediaCard = React.memo(({ post, priority = false, isLikedByUser = f
         initialLikes: post.likeCount || 0,
         initialSaves: post.saveCount || 0,
         initialLiked: isLikedByUser,
+        // (Note: useMediaInteraction hook currently lacks initialSaved param, we will need to update it next)
         userId
     });
 

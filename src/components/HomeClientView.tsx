@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { MediaCard, MediaCardProps } from './MediaCard';
 import { SkeletonCard } from './ui/SkeletonCard';
 import { fetchSubmissions } from '@/app/actions/submissions';
+import { checkUserLikes, checkUserSaves } from '@/app/actions/media';
+import { useAuth } from '@/providers/AuthProvider';
 import { FeaturedCarousel } from './FeaturedCarousel';
 import {
     Sparkles,
@@ -36,6 +38,7 @@ interface HomeClientViewProps {
     featuredItems?: MediaCardProps[];
     trendingTags?: string[];
     initialLikedIds?: string[];
+    initialSavedIds?: string[];
 }
 
 export const HomeClientView = ({
@@ -45,7 +48,8 @@ export const HomeClientView = ({
     trendingItems = [],
     featuredItems = [],
     trendingTags = [],
-    initialLikedIds = []
+    initialLikedIds = [],
+    initialSavedIds = []
 }: HomeClientViewProps) => {
     const router = useRouter();
     const { query: searchQuery, setQuery: setSearchQuery } = useSearch();
@@ -56,7 +60,9 @@ export const HomeClientView = ({
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [likedIds, setLikedIds] = useState<Set<string>>(new Set(initialLikedIds));
+    const [savedIds, setSavedIds] = useState<Set<string>>(new Set(initialSavedIds));
 
+    const { user } = useAuth();
     const [selectedCategories, setSelectedCategories] = useState<string[]>([initialCategory]);
     const [selectedMediaTypes, setSelectedMediaTypes] = useState<string[]>([]);
     const [selectedYears, setSelectedYears] = useState<string[]>(['Todos']);
@@ -94,7 +100,38 @@ export const HomeClientView = ({
         };
     }, [trendingItems]);
 
-    // checkUserLikes: using SSR data from initialLikedIds (server-side fetch in page.tsx)
+    // Fetch user likes and saves on client side to populate hearts and stars
+    useEffect(() => {
+        if (!user) {
+            setLikedIds(new Set());
+            setSavedIds(new Set());
+            return;
+        }
+
+        const fetchInteractions = async () => {
+            const allIds = new Set<string>();
+            items.forEach(i => allIds.add(i.post.id));
+            trendingItems.forEach(i => allIds.add(i.post.id));
+            featuredItems.forEach(i => allIds.add(i.post.id));
+
+            const idsArray = Array.from(allIds);
+            if (idsArray.length === 0) return;
+
+            try {
+                const [userLikes, userSaves] = await Promise.all([
+                    checkUserLikes(idsArray),
+                    checkUserSaves(idsArray)
+                ]);
+                setLikedIds(new Set(userLikes));
+                setSavedIds(new Set(userSaves));
+            } catch (err) {
+                console.error("Failed to fetch interactions", err);
+            }
+        };
+
+        fetchInteractions();
+    }, [user, items, trendingItems, featuredItems]);
+
     // Removed duplicate client-side useEffect for performance
 
     const scrollTrending = (direction: 'left' | 'right') => {
@@ -389,7 +426,7 @@ export const HomeClientView = ({
                                     key={item.post.id}
                                     className="min-w-[280px] md:min-w-[320px] snap-start"
                                 >
-                                    <MediaCard post={item.post} priority={false} isLikedByUser={likedIds.has(item.post.id)} highlightQuery={searchQuery} />
+                                    <MediaCard post={item.post} priority={false} isLikedByUser={likedIds.has(item.post.id)} isSavedByUser={savedIds.has(item.post.id)} highlightQuery={searchQuery} />
                                 </div>
                             ))}
                         </div>
@@ -410,6 +447,7 @@ export const HomeClientView = ({
                                         post={item.post}
                                         priority={true}
                                         isLikedByUser={likedIds.has(item.post.id)}
+                                        isSavedByUser={savedIds.has(item.post.id)}
                                         highlightQuery={searchQuery}
                                     />
                                 </div>
@@ -426,6 +464,7 @@ export const HomeClientView = ({
                                     post={item.post}
                                     priority={false}
                                     isLikedByUser={likedIds.has(item.post.id)}
+                                    isSavedByUser={savedIds.has(item.post.id)}
                                     highlightQuery={searchQuery}
                                 />
                             </div>
